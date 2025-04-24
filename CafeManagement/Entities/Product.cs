@@ -14,9 +14,9 @@ namespace CafeManagement.Entities
         private float importPrice;
         private float salePrice;
         private int quantity;
-        private string image;
+        
 
-        public Product(string id,string name,string typeId,float importPrice,float salePrice,int quantity,string image)
+        public Product(string id,string name,string typeId,float importPrice,float salePrice,int quantity)
         {
             this.id = id;
             this.name = name;
@@ -24,7 +24,7 @@ namespace CafeManagement.Entities
             this.importPrice = importPrice;
             this.salePrice = salePrice;
             this.quantity = quantity;
-            this.image = image;
+            
         }  
         public String getId()
         {
@@ -74,13 +74,6 @@ namespace CafeManagement.Entities
         {
             this.quantity = quantity;
         }
-        public string getImage()
-        {
-            return image;
-        }
-        public void setImage(String image)
-        {
-            this.image = image;
-        }
+        
     }
 }

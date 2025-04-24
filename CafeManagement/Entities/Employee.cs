@@ -21,17 +21,17 @@ public class Employee
     }
 
     public string getId(){
-        return employeeId;
+        return id;
     }
     public void setId(string value){ 
-        employeeId = value; 
+        id = value; 
     }
 
     public string getName(){
-        return employeeName;
+        return name;
     }
     public void setName(string value){
-        employeeName = value; 
+        name = value; 
     }
 
     public string getAddress(){
@@ -56,4 +56,4 @@ public class Employee
     }
 }
 
-}
+

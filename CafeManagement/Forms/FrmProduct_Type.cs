@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace CafeManagement.Forms
 {
-    public partial class FormProduct : Form
+    public partial class FrmProduct_Type : Form
     {
-        public FormProduct()
+        public FrmProduct_Type()
         {
             InitializeComponent();
-        }
-
-        private void FormProduct_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtGiaNhap_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
