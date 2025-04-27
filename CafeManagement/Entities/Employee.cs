@@ -68,5 +68,6 @@ namespace CafeManagement.Entities
         {
             totalAmount = value;
         }
+      
     }
 }
