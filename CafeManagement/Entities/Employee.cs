@@ -34,26 +34,30 @@ public class Employee
         name = value; 
     }
 
-    public string getAddress(){
-        return address; 
+    public string getAddress()
+    {
+        return address;
     }
-    public void setAddress(string value){
+    public void setAddress(string value)
+    {
         address = value;
     }
 
-    public DateTime getDateOfBirth(){ 
-        return dateOfBirth; 
+    public DateTime getDateOfBirth()
+    {
+        return dateOfBirth;
     }
-    public void setDateOfBirth(DateTime value){
-        dateOfBirth = value; 
+    public void setDateOfBirth(DateTime value)
+    {
+        dateOfBirth = value;
     }
 
-    public string getPhoneNumber(){ 
-        return phoneNumber; 
+    public string getPhoneNumber()
+    {
+        return phoneNumber;
     }
-    public void setPhoneNumber(string value){
-        phoneNumber = value; 
+    public void setPhoneNumber(string value)
+    {
+        phoneNumber = value;
     }
 }
-
-
