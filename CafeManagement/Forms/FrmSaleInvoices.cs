@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QLQC
+namespace CafeManagement
 {
-    public partial class frmHoadonBan : Form
+    public partial class FrmSaleInvoices : Form
     {
-        public frmHoadonBan()
+        public FrmSaleInvoices()
         {
             InitializeComponent();
         }
@@ -26,5 +26,7 @@ namespace QLQC
         {
 
         }
+
+
     }
 }
