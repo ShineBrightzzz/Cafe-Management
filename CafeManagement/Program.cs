@@ -1,3 +1,5 @@
+using CafeManagement.Forms;
+
 namespace CafeManagement
 {
     internal static class Program
