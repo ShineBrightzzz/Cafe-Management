@@ -20,22 +20,18 @@ public class Employee
         this.phoneNumber = phoneNumber;
     }
 
-    public string getId()
-    {
-        return employeeId;
+    public string getId(){
+        return id;
     }
-    public void setId(string value)
-    {
-        employeeId = value;
+    public void setId(string value){ 
+        id = value; 
     }
 
-    public string getName()
-    {
-        return employeeName;
+    public string getName(){
+        return name;
     }
-    public void setName(string value)
-    {
-        employeeName = value;
+    public void setName(string value){
+        name = value; 
     }
 
     public string getAddress()
