@@ -1,6 +1,6 @@
-﻿namespace QLQC
+﻿namespace CafeManagement
 {
-    partial class frmHoadonBan
+    partial class FrmSaleInvoices
     {
         /// <summary>
         /// Required designer variable.
@@ -33,25 +33,19 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            this.cboMaNhanVien = new ComboBox();
-            this.drig = new DataGridView();
+            cboMaNhanVien = new ComboBox();
             label5 = new Label();
             label8 = new Label();
             txtMaHDBan = new TextBox();
             txtTongTien = new TextBox();
             label9 = new Label();
             label10 = new Label();
-            this.cboMaKhachHang = new ComboBox();
             label13 = new Label();
             label14 = new Label();
             label15 = new Label();
             label17 = new Label();
             label18 = new Label();
             label19 = new Label();
-            this.cboMaSanPham = new ComboBox();
-            this.txtThanhTien = new TextBox();
-            this.txtDonGia = new TextBox();
-            this.txtKhuyenMai = new TextBox();
             txtSoLuong = new TextBox();
             lblBangChu = new Label();
             label21 = new Label();
@@ -64,7 +58,13 @@
             cboMaHoaDon = new ComboBox();
             txtNgayBan = new TextBox();
             label6 = new Label();
-            ((System.ComponentModel.ISupportInitialize)this.drig).BeginInit();
+            txtMaKhachHang = new TextBox();
+            cboMaSanPham = new ComboBox();
+            txtDonGia = new TextBox();
+            txtKhuyenMai = new TextBox();
+            txtThanhTien = new TextBox();
+            dgridHoadonban = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgridHoadonban).BeginInit();
             SuspendLayout();
             // 
             // btnThem
@@ -114,26 +114,16 @@
             // 
             // cboMaNhanVien
             // 
-            this.cboMaNhanVien.FormattingEnabled = true;
-            this.cboMaNhanVien.Location = new Point(652, 138);
-            this.cboMaNhanVien.Name = "cboMaNhanVien";
-            this.cboMaNhanVien.Size = new Size(121, 24);
-            this.cboMaNhanVien.TabIndex = 6;
-            // 
-            // drig
-            // 
-            this.drig.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.drig.Location = new Point(128, 367);
-            this.drig.Name = "drig";
-            this.drig.RowHeadersWidth = 51;
-            this.drig.RowTemplate.Height = 24;
-            this.drig.Size = new Size(615, 174);
-            this.drig.TabIndex = 7;
+            cboMaNhanVien.FormattingEnabled = true;
+            cboMaNhanVien.Location = new Point(644, 138);
+            cboMaNhanVien.Name = "cboMaNhanVien";
+            cboMaNhanVien.Size = new Size(121, 24);
+            cboMaNhanVien.TabIndex = 6;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(509, 141);
+            label5.Location = new Point(524, 141);
             label5.Name = "label5";
             label5.Size = new Size(100, 16);
             label5.TabIndex = 9;
@@ -142,7 +132,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(494, 90);
+            label8.Location = new Point(509, 93);
             label8.Name = "label8";
             label8.Size = new Size(115, 16);
             label8.TabIndex = 12;
@@ -178,14 +168,6 @@
             label10.Size = new Size(100, 16);
             label10.TabIndex = 18;
             label10.Text = "Mã sản phẩm :";
-            // 
-            // cboMaKhachHang
-            // 
-            this.cboMaKhachHang.FormattingEnabled = true;
-            this.cboMaKhachHang.Location = new Point(652, 90);
-            this.cboMaKhachHang.Name = "cboMaKhachHang";
-            this.cboMaKhachHang.Size = new Size(121, 24);
-            this.cboMaKhachHang.TabIndex = 21;
             // 
             // label13
             // 
@@ -240,35 +222,6 @@
             label19.Size = new Size(110, 16);
             label19.TabIndex = 30;
             label19.Text = "Thông tin chung";
-            // 
-            // cboMaSanPham
-            // 
-            this.cboMaSanPham.FormattingEnabled = true;
-            this.cboMaSanPham.Location = new Point(144, 229);
-            this.cboMaSanPham.Name = "cboMaSanPham";
-            this.cboMaSanPham.Size = new Size(121, 24);
-            this.cboMaSanPham.TabIndex = 31;
-            // 
-            // txtThanhTien
-            // 
-            this.txtThanhTien.Location = new Point(776, 259);
-            this.txtThanhTien.Name = "txtThanhTien";
-            this.txtThanhTien.Size = new Size(139, 23);
-            this.txtThanhTien.TabIndex = 32;
-            // 
-            // txtDonGia
-            // 
-            this.txtDonGia.Location = new Point(456, 229);
-            this.txtDonGia.Name = "txtDonGia";
-            this.txtDonGia.Size = new Size(135, 23);
-            this.txtDonGia.TabIndex = 33;
-            // 
-            // txtKhuyenMai
-            // 
-            this.txtKhuyenMai.Location = new Point(456, 294);
-            this.txtKhuyenMai.Name = "txtKhuyenMai";
-            this.txtKhuyenMai.Size = new Size(126, 23);
-            this.txtKhuyenMai.TabIndex = 34;
             // 
             // txtSoLuong
             // 
@@ -372,11 +325,62 @@
             label6.TabIndex = 51;
             label6.Text = "Thông tin các mặt hàng";
             // 
+            // txtMaKhachHang
+            // 
+            txtMaKhachHang.Location = new Point(644, 90);
+            txtMaKhachHang.Name = "txtMaKhachHang";
+            txtMaKhachHang.Size = new Size(125, 23);
+            txtMaKhachHang.TabIndex = 52;
+            // 
+            // cboMaSanPham
+            // 
+            cboMaSanPham.FormattingEnabled = true;
+            cboMaSanPham.Location = new Point(144, 232);
+            cboMaSanPham.Name = "cboMaSanPham";
+            cboMaSanPham.Size = new Size(121, 24);
+            cboMaSanPham.TabIndex = 53;
+            // 
+            // txtDonGia
+            // 
+            txtDonGia.Location = new Point(461, 233);
+            txtDonGia.Name = "txtDonGia";
+            txtDonGia.Size = new Size(125, 23);
+            txtDonGia.TabIndex = 54;
+            // 
+            // txtKhuyenMai
+            // 
+            txtKhuyenMai.Location = new Point(461, 298);
+            txtKhuyenMai.Name = "txtKhuyenMai";
+            txtKhuyenMai.Size = new Size(125, 23);
+            txtKhuyenMai.TabIndex = 55;
+            // 
+            // txtThanhTien
+            // 
+            txtThanhTien.Location = new Point(768, 262);
+            txtThanhTien.Name = "txtThanhTien";
+            txtThanhTien.Size = new Size(125, 23);
+            txtThanhTien.TabIndex = 56;
+            // 
+            // dgridHoadonban
+            // 
+            dgridHoadonban.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgridHoadonban.Location = new Point(122, 378);
+            dgridHoadonban.Name = "dgridHoadonban";
+            dgridHoadonban.RowHeadersWidth = 51;
+            dgridHoadonban.Size = new Size(596, 155);
+            dgridHoadonban.TabIndex = 57;
+            // 
             // frmHoadonBan
             // 
             AutoScaleDimensions = new SizeF(8F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(945, 838);
+            Controls.Add(dgridHoadonban);
+            Controls.Add(txtThanhTien);
+            Controls.Add(txtKhuyenMai);
+            Controls.Add(txtDonGia);
+            Controls.Add(cboMaSanPham);
+            Controls.Add(txtMaKhachHang);
             Controls.Add(label6);
             Controls.Add(txtNgayBan);
             Controls.Add(cboMaHoaDon);
@@ -389,25 +393,19 @@
             Controls.Add(label21);
             Controls.Add(lblBangChu);
             Controls.Add(txtSoLuong);
-            Controls.Add(this.txtKhuyenMai);
-            Controls.Add(this.txtDonGia);
-            Controls.Add(this.txtThanhTien);
-            Controls.Add(this.cboMaSanPham);
             Controls.Add(label19);
             Controls.Add(label18);
             Controls.Add(label17);
             Controls.Add(label15);
             Controls.Add(label14);
             Controls.Add(label13);
-            Controls.Add(this.cboMaKhachHang);
             Controls.Add(label10);
             Controls.Add(label9);
             Controls.Add(txtTongTien);
             Controls.Add(txtMaHDBan);
             Controls.Add(label8);
             Controls.Add(label5);
-            Controls.Add(this.drig);
-            Controls.Add(this.cboMaNhanVien);
+            Controls.Add(cboMaNhanVien);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -417,7 +415,7 @@
             Name = "frmHoadonBan";
             Text = "HOA DON BAN";
             Load += frmHoadonBan_Load;
-            ((System.ComponentModel.ISupportInitialize)this.drig).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgridHoadonban).EndInit();
             ResumeLayout(false);
             PerformLayout();
 
@@ -460,8 +458,15 @@
         private System.Windows.Forms.Button btnHuy;
         private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.ComboBox cboMaHoaDon;
+        private System.Windows.Forms.ComboBox cboMaNhanVien;
         private TextBox txtNgayBan;
         private Label label6;
+        private TextBox txtMaKhachHang;
+        private ComboBox cboMaSanPham;
+        private TextBox txtDonGia;
+        private TextBox txtKhuyenMai;
+        private TextBox txtThanhTien;
+        private DataGridView dgridHoadonban;
     }
 }
 
