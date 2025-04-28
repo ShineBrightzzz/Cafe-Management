@@ -10,10 +10,15 @@ namespace CafeManagement
         [STAThread]
         static void Main()
         {
+            var projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            var dotenvPath = Path.Combine(projectRoot, ".env");
+            EnvReader.Load(dotenvPath);
+            
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmSaleInvoices());
+            Application.Run(new FormProduct());
+            
         }
     }
 }
