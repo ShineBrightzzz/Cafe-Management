@@ -2,15 +2,15 @@
 
 namespace CafeManagement.Entities
 {
-    public class SalesInvoice
+    public class Sale_Invoice
     {
-        private string invoiceId;        // Mã HDB
-        private DateTime saleDate;       // Ngày bán
-        private string employeeId;       // Mã NV
-        private string customerId;       // Mã KH
-        private double totalAmount;      // Tổng tiền
+        private string invoiceId;        
+        private DateTime saleDate;       
+        private string employeeId;       
+        private string customerId;       
+        private double totalAmount;      
 
-        public SalesInvoice(string invoiceId, DateTime saleDate, string employeeId, string customerId, double totalAmount)
+        public Sale_Invoice(string invoiceId, DateTime saleDate, string employeeId, string customerId, double totalAmount)
         {
             this.invoiceId = invoiceId;
             this.saleDate = saleDate;
@@ -68,6 +68,5 @@ namespace CafeManagement.Entities
         {
             totalAmount = value;
         }
-      
     }
 }
