@@ -10,13 +10,13 @@ namespace CafeManagement.Entities
     {
         private string id;
         private string name;
-        private string phoneNumber;
+        private string phone;
 
-        public Customer(string id, string name, string phoneNumber)
+        public Customer(string id, string name, string phone)
         {
             this.id = id;
             this.name = name;
-            this.phoneNumber = phoneNumber;
+            this.phone = phone;
         }
 
         public string getId()
@@ -41,12 +41,12 @@ namespace CafeManagement.Entities
 
         public string getPhoneNumber()
         {
-            return phoneNumber;
+            return phone;
         }
 
         public void setPhoneNumber(string value)
         {
-            phoneNumber = value;
+            phone = value;
         }
     }
 }
