@@ -10,11 +10,8 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\**" />
-    <Compile Remove="DAO\**" />
     <EmbeddedResource Remove="Controllers\**" />
-    <EmbeddedResource Remove="DAO\**" />
     <None Remove="Controllers\**" />
-    <None Remove="DAO\**" />
   </ItemGroup>
 
   <ItemGroup>

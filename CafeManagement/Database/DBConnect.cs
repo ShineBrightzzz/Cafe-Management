@@ -34,5 +34,13 @@ namespace CafeManagement.Database
                 return null;
             }
         }
+
+        public static void CloseConnection(SqlConnection conn)
+        {
+            if (conn != null && conn.State == System.Data.ConnectionState.Open)
+            {
+                conn.Close();
+            }
+        }
     }
 }
