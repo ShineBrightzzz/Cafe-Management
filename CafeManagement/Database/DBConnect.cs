@@ -1,19 +1,31 @@
 ﻿using System;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System.Windows.Forms;
 
 namespace CafeManagement.Database
 {
     internal class DBConnect
     {
-        private static string connString = "Data Source=DESKTOP-RGO0IJA;Initial Catalog=cafe_mana;Integrated Security=True;Encrypt=False";
+        private static string connString;
+
+        static DBConnect()
+        {
+            connString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
+            if (string.IsNullOrEmpty(connString))
+            {
+                MessageBox.Show("Không tìm thấy chuỗi kết nối. Vui lòng kiểm tra file .env!");
+            }
+        }
 
         public static SqlConnection GetConnection()
         {
             try
             {
-                SqlConnection conn = new SqlConnection(connString);
+                var conn = new SqlConnection(connString);
                 conn.Open();
+                MessageBox.Show("Kết nối thành công!");
                 return conn;
             }
             catch (Exception ex)

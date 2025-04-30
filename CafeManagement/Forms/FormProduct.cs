@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CafeManagement.Database;
 
 namespace CafeManagement.Forms
 {
@@ -15,6 +16,7 @@ namespace CafeManagement.Forms
         public FormProduct()
         {
             InitializeComponent();
+            DBConnect.GetConnection();
         }
 
         private void FormProduct_Load(object sender, EventArgs e)
