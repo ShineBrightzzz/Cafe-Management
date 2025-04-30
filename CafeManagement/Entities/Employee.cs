@@ -2,72 +2,77 @@
 
 namespace CafeManagement.Entities
 {
-    public class SalesInvoice
+    public class Employee
     {
-        private string invoiceId;        // Mã HDB
-        private DateTime saleDate;       // Ngày bán
-        private string employeeId;       // Mã NV
-        private string customerId;       // Mã KH
-        private double totalAmount;      // Tổng tiền
+        private string id;
+        private string name;
+        private string address;
+        private string gender;
+        private DateTime dateOfBirth;
+        private string phoneNumber;
 
-        public SalesInvoice(string invoiceId, DateTime saleDate, string employeeId, string customerId, double totalAmount)
+        public Employee(string id, string name, string address, string gender, DateTime dateOfBirth, string phoneNumber)
         {
-            this.invoiceId = invoiceId;
-            this.saleDate = saleDate;
-            this.employeeId = employeeId;
-            this.customerId = customerId;
-            this.totalAmount = totalAmount;
+            this.id = id;
+            this.name = name;
+            this.address = address;
+            this.gender = gender;
+            this.dateOfBirth = dateOfBirth;
+            this.phoneNumber = phoneNumber;
         }
 
-        public string getInvoiceId()
+        public string getId()
         {
-            return invoiceId;
+            return id;
+        }
+        public void setId(string value)
+        {
+            id = value;
         }
 
-        public void setInvoiceId(string value)
+        public string getName()
         {
-            invoiceId = value;
+            return name;
+        }
+        public void setName(string value)
+        {
+            name = value;
         }
 
-        public DateTime getSaleDate()
+        public string getAddress()
         {
-            return saleDate;
+            return address;
+        }
+        public void setAddress(string value)
+        {
+            address = value;
         }
 
-        public void setSaleDate(DateTime value)
+        public string getGender()
         {
-            saleDate = value;
+            return gender;
+        }
+        public void setGender(string value)
+        {
+            gender = value;
         }
 
-        public string getEmployeeId()
+        public DateTime getDateOfBirth()
         {
-            return employeeId;
+            return dateOfBirth;
+        }
+        public void setDateOfBirth(DateTime value)
+        {
+            dateOfBirth = value;
         }
 
-        public void setEmployeeId(string value)
+        public string getPhoneNumber()
         {
-            employeeId = value;
+            return phoneNumber;
         }
-
-        public string getCustomerId()
+        public void setPhoneNumber(string value)
         {
-            return customerId;
+            phoneNumber = value;
         }
-
-        public void setCustomerId(string value)
-        {
-            customerId = value;
-        }
-
-        public double getTotalAmount()
-        {
-            return totalAmount;
-        }
-
-        public void setTotalAmount(double value)
-        {
-            totalAmount = value;
-        }
-      
     }
 }
