@@ -7,24 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CafeManagement.Database;
 
 namespace CafeManagement.Forms
 {
-    public partial class FormProduct : Form
+    public partial class FrmEmployee : Form
     {
-        public FormProduct()
+        public FrmEmployee()
         {
             InitializeComponent();
-            DBConnect.GetConnection();
         }
 
-        private void FormProduct_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtGiaNhap_TextChanged(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

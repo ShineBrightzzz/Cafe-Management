@@ -8,25 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CafeManagement
+namespace CafeManagement.Forms
 {
-    public partial class FrmSaleInvoices : Form
+    public partial class FrmCustomer : Form
     {
-        public FrmSaleInvoices()
+        public FrmCustomer()
         {
             InitializeComponent();
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmHoadonBan_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }
