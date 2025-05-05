@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace CafeManagement.Entities
 {
-    class Product
+    public class Product
     {
         private string id;
         private string name;
         private string typeId;
-        private float importPrice;
-        private float salePrice;
+        private double importPrice;
+        private double salePrice;
         private int quantity;
+        private string image;
         
 
-        public Product(string id,string name,string typeId,float importPrice,float salePrice,int quantity)
+        public Product(string id,string name,string typeId,double importPrice,double salePrice,int quantity, string image)
         {
             this.id = id;
             this.name = name;
@@ -24,6 +25,7 @@ namespace CafeManagement.Entities
             this.importPrice = importPrice;
             this.salePrice = salePrice;
             this.quantity = quantity;
+            this.image = image;
             
         }  
         public String getId()
@@ -50,19 +52,19 @@ namespace CafeManagement.Entities
         {
             this.typeId = typeId;
         }
-        public float getImportPrice()
+        public double getImportPrice()
         {
             return importPrice;
         }
-        public void setImportPrice(float importPrice)
+        public void setImportPrice(double importPrice)
         {
             this.importPrice = importPrice;
         }
-        public float getSalePrice()
+        public double getSalePrice()
         {
             return salePrice;
         }
-        public void setSalePrice(float salePrice)
+        public void setSalePrice(double salePrice)
         {
             this.salePrice = salePrice;
         }
@@ -73,6 +75,14 @@ namespace CafeManagement.Entities
         public void setQuantity(int quantity)
         {
             this.quantity = quantity;
+        }
+        public string getImage()
+        {
+            return image;
+        }
+        public void setImage(String image)
+        {
+            this.image = image;
         }
         
     }
