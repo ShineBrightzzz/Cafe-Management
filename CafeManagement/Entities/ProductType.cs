@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CafeManagement.Entities
 {
-    class Product_Type
+    public class ProductType
     {
         private string id;
         private string name;
 
-        public Product_Type(string id, string name)
+        public ProductType(string id, string name)
         {
             this.id = id;
             this.name = name;
