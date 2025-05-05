@@ -16,7 +16,6 @@ namespace CafeManagement.Forms
         public FormProduct()
         {
             InitializeComponent();
-            DBConnect.GetConnection();
         }
 
         private void FormProduct_Load(object sender, EventArgs e)
