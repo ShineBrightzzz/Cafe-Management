@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace CafeManagement.Entities
 {
-    internal class ImportInvoice
+    public class ImportInvoice
     {
         private String importInvoiceId; //mã hóa đơn nhập
         private DateTime dateOfImport; //ngày nhập
         private String employeeId; //mã nhân viên
         private String supplierId; //mã nhà cung cấp
-        private float importTotalPrice; //tổng tiền 
+        private double importTotalPrice; //tổng tiền 
 
 
-        public ImportInvoice(String importInvoiceId, DateTime dateOfImport, String employeeId, String supplierId, float importTotalPrice)
+        public ImportInvoice(String importInvoiceId, DateTime dateOfImport, String employeeId, String supplierId, double importTotalPrice)
         {
             this.importInvoiceId = importInvoiceId;
             this.dateOfImport = dateOfImport;   
@@ -29,7 +29,7 @@ namespace CafeManagement.Entities
         public String getEmployeeId() { return employeeId; }
         
         public String getSupplierId() { return supplierId; }
-        public float getImportTotalPrice() { return importTotalPrice; }
+        public double getImportTotalPrice() { return importTotalPrice; }
 
         public void setImportInvoiceID(String importInvoiceID)
         {
@@ -51,7 +51,7 @@ namespace CafeManagement.Entities
             this.supplierId = supplierId;
         }
 
-        public void setImportTotalPrice(float importTotalPrice)
+        public void setImportTotalPrice(double importTotalPrice)
         {
             this.importTotalPrice = importTotalPrice;
         }

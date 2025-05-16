@@ -11,11 +11,11 @@ namespace CafeManagement.Entities
         private String importInvoiceId;
         private String productId;
         private int quantity;
-        private float unitPrice;
-        private float discount;
-        private float totalPrice;
+        private double unitPrice;
+        private double discount;
+        private double totalPrice;
 
-        public ImportInvoiceDetail(String importInvoiceId, String productId, int quantity, float unitPrice, float discount, float totalPrice) {
+        public ImportInvoiceDetail(String importInvoiceId, String productId, int quantity, double unitPrice, double discount, double totalPrice) {
             this.importInvoiceId = importInvoiceId; 
             this.productId = productId;
             this.quantity = quantity;
@@ -27,9 +27,9 @@ namespace CafeManagement.Entities
         public String getImportInvoiceId() { return importInvoiceId; }
         public String getProductId() { return productId; }
         public int getQuantity() { return quantity; }
-        public float getUnitPrice() { return unitPrice; }
-        public float getDiscount() { return discount; }
-        public float getTotalPrice() { return totalPrice; }
+        public double getUnitPrice() { return unitPrice; }
+        public double getDiscount() { return discount; }
+        public double getTotalPrice() { return totalPrice; }
 
         public void setImportInvoice(String importInvoiceId)
         {
@@ -41,15 +41,15 @@ namespace CafeManagement.Entities
         public void setQuantity(int quantity) {
             this.quantity = quantity; 
         }
-        public void setUnitPrice(float unitPrice)
+        public void setUnitPrice(double unitPrice)
         {
             this.unitPrice = unitPrice;
         }
-        public void setDiscount(float discount)
+        public void setDiscount(double discount)
         {
             this.discount = discount;
         }
-        public void setTotalPrice(float totalPrice)
+        public void setTotalPrice(double totalPrice)
         {
             this.totalPrice = totalPrice;
         }
