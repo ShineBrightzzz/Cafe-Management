@@ -47,6 +47,8 @@
             label3 = new Label();
             label2 = new Label();
             groupBox2 = new GroupBox();
+            txtSoLuong = new TextBox();
+            txtTenHang = new TextBox();
             cboMaHang = new ComboBox();
             btnDong = new Button();
             btnIn = new Button();
@@ -70,8 +72,6 @@
             label19 = new Label();
             cboMaHoaDonNhap = new ComboBox();
             btnTimKiem = new Button();
-            txtTenHang = new TextBox();
-            txtSoLuong = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgridChiTietHoaDonNhap).BeginInit();
@@ -276,6 +276,20 @@
             groupBox2.Text = "Thông tin mặt hàng";
             groupBox2.Enter += groupBox2_Enter;
             // 
+            // txtSoLuong
+            // 
+            txtSoLuong.Location = new Point(712, 80);
+            txtSoLuong.Name = "txtSoLuong";
+            txtSoLuong.Size = new Size(201, 39);
+            txtSoLuong.TabIndex = 36;
+            // 
+            // txtTenHang
+            // 
+            txtTenHang.Location = new Point(236, 147);
+            txtTenHang.Name = "txtTenHang";
+            txtTenHang.Size = new Size(201, 39);
+            txtTenHang.TabIndex = 35;
+            // 
             // cboMaHang
             // 
             cboMaHang.FormattingEnabled = true;
@@ -468,26 +482,12 @@
             // 
             // btnTimKiem
             // 
-            btnTimKiem.Location = new Point(626, 1470);
+            btnTimKiem.Location = new Point(626, 1477);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(150, 46);
             btnTimKiem.TabIndex = 36;
             btnTimKiem.Text = "Tìm kiếm";
             btnTimKiem.UseVisualStyleBackColor = true;
-            // 
-            // txtTenHang
-            // 
-            txtTenHang.Location = new Point(236, 147);
-            txtTenHang.Name = "txtTenHang";
-            txtTenHang.Size = new Size(201, 39);
-            txtTenHang.TabIndex = 35;
-            // 
-            // txtSoLuong
-            // 
-            txtSoLuong.Location = new Point(712, 80);
-            txtSoLuong.Name = "txtSoLuong";
-            txtSoLuong.Size = new Size(201, 39);
-            txtSoLuong.TabIndex = 36;
             // 
             // frmImportInvoice
             // 
