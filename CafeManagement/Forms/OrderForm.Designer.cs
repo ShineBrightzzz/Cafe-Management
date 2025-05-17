@@ -28,30 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            invoicesPanel = new FlowLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnTable = new Button();
             btnMenu = new Button();
+            invoicesPanel = new FlowLayoutPanel();
+            panel1 = new Panel();
             mainPanel = new FlowLayoutPanel();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1082, 61);
-            panel1.TabIndex = 2;
-            // 
-            // invoicesPanel
-            // 
-            invoicesPanel.Dock = DockStyle.Right;
-            invoicesPanel.Location = new Point(746, 61);
-            invoicesPanel.Name = "invoicesPanel";
-            invoicesPanel.Size = new Size(336, 670);
-            invoicesPanel.TabIndex = 4;
             // 
             // flowLayoutPanel1
             // 
@@ -60,8 +44,8 @@
             flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 61);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(746, 46);
-            flowLayoutPanel1.TabIndex = 6;
+            flowLayoutPanel1.Size = new Size(665, 46);
+            flowLayoutPanel1.TabIndex = 10;
             // 
             // btnTable
             // 
@@ -76,7 +60,6 @@
             btnTable.TabIndex = 0;
             btnTable.Text = "Bàn";
             btnTable.UseVisualStyleBackColor = false;
-            btnTable.Click += btnTable_Click;
             // 
             // btnMenu
             // 
@@ -91,21 +74,36 @@
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
             btnMenu.UseVisualStyleBackColor = false;
-            btnMenu.Click += btnMenu_Click;
+            // 
+            // invoicesPanel
+            // 
+            invoicesPanel.Dock = DockStyle.Right;
+            invoicesPanel.Location = new Point(665, 61);
+            invoicesPanel.Name = "invoicesPanel";
+            invoicesPanel.Size = new Size(523, 761);
+            invoicesPanel.TabIndex = 9;
+            // 
+            // panel1
+            // 
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1188, 61);
+            panel1.TabIndex = 8;
             // 
             // mainPanel
             // 
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 107);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(746, 624);
-            mainPanel.TabIndex = 7;
+            mainPanel.Size = new Size(665, 715);
+            mainPanel.TabIndex = 11;
             // 
             // OrderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1082, 731);
+            ClientSize = new Size(1188, 822);
             Controls.Add(mainPanel);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(invoicesPanel);
@@ -119,11 +117,11 @@
 
         #endregion
 
-        private Panel panel1;
-        private FlowLayoutPanel invoicesPanel;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnTable;
         private Button btnMenu;
+        private FlowLayoutPanel invoicesPanel;
+        private Panel panel1;
         private FlowLayoutPanel mainPanel;
     }
 }

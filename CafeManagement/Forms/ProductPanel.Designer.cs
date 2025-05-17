@@ -35,7 +35,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Name = "ProductPanel";
-            Size = new Size(622, 431);
+            Size = new Size(665, 715);
             ResumeLayout(false);
         }
 

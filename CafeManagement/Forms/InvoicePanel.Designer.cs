@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            button1 = new Button();
             button2 = new Button();
+            button1 = new Button();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -40,27 +40,10 @@
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 531);
+            panel1.Location = new Point(0, 699);
             panel1.Name = "panel1";
-            panel1.Size = new Size(374, 77);
+            panel1.Size = new Size(986, 77);
             panel1.TabIndex = 0;
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(0, 0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(374, 531);
-            flowLayoutPanel1.TabIndex = 1;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(3, 19);
-            button1.Name = "button1";
-            button1.Size = new Size(178, 46);
-            button1.TabIndex = 0;
-            button1.Text = "Thanh toán";
-            button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -71,6 +54,23 @@
             button2.Text = "Thông báo";
             button2.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            button1.Location = new Point(3, 19);
+            button1.Name = "button1";
+            button1.Size = new Size(178, 46);
+            button1.TabIndex = 0;
+            button1.Text = "Thanh toán";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(986, 699);
+            flowLayoutPanel1.TabIndex = 1;
+            // 
             // InvoicePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -78,7 +78,7 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             Name = "InvoicePanel";
-            Size = new Size(374, 608);
+            Size = new Size(986, 776);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }

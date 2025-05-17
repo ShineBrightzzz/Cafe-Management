@@ -17,6 +17,7 @@ namespace CafeManagement.Forms
         public InvoiceItem()
         {
             InitializeComponent();
+            
         }
 
         public InvoiceItem(Product product)
@@ -32,7 +33,7 @@ namespace CafeManagement.Forms
             this.BackColor = Color.White;
             this.Margin = new Padding(0, 0, 0, 5);
             this.BorderStyle = BorderStyle.None;
-            
+
             // Add subtle shadow effect using panel
             Panel shadowPanel = new Panel
             {
@@ -53,29 +54,32 @@ namespace CafeManagement.Forms
 
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            
-            Label nameLabel = new Label
-            {
-                Text = _product.getName(),
-                Font = new Font("Arial", 10, FontStyle.Bold),
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft
-            };
 
-            Label priceLabel = new Label
-            {
-                Text = $"{_product.getSalePrice():N0} đ",
-                Font = new Font("Arial", 9),
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleRight,
-                ForeColor = Color.FromArgb(51, 51, 51)
-            };
 
-            layout.Controls.Add(nameLabel, 0, 0);
-            layout.Controls.Add(priceLabel, 1, 0);
+            lblProductName.Text = _product.getName();
+            lblTotalPrice.Text = $"{_product.getSalePrice():N0} đ";
 
+            txtPrice.Text = $"{_product.getSalePrice():N0} đ";
+            txtPrice.Enabled = false;
             shadowPanel.Controls.Add(layout);
             this.Controls.Add(shadowPanel);
+        }
+
+        private void btnSubtract_Click(object sender, EventArgs e)
+        {
+            int quantity = Convert.ToInt32(lblQuantity.Text);
+            quantity--;
+            lblQuantity.Text = quantity.ToString();
+            lblTotalPrice.Text = $"{_product.getSalePrice() * quantity:N0} đ";
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            int quantity = Convert.ToInt32(lblQuantity.Text);
+            quantity++;
+            lblQuantity.Text = quantity.ToString();
+            
+            lblTotalPrice.Text = $"{_product.getSalePrice() * quantity:N0} đ";
         }
     }
 }
