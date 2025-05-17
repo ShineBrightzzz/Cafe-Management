@@ -39,19 +39,8 @@ namespace CafeManagement.Forms
                 Padding = new Padding(10, 0, 0, 0)
             };
 
-            Button backButton = new Button
-            {
-                Text = "Quay lại",
-                Dock = DockStyle.Right,
-                Width = 100,
-                Height = 35,
-                Margin = new Padding(0, 7, 10, 0),
-                FlatStyle = FlatStyle.Flat
-            };
-            backButton.Click += BackButton_Click;
 
             headerPanel.Controls.Add(tableLabel);
-            headerPanel.Controls.Add(backButton);
             
             // Create products flow layout
             productsFlowLayout = new FlowLayoutPanel
@@ -74,7 +63,6 @@ namespace CafeManagement.Forms
         private void LoadProducts()
         {
             List<Product> products = productController.GetAllProducts();
-            MessageBox.Show($"Có {products.Count} sản phẩm trong danh sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (products == null || products.Count == 0)
             {
@@ -114,17 +102,6 @@ namespace CafeManagement.Forms
                 // Ở đây bạn có thể mở form thêm sản phẩm vào hóa đơn hoặc xử lý logic khác
             }
         }
-        
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            // Trở về bảng chọn bàn
-            var parent = this.Parent;
-            if (parent != null)
-            {
-                TablePanel tablePanel = new TablePanel();
-                parent.Controls.Clear();
-                parent.Controls.Add(tablePanel);
-            }
-        }
+       
     }
 }
