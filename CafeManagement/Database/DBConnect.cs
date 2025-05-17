@@ -17,15 +17,12 @@ namespace CafeManagement.Database
             {
                 MessageBox.Show("Không tìm thấy chuỗi kết nối. Vui lòng kiểm tra file .env!");
             }
-        }
-
-        public static SqlConnection GetConnection()
+        }        public static SqlConnection GetConnection()
         {
             try
             {
                 var conn = new SqlConnection(connString);
-                conn.Open();
-                MessageBox.Show("Kết nối thành công!");
+                // Don't open the connection here - let the DAO methods handle it
                 return conn;
             }
             catch (Exception ex)
