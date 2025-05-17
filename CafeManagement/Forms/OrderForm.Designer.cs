@@ -30,7 +30,7 @@
         {
             panel1 = new Panel();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            tablePanel = new FlowLayoutPanel();
+            mainPanel = new FlowLayoutPanel();
             SuspendLayout();
             // 
             // panel1
@@ -49,20 +49,20 @@
             flowLayoutPanel2.Size = new Size(336, 670);
             flowLayoutPanel2.TabIndex = 4;
             // 
-            // tablePanel
+            // mainPanel
             // 
-            tablePanel.Dock = DockStyle.Fill;
-            tablePanel.Location = new Point(0, 61);
-            tablePanel.Name = "tablePanel";
-            tablePanel.Size = new Size(746, 670);
-            tablePanel.TabIndex = 5;
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(0, 61);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new Size(746, 670);
+            mainPanel.TabIndex = 5;
             // 
             // OrderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1082, 731);
-            Controls.Add(tablePanel);
+            Controls.Add(mainPanel);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(panel1);
             Name = "OrderForm";
@@ -75,6 +75,6 @@
 
         private Panel panel1;
         private FlowLayoutPanel flowLayoutPanel2;
-        private FlowLayoutPanel tablePanel;
+        private FlowLayoutPanel mainPanel;
     }
 }

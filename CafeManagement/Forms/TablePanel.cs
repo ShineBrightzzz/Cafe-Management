@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Controllers;
 using CafeManagement.Entities;
@@ -18,7 +13,6 @@ namespace CafeManagement.Forms
         private List<Table> tables;
         private FlowLayoutPanel tableFlowPanel;
 
-        // Colors for different table statuses
         private Color availableColor = Color.LightGreen;
         private Color occupiedColor = Color.LightCoral;
 
@@ -29,14 +23,11 @@ namespace CafeManagement.Forms
             InitializeComponent();
             InitializeTablePanel();
             tableController = new TableController();
-            
-            // Load tables when component is initialized
             LoadTables();
         }
 
         private void InitializeTablePanel()
         {
-            // Create and configure flow layout panel for tables
             tableFlowPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -47,15 +38,14 @@ namespace CafeManagement.Forms
             };
 
             this.Controls.Add(tableFlowPanel);
-        }        
-        
+        }
+
         public void LoadTables()
         {
-            try 
+            try
             {
                 tables = tableController.GetAllTables();
                 DisplayTables();
-                Console.WriteLine($"Tables loaded successfully. Count: {tables?.Count ?? 0}");
             }
             catch (Exception ex)
             {
@@ -81,66 +71,34 @@ namespace CafeManagement.Forms
 
             foreach (var table in tables)
             {
-                Panel tableButton = CreateTableButton(table);
+                Button tableButton = CreateTableButtonControl(table);
                 tableFlowPanel.Controls.Add(tableButton);
             }
         }
 
-        private Panel CreateTableButton(Table table)
+        private Button CreateTableButtonControl(Table table)
         {
-            // Create panel to represent a table
-            Panel tablePanel = new Panel
+            Button tableButton = new Button
             {
                 Width = 120,
                 Height = 80,
                 Margin = new Padding(10),
                 BackColor = table.getIsOccupied() ? occupiedColor : availableColor,
                 Tag = table,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Arial", 10, FontStyle.Bold),
+                Text = $"{table.getName()}\nStatus: {(table.getIsOccupied() ? "Occupied" : "Available")}",
+                TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // Add table name label
-            Label nameLabel = new Label
-            {
-                Text = table.getName(),
-                Font = new Font("Arial", 12, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = false,
-                Width = 120,
-                Height = 30,
-                Location = new Point(0, 10),
-            };
-            tablePanel.Controls.Add(nameLabel);
-
-            // Add status label
-            Label statusLabel = new Label
-            {
-                Text = $"Status: {(table.getIsOccupied() ? "Occupied" : "Available")}",
-                Font = new Font("Arial", 10),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = false,
-                Width = 120,
-                Height = 20,
-                Location = new Point(0, 45),
-            };
-            tablePanel.Controls.Add(statusLabel);
-
-            // Add click event handler
-            tablePanel.Click += TablePanel_Click;
-
-            // Add border
-            tablePanel.Paint += (sender, e) => {
-                var p = sender as Panel;
-                e.Graphics.DrawRectangle(new Pen(Color.Black, 2), 0, 0, p.Width - 1, p.Height - 1);
-            };
-
-            return tablePanel;
+            tableButton.Click += TableButton_Click;
+            return tableButton;
         }
 
-        private void TablePanel_Click(object sender, EventArgs e)
+        private void TableButton_Click(object sender, EventArgs e)
         {
-            if (sender is Panel tablePanel && tablePanel.Tag is Table table)
+            if (sender is Button button && button.Tag is Table table)
             {
-                // Trigger the event for handling table selection
                 TableSelected?.Invoke(this, table);
             }
         }
@@ -151,27 +109,17 @@ namespace CafeManagement.Forms
             if (table != null)
             {
                 table.setIsOccupied(isOccupied);
-                tableController.UpdateTable(
-                    table.getId(),
-                    table.getName(),
-                    table.getIsOccupied()
-                );
-                
-                // Refresh display
+                tableController.UpdateTable(table.getId(), table.getName(), table.getIsOccupied());
                 LoadTables();
             }
         }
 
         public void FilterTablesByOccupationStatus(bool? isOccupied)
         {
-            if (isOccupied == null)
-            {
-                tables = tableController.GetAllTables();
-            }
-            else
-            {
-                tables = tableController.GetTablesByOccupationStatus(isOccupied.Value);
-            }
+            tables = isOccupied == null
+                ? tableController.GetAllTables()
+                : tableController.GetTablesByOccupationStatus(isOccupied.Value);
+
             DisplayTables();
         }
     }
