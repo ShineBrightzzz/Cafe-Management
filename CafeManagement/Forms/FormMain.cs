@@ -22,9 +22,9 @@ namespace CafeManagement.Forms
         {
             var products = new List<Product>
             {
-                new Product("SP01", "Cà phê đen", "CF", 15000, 20000, 10, "https://caphenguyenchat.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-song-lau-khoe-manh-hon-cach-nao-3-1024x1024.png"),
-                new Product("SP02", "Trà sữa", "TS", 22000, 30000, 5, "Images/trasua.jpg"),
-                new Product("SP03", "Sinh tố bơ", "ST", 25000, 35000, 8, "Images/sinhtobo.jpg")
+                new Product("SP01", "Cà phê đen", "CF", 15000, 20000, "https://caphenguyenchat.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-song-lau-khoe-manh-hon-cach-nao-3-1024x1024.png"),
+                new Product("SP02", "Trà sữa", "TS", 22000, 30000, "Images/trasua.jpg"),
+                new Product("SP03", "Sinh tố bơ", "ST", 25000, 35000, "Images/sinhtobo.jpg")
             };
 
             mainPanel.Controls.Clear();

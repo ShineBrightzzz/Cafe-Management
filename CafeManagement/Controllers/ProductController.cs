@@ -13,15 +13,15 @@ namespace CafeManagement.Controllers
             productService = new ProductService();
         }
 
-        public bool AddProduct(string id, string name, string typeId, double importPrice, double salePrice, int quantity, string image)
+        public bool AddProduct(string id, string name, string type, double importPrice, double salePrice, string image)
         {
-            var product = new Product(id, name, typeId, importPrice, salePrice, quantity, image);
+            var product = new Product(id, name, type, importPrice, salePrice, image);
             return productService.AddProduct(product);
         }
 
-        public bool UpdateProduct(string id, string name, string typeId, double importPrice, double salePrice, int quantity, string image)
+        public bool UpdateProduct(string id, string name, string type, double importPrice, double salePrice, string image)
         {
-            var product = new Product(id, name, typeId, importPrice, salePrice, quantity, image);
+            var product = new Product(id, name, type, importPrice, salePrice, image);
             return productService.UpdateProduct(product);
         }
 

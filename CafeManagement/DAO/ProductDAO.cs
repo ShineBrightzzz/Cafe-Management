@@ -10,8 +10,8 @@ namespace CafeManagement.DAO
     {
         public void AddProduct(Product product)
         {
-            string sql = "INSERT INTO products (id, name, type_id, import_price, sale_price, quantity, image) " +
-                         "VALUES (@id, @name, @type_id, @import_price, @sale_price, @quantity, @image)";
+            string sql = "INSERT INTO products (id, name, type, import_price, sale_price, image) " +
+                         "VALUES (@id, @name, @type, @import_price, @sale_price, @image)";
             try
             {
                 using (SqlConnection conn = DBConnect.GetConnection())
@@ -21,10 +21,9 @@ namespace CafeManagement.DAO
                     {
                         cmd.Parameters.AddWithValue("@id", product.getId());
                         cmd.Parameters.AddWithValue("@name", product.getName());
-                        cmd.Parameters.AddWithValue("@type_id", product.getTypeId());
+                        cmd.Parameters.AddWithValue("@type", product.getType());
                         cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
                         cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
-                        cmd.Parameters.AddWithValue("@quantity", product.getQuantity());
                         cmd.Parameters.AddWithValue("@image", product.getImage());
                         cmd.ExecuteNonQuery();
                     }
@@ -32,14 +31,14 @@ namespace CafeManagement.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi thêm sản phẩm: " + ex.Message);
+                Console.WriteLine("Error adding product: " + ex.Message);
             }
         }
 
         public void UpdateProduct(Product product)
         {
-            string sql = "UPDATE products SET name = @name, type_id = @type_id, import_price = @import_price, " +
-                         "sale_price = @sale_price, quantity = @quantity, image = @image WHERE id = @id";
+            string sql = "UPDATE products SET name = @name, type = @type, import_price = @import_price, " +
+                         "sale_price = @sale_price, image = @image WHERE id = @id";
             try
             {
                 using (SqlConnection conn = DBConnect.GetConnection())
@@ -49,10 +48,9 @@ namespace CafeManagement.DAO
                     {
                         cmd.Parameters.AddWithValue("@id", product.getId());
                         cmd.Parameters.AddWithValue("@name", product.getName());
-                        cmd.Parameters.AddWithValue("@type_id", product.getTypeId());
+                        cmd.Parameters.AddWithValue("@type", product.getType());
                         cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
                         cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
-                        cmd.Parameters.AddWithValue("@quantity", product.getQuantity());
                         cmd.Parameters.AddWithValue("@image", product.getImage());
                         cmd.ExecuteNonQuery();
                     }
@@ -147,10 +145,9 @@ namespace CafeManagement.DAO
             return new Product(
                 reader["id"].ToString(),
                 reader["name"].ToString(),
-                reader["type_id"].ToString(),
+                reader["type"].ToString(),
                 Convert.ToDouble(reader["import_price"]),
                 Convert.ToDouble(reader["sale_price"]),
-                Convert.ToInt32(reader["quantity"]),
                 reader["image"].ToString()
             );
         }

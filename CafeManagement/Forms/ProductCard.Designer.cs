@@ -22,46 +22,48 @@
             this.lblPrice = new Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
+            //            // pictureBox
             // 
-            // pictureBox
-            // 
-            this.pictureBox.Location = new Point(10, 10);
+            this.pictureBox.Dock = DockStyle.Top;
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new Size(250, 150);
-            this.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.pictureBox.Size = new Size(180, 140);
+            this.pictureBox.Margin = new Padding(0);
+            this.pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
             // lblName
             // 
-            this.lblName.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            this.lblName.Location = new Point(10, 170);
+            this.lblName.Dock = DockStyle.Top;
+            this.lblName.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new Size(250, 25);
+            this.lblName.Size = new Size(180, 40);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "Tên sản phẩm";
             this.lblName.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblName.Padding = new Padding(5, 5, 5, 0);
             // 
             // lblPrice
             // 
+            this.lblPrice.Dock = DockStyle.Top;
             this.lblPrice.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            this.lblPrice.Location = new Point(10, 200);
             this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new Size(250, 25);
+            this.lblPrice.Size = new Size(180, 30);
             this.lblPrice.TabIndex = 2;
             this.lblPrice.Text = "Giá";
+            this.lblPrice.ForeColor = Color.Red;
             this.lblPrice.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // ProductCard
+            //            // ProductCard
             // 
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BorderStyle = BorderStyle.FixedSingle;
-            this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblPrice);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.pictureBox);
             this.Name = "ProductCard";
-            this.Size = new Size(270, 240);
+            this.Size = new Size(180, 220);
+            this.BackColor = Color.White;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
         }

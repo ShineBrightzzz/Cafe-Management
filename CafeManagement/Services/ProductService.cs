@@ -20,34 +20,29 @@ namespace CafeManagement.Services
             {
                 if (string.IsNullOrEmpty(product.getId()) ||
                     string.IsNullOrEmpty(product.getName()) ||
-                    string.IsNullOrEmpty(product.getTypeId()))
+                    string.IsNullOrEmpty(product.getType()))
                 {
-                    throw new ArgumentException("Vui lòng nhập đầy đủ thông tin sản phẩm (ID, Tên, Loại).");
+                    throw new ArgumentException("Please provide complete product information (ID, Name, Type).");
                 }
 
-                if (product.getImportPrice() < 0 || product.getSalePrice() < 0 || product.getQuantity() < 0)
+                if (product.getImportPrice() < 0 || product.getSalePrice() < 0)
                 {
-                    throw new ArgumentException("Giá nhập, giá bán và số lượng không được âm.");
+                    throw new ArgumentException("Import price and sale price cannot be negative.");
                 }
 
                 Product existing = productDAO.GetProductById(product.getId());
                 if (existing != null)
                 {
-                    Console.WriteLine("ID sản phẩm đã tồn tại.");
+                    Console.WriteLine("Product ID already exists.");
                     return false;
                 }
 
                 productDAO.AddProduct(product);
                 return true;
             }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Lỗi: {ex.Message}");
-                return false;
-            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi không xác định: {ex.Message}");
+                Console.WriteLine("Error adding product: " + ex.Message);
                 return false;
             }
         }
@@ -58,7 +53,7 @@ namespace CafeManagement.Services
             {
                 if (string.IsNullOrEmpty(product.getId()) ||
                     string.IsNullOrEmpty(product.getName()) ||
-                    string.IsNullOrEmpty(product.getTypeId()))
+                    string.IsNullOrEmpty(product.getType()))
                 {
                     throw new ArgumentException("Vui lòng nhập đầy đủ thông tin sản phẩm (ID, Tên, Loại).");
                 }
