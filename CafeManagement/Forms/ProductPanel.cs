@@ -79,13 +79,14 @@ namespace CafeManagement.Forms
             
             foreach (Product product in products)
             {
+                // Replace existing product display logic with ProductCard
                 ProductCard productCard = new ProductCard(product);
                 productCard.Width = 180;
                 productCard.Height = 220;
                 productCard.Margin = new Padding(10);
                 productCard.Click += ProductCard_Click;
                 productCard.Tag = product;
-                
+
                 productsFlowLayout.Controls.Add(productCard);
             }
         }

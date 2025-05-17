@@ -16,6 +16,7 @@ namespace CafeManagement.Forms
         private void OrderForm_Load(object sender, EventArgs e)
         {
             LoadTablePanel();
+
         }
 
         private void LoadTablePanel()
@@ -25,6 +26,13 @@ namespace CafeManagement.Forms
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(tablePanel);
+        }
+
+        private void LoadInvoicePanel()
+        {
+            InvoicePanel invoicePanel = new InvoicePanel(selectedTable);
+            invoicesPanel.Controls.Clear();
+            invoicePanel.Controls.Add(invoicePanel);
         }
 
         private void LoadProductPanel(Table selectedTable)

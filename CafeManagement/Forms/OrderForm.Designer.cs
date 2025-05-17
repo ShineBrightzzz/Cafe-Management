@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            flowLayoutPanel2 = new FlowLayoutPanel();
+            invoicesPanel = new FlowLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            mainPanel = new FlowLayoutPanel();
             btnTable = new Button();
             btnMenu = new Button();
+            mainPanel = new FlowLayoutPanel();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,13 +45,13 @@
             panel1.Size = new Size(1082, 61);
             panel1.TabIndex = 2;
             // 
-            // flowLayoutPanel2
+            // invoicesPanel
             // 
-            flowLayoutPanel2.Dock = DockStyle.Right;
-            flowLayoutPanel2.Location = new Point(746, 61);
-            flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(336, 670);
-            flowLayoutPanel2.TabIndex = 4;
+            invoicesPanel.Dock = DockStyle.Right;
+            invoicesPanel.Location = new Point(746, 61);
+            invoicesPanel.Name = "invoicesPanel";
+            invoicesPanel.Size = new Size(336, 670);
+            invoicesPanel.TabIndex = 4;
             // 
             // flowLayoutPanel1
             // 
@@ -63,6 +63,36 @@
             flowLayoutPanel1.Size = new Size(746, 46);
             flowLayoutPanel1.TabIndex = 6;
             // 
+            // btnTable
+            // 
+            btnTable.BackColor = Color.LightBlue;
+            btnTable.FlatAppearance.BorderSize = 0;
+            btnTable.FlatStyle = FlatStyle.Flat;
+            btnTable.Font = new Font("Arial", 10F, FontStyle.Bold);
+            btnTable.ForeColor = Color.White;
+            btnTable.Location = new Point(3, 3);
+            btnTable.Name = "btnTable";
+            btnTable.Size = new Size(154, 37);
+            btnTable.TabIndex = 0;
+            btnTable.Text = "Bàn";
+            btnTable.UseVisualStyleBackColor = false;
+            btnTable.Click += btnTable_Click;
+            // 
+            // btnMenu
+            // 
+            btnMenu.BackColor = Color.LightBlue;
+            btnMenu.FlatAppearance.BorderSize = 0;
+            btnMenu.FlatStyle = FlatStyle.Flat;
+            btnMenu.Font = new Font("Arial", 10F, FontStyle.Bold);
+            btnMenu.ForeColor = Color.White;
+            btnMenu.Location = new Point(163, 3);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(154, 37);
+            btnMenu.TabIndex = 0;
+            btnMenu.Text = "Thực đơn";
+            btnMenu.UseVisualStyleBackColor = false;
+            btnMenu.Click += btnMenu_Click;
+            // 
             // mainPanel
             // 
             mainPanel.Dock = DockStyle.Fill;
@@ -71,36 +101,6 @@
             mainPanel.Size = new Size(746, 624);
             mainPanel.TabIndex = 7;
             // 
-            // btnTable
-            // 
-            btnTable.Location = new Point(3, 3);
-            btnTable.Name = "btnTable";
-            btnTable.Size = new Size(154, 37);
-            btnTable.TabIndex = 0;
-            btnTable.Text = "Bàn";
-            btnTable.UseVisualStyleBackColor = true;
-            btnTable.Click += btnTable_Click;
-            btnTable.BackColor = Color.LightBlue;
-            btnTable.FlatStyle = FlatStyle.Flat;
-            btnTable.Font = new Font("Arial", 10, FontStyle.Bold);
-            btnTable.ForeColor = Color.White;
-            btnTable.FlatAppearance.BorderSize = 0;
-            // 
-            // btnMenu
-            // 
-            btnMenu.Location = new Point(163, 3);
-            btnMenu.Name = "btnMenu";
-            btnMenu.Size = new Size(154, 37);
-            btnMenu.TabIndex = 0;
-            btnMenu.Text = "Thực đơn";
-            btnMenu.UseVisualStyleBackColor = true;
-            btnMenu.Click += btnMenu_Click;
-            btnMenu.BackColor = Color.LightBlue;
-            btnMenu.FlatStyle = FlatStyle.Flat;
-            btnMenu.Font = new Font("Arial", 10, FontStyle.Bold);
-            btnMenu.ForeColor = Color.White;
-            btnMenu.FlatAppearance.BorderSize = 0;
-            // 
             // OrderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -108,7 +108,7 @@
             ClientSize = new Size(1082, 731);
             Controls.Add(mainPanel);
             Controls.Add(flowLayoutPanel1);
-            Controls.Add(flowLayoutPanel2);
+            Controls.Add(invoicesPanel);
             Controls.Add(panel1);
             Name = "OrderForm";
             Text = "OrderForm";
@@ -120,7 +120,7 @@
         #endregion
 
         private Panel panel1;
-        private FlowLayoutPanel flowLayoutPanel2;
+        private FlowLayoutPanel invoicesPanel;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnTable;
         private Button btnMenu;
