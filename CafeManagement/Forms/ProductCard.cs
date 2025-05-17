@@ -45,6 +45,16 @@ namespace CafeManagement.Forms
             lblName.Text = _product.getName();
             lblPrice.Text = $"{_product.getSalePrice():N0} đ";
 
+            // Enable click events for child controls
+            pictureBox.Click += (s, e) => this.OnClick(e);
+            lblName.Click += (s, e) => this.OnClick(e);
+            lblPrice.Click += (s, e) => this.OnClick(e);
+            
+            // Set cursor for child controls
+            pictureBox.Cursor = Cursors.Hand;
+            lblName.Cursor = Cursors.Hand;
+            lblPrice.Cursor = Cursors.Hand;
+
             string imagePath = _product.getImage();            
             try
             {

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CafeManagement.Entities;
 using CafeManagement.Controllers;
 using System.Collections.Generic;
+using CafeManagement.Entities; // Added to reference the Product class
 
 namespace CafeManagement.Forms
 {
@@ -12,13 +13,16 @@ namespace CafeManagement.Forms
         private Table selectedTable;
         private ProductController productController;
         private FlowLayoutPanel productsFlowLayout;
-        
+
+        public event Action<Product> ProductSelected;
+
         public ProductPanel(Table table)
         {
             InitializeComponent();
             selectedTable = table;
             productController = new ProductController();
             InitializeProductPanel();
+            LoadProducts();
         }
 
         private void InitializeProductPanel()
@@ -55,9 +59,6 @@ namespace CafeManagement.Forms
             // Add controls to main panel
             this.Controls.Add(productsFlowLayout);
             this.Controls.Add(headerPanel);
-            
-            // Load products
-            LoadProducts();
         }
         
         private void LoadProducts()
@@ -91,16 +92,16 @@ namespace CafeManagement.Forms
             }
         }
         
+        private void OnProductSelected(Product product)
+        {
+            ProductSelected?.Invoke(product);
+        }
+
         private void ProductCard_Click(object sender, EventArgs e)
         {
             if (sender is ProductCard productCard && productCard.Tag is Product product)
             {
-                MessageBox.Show($"Bạn đã chọn: {product.getName()}\nGiá: {product.getSalePrice():N0} đ", 
-                    "Thông tin sản phẩm", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Information);
-                
-                // Ở đây bạn có thể mở form thêm sản phẩm vào hóa đơn hoặc xử lý logic khác
+                ProductSelected?.Invoke(product);
             }
         }
        

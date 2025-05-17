@@ -28,40 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            actionPanel = new FlowLayoutPanel();
-            invoicesPanel = new FlowLayoutPanel();
+            panel1 = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            button1 = new Button();
+            button2 = new Button();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // actionPanel
+            // panel1
             // 
-            actionPanel.Dock = DockStyle.Bottom;
-            actionPanel.Location = new Point(0, 508);
-            actionPanel.Name = "actionPanel";
-            actionPanel.Size = new Size(374, 100);
-            actionPanel.TabIndex = 0;
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button1);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 531);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(374, 77);
+            panel1.TabIndex = 0;
             // 
-            // invoicesPanel
+            // flowLayoutPanel1
             // 
-            invoicesPanel.Dock = DockStyle.Fill;
-            invoicesPanel.Location = new Point(0, 0);
-            invoicesPanel.Name = "invoicesPanel";
-            invoicesPanel.Size = new Size(374, 508);
-            invoicesPanel.TabIndex = 1;
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(374, 531);
+            flowLayoutPanel1.TabIndex = 1;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(3, 19);
+            button1.Name = "button1";
+            button1.Size = new Size(178, 46);
+            button1.TabIndex = 0;
+            button1.Text = "Thanh toán";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(187, 19);
+            button2.Name = "button2";
+            button2.Size = new Size(178, 46);
+            button2.TabIndex = 0;
+            button2.Text = "Thông báo";
+            button2.UseVisualStyleBackColor = true;
             // 
             // InvoicePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(invoicesPanel);
-            Controls.Add(actionPanel);
+            Controls.Add(flowLayoutPanel1);
+            Controls.Add(panel1);
             Name = "InvoicePanel";
             Size = new Size(374, 608);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private FlowLayoutPanel actionPanel;
-        private FlowLayoutPanel invoicesPanel;
+        private Panel panel1;
+        private Button button2;
+        private Button button1;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -7,6 +7,7 @@ namespace CafeManagement.Forms
     public partial class OrderForm : Form
     {
         private Table selectedTable;
+        private InvoicePanel invoicePanel;
 
         public OrderForm()
         {
@@ -16,7 +17,7 @@ namespace CafeManagement.Forms
         private void OrderForm_Load(object sender, EventArgs e)
         {
             LoadTablePanel();
-
+            LoadInvoicePanel();
         }
 
         private void LoadTablePanel()
@@ -30,14 +31,18 @@ namespace CafeManagement.Forms
 
         private void LoadInvoicePanel()
         {
-            InvoicePanel invoicePanel = new InvoicePanel(selectedTable);
-            invoicesPanel.Controls.Clear();
-            invoicePanel.Controls.Add(invoicePanel);
+            if (selectedTable != null)
+            {
+                invoicePanel = new InvoicePanel(selectedTable);
+                invoicesPanel.Controls.Clear();
+                invoicesPanel.Controls.Add(invoicePanel);
+            }
         }
 
         private void LoadProductPanel(Table selectedTable)
         {
             ProductPanel productPanel = new ProductPanel(selectedTable);
+            productPanel.ProductSelected += ProductPanel_ProductSelected;
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(productPanel);
@@ -46,10 +51,16 @@ namespace CafeManagement.Forms
         private void TablePanel_TableSelected(object sender, Table selectedTable)
         {
             this.selectedTable = selectedTable;
-            ProductPanel productPanel = new ProductPanel(selectedTable);
+            LoadProductPanel(selectedTable);
+            LoadInvoicePanel();
+        }
 
-            mainPanel.Controls.Clear();
-            mainPanel.Controls.Add(productPanel);
+        private void ProductPanel_ProductSelected(Product selectedProduct)
+        {
+            if (invoicePanel != null && selectedProduct != null)
+            {
+                invoicePanel.AddProduct(selectedProduct);
+            }
         }
 
         private void btnTable_Click(object sender, EventArgs e)
@@ -59,7 +70,10 @@ namespace CafeManagement.Forms
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            LoadProductPanel(selectedTable);
+            if (selectedTable != null)
+            {
+                LoadProductPanel(selectedTable);
+            }
         }
     }
 }
