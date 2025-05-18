@@ -5,24 +5,38 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CafeManagement.Forms.Employee
 {
-    public partial class ThemNV : Form
+    public partial class SuaNV : Form
     {
-        public ThemNV()
+        public SuaNV(string maNV, string tenNV, string diachi, string gioitinh, string ngaysinh, string sdt)
         {
             InitializeComponent();
+
+            txtMaNhanVien.Text = maNV;
+            txtTenNhanVien.Text = tenNV;
+            txtDiaChi.Text = diachi;
+            if (gioitinh == "Nam")
+            {
+                rdoNam.Checked = true;
+            }
+            else rdoNu.Checked = true;
+            mskNgaySinh.Text = ngaysinh;
+            mskSoDienThoai.Text = sdt;
         }
 
+        DataTable tblNV;
+        private void SuaNV_Load(object sender, EventArgs e)
+        {
 
+        }
 
         private void btnXacNhan_Click(object sender, EventArgs e)
         {
+            string sql;
             string gender;
             if (rdoNam.Checked == true)
             {
@@ -30,11 +44,9 @@ namespace CafeManagement.Forms.Employee
             }
             else gender = "Nữ";
 
-            string sql;
             if (txtMaNhanVien.Text == "")
             {
-                MessageBox.Show("Bạn phải nhập mã nhân viên", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMaNhanVien.Focus();
+                MessageBox.Show("Bạn chưa chọn bản ghi nào", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (txtTenNhanVien.Text == "")
@@ -55,11 +67,6 @@ namespace CafeManagement.Forms.Employee
                 mskSoDienThoai.Focus();
                 return;
             }
-            //if (!Regex.IsMatch(mskSoDienThoai.Text, @"^\d{10,11}$"))
-            //{
-            //    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
             if (mskNgaySinh.Text == "  /  /")
             {
                 MessageBox.Show("Bạn phải nhập ngày sinh", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -77,28 +84,8 @@ namespace CafeManagement.Forms.Employee
             {
                 MessageBox.Show("Ban phai nhap giới tính", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            sql = "SELECT id FROM employees WHERE id=N'" + txtMaNhanVien.Text.Trim() + "'";
-            if (Functions.checkkey(sql))
-            {
-                MessageBox.Show("Mã khách này đã có, bạn phải nhập mã khác", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMaNhanVien.Focus();
-                txtMaNhanVien.Text = "";
-                return;
-            }
-            sql = "INSERT INTO employees(id, name, address, gender, date_of_birth,phone) VALUES (N'" + txtMaNhanVien.Text + "',N'" + txtTenNhanVien.Text + "',N'" + txtDiaChi.Text + "',N'" + gender + "',N'" + Functions.ConvertDateTime(mskNgaySinh.Text) + "',N'" + mskSoDienThoai.Text + "')";
+            sql = "UPDATE employees SET name=N'" + txtTenNhanVien.Text.ToString() + "',address=N'" + txtDiaChi.Text.ToString() + "',gender=N'" + gender + "',date_of_birth=N'" + Functions.ConvertDateTime(mskNgaySinh.Text) + "',phone=N'" + mskSoDienThoai.Text.ToString() + "' WHERE id=N'" + txtMaNhanVien.Text + "'";
             Functions.RunSql(sql);
-            MessageBox.Show("Thêm nhân viên thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ThemNV_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnHuy_Click(object sender, EventArgs e)
