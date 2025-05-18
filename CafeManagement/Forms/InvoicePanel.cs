@@ -11,8 +11,7 @@ using CafeManagement.Entities; // Ensure the correct Table type is referenced
 
 namespace CafeManagement.Forms
 {
-    public partial class InvoicePanel : UserControl
-    {
+    public partial class InvoicePanel : UserControl    {
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
 
@@ -42,20 +41,20 @@ namespace CafeManagement.Forms
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.WrapContents = false;
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Padding = new Padding(10);
-            flowLayoutPanel1.BackColor = Color.White;
-
-            // Set header style
+            flowLayoutPanel1.Padding = new Padding(10);            flowLayoutPanel1.BackColor = Color.White;            // Set header panel background color
             panel1.BackColor = Color.FromArgb(51, 51, 51);
-            Label headerLabel = new Label
+        }
+
+        private void UpdateTotalPrice()
+        {
+            double total = 0;
+            foreach (var item in _invoiceItems)
             {
-                Text = "Hóa Đơn",
-                ForeColor = Color.White,
-                Font = new Font("Arial", 12, FontStyle.Bold),
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panel1.Controls.Add(headerLabel);
+                int quantity = int.Parse(item.GetQuantity());
+                double price = item.GetPrice();
+                total += quantity * price;
+            }
+            lblTotalPrice.Text = $"Tổng tiền: {total:N0} đ";
         }
 
         private void LoadInvoiceItems()
@@ -66,6 +65,7 @@ namespace CafeManagement.Forms
                 item.Width = flowLayoutPanel1.Width - 20; // Account for padding
                 flowLayoutPanel1.Controls.Add(item);
             }
+            UpdateTotalPrice();
         }
 
         // Add a method to add a product directly
@@ -89,8 +89,15 @@ namespace CafeManagement.Forms
         {
             _invoiceItems.Add(item);
             item.Width = flowLayoutPanel1.Width - 20; // Account for padding
+            item.QuantityChanged += InvoiceItem_QuantityChanged;  // Subscribe to quantity changes
             flowLayoutPanel1.Controls.Add(item);
             flowLayoutPanel1.ScrollControlIntoView(item);
+            UpdateTotalPrice();
+        }
+
+        private void InvoiceItem_QuantityChanged(object sender, EventArgs e)
+        {
+            UpdateTotalPrice();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CafeManagement.Forms
     public partial class InvoiceItem : UserControl
     {
         private Product _product;
+        public event EventHandler QuantityChanged;
 
         public InvoiceItem()
         {
@@ -65,12 +66,26 @@ namespace CafeManagement.Forms
             this.Controls.Add(shadowPanel);
         }
 
+        public string GetQuantity()
+        {
+            return lblQuantity.Text;
+        }
+
+        public double GetPrice()
+        {
+            return _product.getSalePrice();
+        }
+
         private void btnSubtract_Click(object sender, EventArgs e)
         {
             int quantity = Convert.ToInt32(lblQuantity.Text);
-            quantity--;
-            lblQuantity.Text = quantity.ToString();
-            lblTotalPrice.Text = $"{_product.getSalePrice() * quantity:N0} đ";
+            if (quantity > 1)
+            {
+                quantity--;
+                lblQuantity.Text = quantity.ToString();
+                lblTotalPrice.Text = $"{_product.getSalePrice() * quantity:N0} đ";
+                QuantityChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -80,6 +95,7 @@ namespace CafeManagement.Forms
             lblQuantity.Text = quantity.ToString();
             
             lblTotalPrice.Text = $"{_product.getSalePrice() * quantity:N0} đ";
+            QuantityChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

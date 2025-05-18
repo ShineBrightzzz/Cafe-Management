@@ -32,22 +32,24 @@
             button2 = new Button();
             button1 = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            lblTotalPrice = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(lblTotalPrice);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 699);
+            panel1.Location = new Point(0, 618);
             panel1.Name = "panel1";
-            panel1.Size = new Size(986, 77);
+            panel1.Size = new Size(523, 143);
             panel1.TabIndex = 0;
             // 
             // button2
             // 
-            button2.Location = new Point(187, 19);
+            button2.Location = new Point(326, 81);
             button2.Name = "button2";
             button2.Size = new Size(178, 46);
             button2.TabIndex = 0;
@@ -56,7 +58,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(3, 19);
+            button1.Location = new Point(22, 81);
             button1.Name = "button1";
             button1.Size = new Size(178, 46);
             button1.TabIndex = 0;
@@ -68,8 +70,17 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(986, 699);
+            flowLayoutPanel1.Size = new Size(523, 618);
             flowLayoutPanel1.TabIndex = 1;
+            // 
+            // lblTotalPrice
+            // 
+            lblTotalPrice.AutoSize = true;
+            lblTotalPrice.Location = new Point(278, 31);
+            lblTotalPrice.Name = "lblTotalPrice";
+            lblTotalPrice.Size = new Size(38, 15);
+            lblTotalPrice.TabIndex = 1;
+            lblTotalPrice.Text = "label1";
             // 
             // InvoicePanel
             // 
@@ -78,8 +89,9 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             Name = "InvoicePanel";
-            Size = new Size(986, 776);
+            Size = new Size(523, 761);
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -89,5 +101,6 @@
         private Button button2;
         private Button button1;
         private FlowLayoutPanel flowLayoutPanel1;
+        private Label lblTotalPrice;
     }
 }
