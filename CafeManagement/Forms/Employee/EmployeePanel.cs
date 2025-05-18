@@ -8,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CafeManagement.Forms
+namespace CafeManagement.Forms.Employee
 {
-    public partial class FrmCustomer : Form
+    public partial class EmployeePanel : UserControl
     {
-        public FrmCustomer()
+        public EmployeePanel()
         {
             InitializeComponent();
         }
 
-        private void FrmCustomer_Load(object sender, EventArgs e)
+        private void btnThem_Click(object sender, EventArgs e)
         {
-
+            ThemNV addEmployee = new ThemNV();
+            addEmployee.Show();
         }
     }
 }

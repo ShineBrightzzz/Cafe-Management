@@ -29,90 +29,102 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            panel2 = new Panel();
+            panelSidebar = new Panel();
             button7 = new Button();
-            button6 = new Button();
-            button5 = new Button();
-            button4 = new Button();
+            btnCustomer = new Button();
+            btnSaleInvoice = new Button();
+            btnHoaDonNhap = new Button();
             button3 = new Button();
             btnMenu = new Button();
             button1 = new Button();
             mainPanel = new FlowLayoutPanel();
-            panel2.SuspendLayout();
+            panelSidebar.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1086, 77);
+            panel1.Size = new Size(1241, 103);
             panel1.TabIndex = 0;
             // 
-            // panel2
+            // panelSidebar
             // 
-            panel2.Controls.Add(button7);
-            panel2.Controls.Add(button6);
-            panel2.Controls.Add(button5);
-            panel2.Controls.Add(button4);
-            panel2.Controls.Add(button3);
-            panel2.Controls.Add(btnMenu);
-            panel2.Controls.Add(button1);
-            panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(0, 77);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(200, 706);
-            panel2.TabIndex = 1;
+            panelSidebar.Controls.Add(button7);
+            panelSidebar.Controls.Add(btnCustomer);
+            panelSidebar.Controls.Add(btnSaleInvoice);
+            panelSidebar.Controls.Add(btnHoaDonNhap);
+            panelSidebar.Controls.Add(button3);
+            panelSidebar.Controls.Add(btnMenu);
+            panelSidebar.Controls.Add(button1);
+            panelSidebar.Dock = DockStyle.Left;
+            panelSidebar.Location = new Point(0, 103);
+            panelSidebar.Margin = new Padding(3, 4, 3, 4);
+            panelSidebar.Name = "panelSidebar";
+            panelSidebar.Size = new Size(229, 941);
+            panelSidebar.TabIndex = 1;
             // 
             // button7
             // 
-            button7.Location = new Point(0, 320);
+            button7.Location = new Point(0, 427);
+            button7.Margin = new Padding(3, 4, 3, 4);
             button7.Name = "button7";
-            button7.Size = new Size(200, 44);
+            button7.Size = new Size(229, 59);
             button7.TabIndex = 0;
             button7.Text = "Nhân viên";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
-            // button6
+            // btnCustomer
             // 
-            button6.Location = new Point(0, 270);
-            button6.Name = "button6";
-            button6.Size = new Size(200, 44);
-            button6.TabIndex = 0;
-            button6.Text = "Khách hàng";
-            button6.UseVisualStyleBackColor = true;
+            btnCustomer.Location = new Point(0, 360);
+            btnCustomer.Margin = new Padding(3, 4, 3, 4);
+            btnCustomer.Name = "btnCustomer";
+            btnCustomer.Size = new Size(229, 59);
+            btnCustomer.TabIndex = 0;
+            btnCustomer.Text = "Khách hàng";
+            btnCustomer.UseVisualStyleBackColor = true;
+            btnCustomer.Click += btnCustomer_Click;
             // 
-            // button5
+            // btnSaleInvoice
             // 
-            button5.Location = new Point(0, 211);
-            button5.Name = "button5";
-            button5.Size = new Size(200, 44);
-            button5.TabIndex = 0;
-            button5.Text = "Hóa đơn bán";
-            button5.UseVisualStyleBackColor = true;
+            btnSaleInvoice.Location = new Point(0, 281);
+            btnSaleInvoice.Margin = new Padding(3, 4, 3, 4);
+            btnSaleInvoice.Name = "btnSaleInvoice";
+            btnSaleInvoice.Size = new Size(229, 59);
+            btnSaleInvoice.TabIndex = 0;
+            btnSaleInvoice.Text = "Hóa đơn bán";
+            btnSaleInvoice.UseVisualStyleBackColor = true;
+            btnSaleInvoice.Click += btnSaleInvoice_Click;
             // 
-            // button4
+            // btnHoaDonNhap
             // 
-            button4.Location = new Point(0, 150);
-            button4.Name = "button4";
-            button4.Size = new Size(200, 44);
-            button4.TabIndex = 0;
-            button4.Text = "Hóa đơn nhập";
-            button4.UseVisualStyleBackColor = true;
+            btnHoaDonNhap.Location = new Point(0, 200);
+            btnHoaDonNhap.Margin = new Padding(3, 4, 3, 4);
+            btnHoaDonNhap.Name = "btnHoaDonNhap";
+            btnHoaDonNhap.Size = new Size(229, 59);
+            btnHoaDonNhap.TabIndex = 0;
+            btnHoaDonNhap.Text = "Hóa đơn nhập";
+            btnHoaDonNhap.UseVisualStyleBackColor = true;
+            btnHoaDonNhap.Click += btnHoaDonNhap_Click;
             // 
             // button3
             // 
-            button3.Location = new Point(0, 100);
+            button3.Location = new Point(0, 133);
+            button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
-            button3.Size = new Size(200, 44);
+            button3.Size = new Size(229, 59);
             button3.TabIndex = 0;
             button3.UseVisualStyleBackColor = true;
             // 
             // btnMenu
             // 
-            btnMenu.Location = new Point(0, 50);
+            btnMenu.Location = new Point(0, 67);
+            btnMenu.Margin = new Padding(3, 4, 3, 4);
             btnMenu.Name = "btnMenu";
-            btnMenu.Size = new Size(200, 44);
+            btnMenu.Size = new Size(229, 59);
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
             btnMenu.UseVisualStyleBackColor = true;
@@ -121,42 +133,46 @@
             // button1
             // 
             button1.Location = new Point(0, 0);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(200, 44);
+            button1.Size = new Size(229, 59);
             button1.TabIndex = 0;
             button1.Text = "Trang chủ";
             button1.UseVisualStyleBackColor = true;
             // 
             // mainPanel
             // 
-            mainPanel.Dock = DockStyle.Fill;
-            mainPanel.Location = new Point(200, 77);
+            mainPanel.Dock = DockStyle.Bottom;
+            mainPanel.Location = new Point(229, 103);
+            mainPanel.Margin = new Padding(3, 4, 3, 4);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(886, 706);
+            mainPanel.Size = new Size(1012, 941);
             mainPanel.TabIndex = 2;
+            mainPanel.Paint += mainPanel_Paint;
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1086, 783);
+            ClientSize = new Size(1241, 1044);
             Controls.Add(mainPanel);
-            Controls.Add(panel2);
+            Controls.Add(panelSidebar);
             Controls.Add(panel1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormMain";
             Text = "FormMain";
-            panel2.ResumeLayout(false);
+            panelSidebar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private Panel panel2;
+        private Panel panelSidebar;
         private Button button1;
-        private Button button6;
-        private Button button5;
-        private Button button4;
+        private Button btnCustomer;
+        private Button btnSaleInvoice;
+        private Button btnHoaDonNhap;
         private Button button3;
         private Button btnMenu;
         private Button button7;
