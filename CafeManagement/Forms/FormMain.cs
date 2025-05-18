@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Entities;
 using CafeManagement.Forms.Employee;
+using CafeManagement.Forms.ImportVoice;
+using CafeManagement.Forms.SaleInvoice;
 
 namespace CafeManagement.Forms
 {
@@ -68,6 +70,24 @@ namespace CafeManagement.Forms
             employeePanel.Margin = new Padding(10, 0, 0, 0);
             employeePanel.BringToFront();
             mainPanel.Controls.Add(employeePanel);
+        }
+
+        private void btnSaleInvoice_Click(object sender, EventArgs e)
+        {
+            SaleInvoicePanel saleInvoicePanel = new SaleInvoicePanel();
+            mainPanel.Controls.Clear();
+            saleInvoicePanel.Margin = new Padding(10, 0, 0, 0);
+            saleInvoicePanel.BringToFront();
+            mainPanel.Controls.Add(saleInvoicePanel);
+        }
+
+        private void btnHoaDonNhap_Click(object sender, EventArgs e)
+        {
+            ImportVoicePanel importInvoicePanel = new ImportVoicePanel();
+            mainPanel.Controls.Clear();
+            importInvoicePanel.Margin = new Padding(10, 0, 0, 0);
+            importInvoicePanel.BringToFront();
+            mainPanel.Controls.Add(importInvoicePanel);
         }
     }
 }

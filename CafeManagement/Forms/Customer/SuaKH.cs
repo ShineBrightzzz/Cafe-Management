@@ -42,19 +42,24 @@ MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenKhachHang.Focus();
                 return;
             }
-         
+
             if (mskSoDienThoai.Text == "(   )     -")
             {
-                MessageBox.Show("Bạn phải nhập số điện thoại", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Bạn phải nhập số điện thoại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 mskSoDienThoai.Focus();
                 return;
             }
             sql = "UPDATE customers SET  name=N'" + txtTenKhachHang.Text.Trim().ToString()
-                  + "',phone=N'" + mskSoDienThoai.Text.ToString() +  "' WHERE id=N'" + txtMaKhachHang.Text + "'";
+                  + "',phone=N'" + mskSoDienThoai.Text.ToString() + "' WHERE id=N'" + txtMaKhachHang.Text + "'";
             Functions.RunSql(sql);
         }
 
         private void SuaKH_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnHuy_Click(object sender, EventArgs e)
         {
 
         }

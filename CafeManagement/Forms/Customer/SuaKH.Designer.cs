@@ -93,6 +93,7 @@
             btnHuy.TabIndex = 38;
             btnHuy.Text = "Hủy";
             btnHuy.UseVisualStyleBackColor = true;
+            btnHuy.Click += btnHuy_Click;
             // 
             // txtMaKhachHang
             // 

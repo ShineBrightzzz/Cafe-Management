@@ -32,8 +32,8 @@
             panelSidebar = new Panel();
             button7 = new Button();
             btnCustomer = new Button();
-            button5 = new Button();
-            button4 = new Button();
+            btnSaleInvoice = new Button();
+            btnHoaDonNhap = new Button();
             button3 = new Button();
             btnMenu = new Button();
             button1 = new Button();
@@ -54,8 +54,8 @@
             // 
             panelSidebar.Controls.Add(button7);
             panelSidebar.Controls.Add(btnCustomer);
-            panelSidebar.Controls.Add(button5);
-            panelSidebar.Controls.Add(button4);
+            panelSidebar.Controls.Add(btnSaleInvoice);
+            panelSidebar.Controls.Add(btnHoaDonNhap);
             panelSidebar.Controls.Add(button3);
             panelSidebar.Controls.Add(btnMenu);
             panelSidebar.Controls.Add(button1);
@@ -88,25 +88,27 @@
             btnCustomer.UseVisualStyleBackColor = true;
             btnCustomer.Click += btnCustomer_Click;
             // 
-            // button5
+            // btnSaleInvoice
             // 
-            button5.Location = new Point(0, 281);
-            button5.Margin = new Padding(3, 4, 3, 4);
-            button5.Name = "button5";
-            button5.Size = new Size(229, 59);
-            button5.TabIndex = 0;
-            button5.Text = "Hóa đơn bán";
-            button5.UseVisualStyleBackColor = true;
+            btnSaleInvoice.Location = new Point(0, 281);
+            btnSaleInvoice.Margin = new Padding(3, 4, 3, 4);
+            btnSaleInvoice.Name = "btnSaleInvoice";
+            btnSaleInvoice.Size = new Size(229, 59);
+            btnSaleInvoice.TabIndex = 0;
+            btnSaleInvoice.Text = "Hóa đơn bán";
+            btnSaleInvoice.UseVisualStyleBackColor = true;
+            btnSaleInvoice.Click += btnSaleInvoice_Click;
             // 
-            // button4
+            // btnHoaDonNhap
             // 
-            button4.Location = new Point(0, 200);
-            button4.Margin = new Padding(3, 4, 3, 4);
-            button4.Name = "button4";
-            button4.Size = new Size(229, 59);
-            button4.TabIndex = 0;
-            button4.Text = "Hóa đơn nhập";
-            button4.UseVisualStyleBackColor = true;
+            btnHoaDonNhap.Location = new Point(0, 200);
+            btnHoaDonNhap.Margin = new Padding(3, 4, 3, 4);
+            btnHoaDonNhap.Name = "btnHoaDonNhap";
+            btnHoaDonNhap.Size = new Size(229, 59);
+            btnHoaDonNhap.TabIndex = 0;
+            btnHoaDonNhap.Text = "Hóa đơn nhập";
+            btnHoaDonNhap.UseVisualStyleBackColor = true;
+            btnHoaDonNhap.Click += btnHoaDonNhap_Click;
             // 
             // button3
             // 
@@ -169,8 +171,8 @@
         private Panel panelSidebar;
         private Button button1;
         private Button btnCustomer;
-        private Button button5;
-        private Button button4;
+        private Button btnSaleInvoice;
+        private Button btnHoaDonNhap;
         private Button button3;
         private Button btnMenu;
         private Button button7;

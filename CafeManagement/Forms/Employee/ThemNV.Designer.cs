@@ -155,6 +155,7 @@
             btnHuy.TabIndex = 34;
             btnHuy.Text = "Hủy";
             btnHuy.UseVisualStyleBackColor = true;
+            btnHuy.Click += btnHuy_Click;
             // 
             // chkNam
             // 

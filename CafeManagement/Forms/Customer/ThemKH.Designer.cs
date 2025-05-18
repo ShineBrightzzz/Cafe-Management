@@ -65,7 +65,6 @@
             txtTenKhachHang.Name = "txtTenKhachHang";
             txtTenKhachHang.Size = new Size(354, 27);
             txtTenKhachHang.TabIndex = 23;
-        //    txtTenKhachHang.TextChanged += this.txtTenKhachHang_TextChanged;
             // 
             // txtMaKhachHang
             // 
@@ -73,7 +72,7 @@
             txtMaKhachHang.Name = "txtMaKhachHang";
             txtMaKhachHang.Size = new Size(356, 27);
             txtMaKhachHang.TabIndex = 22;
-         //   txtMaKhachHang.TextChanged += this.txtMaKhachHang_TextChanged;
+            txtMaKhachHang.TextChanged += txtMaKhachHang_TextChanged;
             // 
             // label9
             // 
@@ -83,7 +82,6 @@
             label9.Size = new Size(112, 20);
             label9.TabIndex = 21;
             label9.Text = "Mã khách hàng:";
-        //    label9.Click += this.label9_Click;
             // 
             // label8
             // 
@@ -93,7 +91,6 @@
             label8.Size = new Size(114, 20);
             label8.TabIndex = 20;
             label8.Text = "Tên khách hàng:";
-           // label8.Click += this.label8_Click;
             // 
             // label7
             // 
@@ -103,7 +100,6 @@
             label7.Size = new Size(104, 20);
             label7.TabIndex = 19;
             label7.Text = "Số điện thoại: ";
-        //    label7.Click += this.label7_Click;
             // 
             // label1
             // 
@@ -122,7 +118,6 @@
             mskSoDienThoai.Name = "mskSoDienThoai";
             mskSoDienThoai.Size = new Size(356, 27);
             mskSoDienThoai.TabIndex = 27;
-         //   mskSoDienThoai.MaskInputRejected += this.mskSoDienThoai_MaskInputRejected;
             // 
             // ThemKH
             // 

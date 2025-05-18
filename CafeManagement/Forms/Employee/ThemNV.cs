@@ -19,7 +19,7 @@ namespace CafeManagement.Forms.Employee
             InitializeComponent();
         }
 
- 
+
 
         private void btnXacNhan_Click(object sender, EventArgs e)
         {
@@ -73,7 +73,7 @@ namespace CafeManagement.Forms.Employee
                 mskNgaySinh.Focus();
                 return;
             }
-            if (chkNam.Checked==false && chkNu.Checked == false)
+            if (chkNam.Checked == false && chkNu.Checked == false)
             {
                 MessageBox.Show("Ban phai nhap giới tính", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -85,10 +85,15 @@ namespace CafeManagement.Forms.Employee
                 txtMaNhanVien.Text = "";
                 return;
             }
-            sql = "INSERT INTO employees(id, name, address, gender, date_of_birth,phone) VALUES (N'" + txtMaNhanVien.Text + "',N'" + txtTenNhanVien.Text + "',N'" + txtDiaChi.Text + "',N'"+gender+"',N'"+ Functions.ConvertDateTime(mskNgaySinh.Text) + "',N'"+mskSoDienThoai.Text+"')";
+            sql = "INSERT INTO employees(id, name, address, gender, date_of_birth,phone) VALUES (N'" + txtMaNhanVien.Text + "',N'" + txtTenNhanVien.Text + "',N'" + txtDiaChi.Text + "',N'" + gender + "',N'" + Functions.ConvertDateTime(mskNgaySinh.Text) + "',N'" + mskSoDienThoai.Text + "')";
             Functions.RunSql(sql);
             MessageBox.Show("Thêm nhân viên thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
+        }
+
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

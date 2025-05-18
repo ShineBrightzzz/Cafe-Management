@@ -70,5 +70,10 @@ namespace CafeManagement.Forms.Customer
         {
 
         }
+
+        private void txtMaKhachHang_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
