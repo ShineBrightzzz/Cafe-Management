@@ -34,10 +34,10 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             lblTotalPrice = new Label();
             panel1.SuspendLayout();
-            SuspendLayout();
-            // 
+            SuspendLayout();            // 
             // panel1
             // 
+            panel1.BackColor = SystemColors.Control;
             panel1.Controls.Add(lblTotalPrice);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
@@ -71,16 +71,17 @@
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(523, 618);
-            flowLayoutPanel1.TabIndex = 1;
-            // 
+            flowLayoutPanel1.TabIndex = 1;            // 
             // lblTotalPrice
             // 
             lblTotalPrice.AutoSize = true;
-            lblTotalPrice.Location = new Point(278, 31);
+            lblTotalPrice.Font = new Font("Arial", 12F, FontStyle.Bold);
+            lblTotalPrice.ForeColor = Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            lblTotalPrice.Location = new Point(22, 31);
             lblTotalPrice.Name = "lblTotalPrice";
-            lblTotalPrice.Size = new Size(38, 15);
+            lblTotalPrice.Size = new Size(120, 19);
             lblTotalPrice.TabIndex = 1;
-            lblTotalPrice.Text = "label1";
+            lblTotalPrice.Text = "Tổng tiền: 0 đ";
             // 
             // InvoicePanel
             // 

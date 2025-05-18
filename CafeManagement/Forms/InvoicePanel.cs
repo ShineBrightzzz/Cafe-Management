@@ -40,9 +40,8 @@ namespace CafeManagement.Forms
             // Configure the flowLayoutPanel1 from Designer
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.WrapContents = false;
-            flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Padding = new Padding(10);            flowLayoutPanel1.BackColor = Color.White;            // Set header panel background color
-            panel1.BackColor = Color.FromArgb(51, 51, 51);
+            flowLayoutPanel1.AutoScroll = true;            flowLayoutPanel1.Padding = new Padding(10);
+            flowLayoutPanel1.BackColor = Color.White;
         }
 
         private void UpdateTotalPrice()
