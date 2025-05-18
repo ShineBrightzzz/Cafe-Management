@@ -142,36 +142,6 @@ namespace CafeManagement.DAO
             return products;
         }
 
-        public List<Product> GetProductByName(string name)
-        {
-            List<Product> products = new List<Product>();
-            string sql = "SELECT * FROM products WHERE name LIKE @name";
-            try
-            {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@name", "%" + name + "%");
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                products.Add(MapReaderToProduct(reader));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi tìm sản phẩm theo tên: " + ex.Message);
-            }
-
-            return products;
-        }
-
         private Product MapReaderToProduct(SqlDataReader reader)
         {
             return new Product(
