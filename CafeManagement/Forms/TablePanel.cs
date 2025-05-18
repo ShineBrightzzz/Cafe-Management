@@ -99,6 +99,7 @@ namespace CafeManagement.Forms
                 Margin = new Padding(10),
                 BackColor = table.getIsOccupied() ? occupiedColor : availableColor,
                 Tag = table,
+                Cursor = Cursors.Hand
             };
 
             // Add table name label
@@ -108,24 +109,20 @@ namespace CafeManagement.Forms
                 Font = new Font("Arial", 10, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = false,
-                Width = tablePanel.Width - 10, // Adjust width to fit within the panel
+                Width = tablePanel.Width - 10,
                 Height = 30,
-                Location = new Point(5, 10), // Add padding to center the label
-                AutoEllipsis = true // Enable ellipsis for long text
+                Location = new Point(5, 10),
+                AutoEllipsis = true,
+                Tag = table, // Pass the table to the label's tag
+                Cursor = Cursors.Hand // Make the label show hand cursor too
             };
+
+            // Make label click trigger the table selection directly
+            nameLabel.Click += (s, e) => TableSelected?.Invoke(this, table);
+            
             tablePanel.Controls.Add(nameLabel);
 
-            // Update background color logic
-            if (table.getIsOccupied())
-            {
-                tablePanel.BackColor = Color.LightBlue; // Light blue for occupied tables
-            }
-            else
-            {
-                tablePanel.BackColor = Color.White; // Default white for empty tables
-            }
-
-            // Add click event handler
+            // Add click event handler to panel
             tablePanel.Click += TablePanel_Click;
 
             // Add border

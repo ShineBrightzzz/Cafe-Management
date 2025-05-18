@@ -74,7 +74,7 @@ namespace CafeManagement.Forms
             {
                 _currentOrder = pendingOrders[0]; // Get the first pending order
                 var orderDetails = _orderService.GetOrderDetails(_currentOrder.getId());
-                
+
                 foreach (var detail in orderDetails)
                 {
                     Product product = _productDAO.GetProductById(detail.getProductId());
@@ -122,7 +122,7 @@ namespace CafeManagement.Forms
 
                 InvoiceItem invoiceItem = new InvoiceItem(product);
                 invoiceItem.ItemDeleted += InvoiceItem_Deleted;
-                
+
                 // Add to database first
                 if (_orderService.AddOrderDetail(_currentOrder.getId(), product, 1))
                 {
@@ -188,6 +188,39 @@ namespace CafeManagement.Forms
                     _invoiceItems.Clear();
                     flowLayoutPanel1.Controls.Clear();
                     UpdateTotalPrice();
+                }
+            }
+        }
+
+        private void btnPayment_Click(object sender, EventArgs e)
+        {
+            if (_currentOrder == null)
+            {
+                MessageBox.Show("Không có hóa đơn cần thanh toán", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Xác nhận thanh toán hóa đơn?\nTổng tiền: {lblTotalPrice.Text}",
+                "Xác nhận thanh toán",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                if (_orderService.CompleteOrder(_currentOrder.getId()))
+                {
+                    MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // CompleteOrder() already handles:
+                    // 1. Update order status to completed
+                    // 2. Update table status to available if no other pending orders
+                    // 3. Clear the order and items from memory
+                    CompleteOrder(); // This method will clear the UI
+                }
+                else
+                {
+                    MessageBox.Show("Có lỗi xảy ra khi thanh toán!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

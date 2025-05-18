@@ -10,12 +10,14 @@ namespace CafeManagement.Services
         private OrderDAO _orderDAO;
         private OrderDetailDAO _orderDetailDAO;
         private ProductDAO _productDAO;
+        private TableDAO _tableDAO;
 
         public OrderService()
         {
             _orderDAO = new OrderDAO();
             _orderDetailDAO = new OrderDetailDAO();
             _productDAO = new ProductDAO();
+            _tableDAO = new TableDAO();
         }
 
         public Order CreateNewOrder(string tableId)
@@ -23,6 +25,15 @@ namespace CafeManagement.Services
             string orderId = Guid.NewGuid().ToString();
             Order order = new Order(orderId, tableId, "pending", DateTime.Now);
             _orderDAO.AddOrder(order);
+            
+            // Cập nhật trạng thái bàn thành đã có người
+            Table table = _tableDAO.GetTableById(tableId);
+            if (table != null)
+            {
+                table.setIsOccupied(true);
+                _tableDAO.UpdateTable(table);
+            }
+            
             return order;
         }
 
@@ -76,8 +87,27 @@ namespace CafeManagement.Services
         {
             try
             {
-                _orderDAO.UpdateOrderStatus(orderId, "completed");
-                return true;
+                // Lấy thông tin order để biết table_id
+                Order order = _orderDAO.GetOrderById(orderId);
+                if (order != null)
+                {
+                    // Cập nhật trạng thái order
+                    _orderDAO.UpdateOrderStatus(orderId, "completed");
+
+                    // Kiểm tra xem bàn còn order pending nào khác không
+                    var pendingOrders = _orderDAO.GetOrdersByTableId(order.getTableId());
+                    if (pendingOrders.Count <= 1) // Nếu chỉ có order hiện tại (sắp complete) thì set bàn thành trống
+                    {
+                        Table table = _tableDAO.GetTableById(order.getTableId());
+                        if (table != null)
+                        {
+                            table.setIsOccupied(false);
+                            _tableDAO.UpdateTable(table);
+                        }
+                    }
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {

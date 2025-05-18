@@ -29,23 +29,35 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
-            flowLayoutPanel1 = new FlowLayoutPanel();
             lblTotalPrice = new Label();
+            button2 = new Button();
+            btnPayment = new Button();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panel1.SuspendLayout();
-            SuspendLayout();            // 
+            SuspendLayout();
+            // 
             // panel1
             // 
             panel1.BackColor = SystemColors.Control;
             panel1.Controls.Add(lblTotalPrice);
             panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(btnPayment);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 618);
             panel1.Name = "panel1";
             panel1.Size = new Size(523, 143);
             panel1.TabIndex = 0;
+            // 
+            // lblTotalPrice
+            // 
+            lblTotalPrice.AutoSize = true;
+            lblTotalPrice.Font = new Font("Arial", 12F, FontStyle.Bold);
+            lblTotalPrice.ForeColor = Color.FromArgb(51, 51, 51);
+            lblTotalPrice.Location = new Point(22, 31);
+            lblTotalPrice.Name = "lblTotalPrice";
+            lblTotalPrice.Size = new Size(114, 19);
+            lblTotalPrice.TabIndex = 1;
+            lblTotalPrice.Text = "Tổng tiền: 0 đ";
             // 
             // button2
             // 
@@ -56,14 +68,15 @@
             button2.Text = "Thông báo";
             button2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnPayment
             // 
-            button1.Location = new Point(22, 81);
-            button1.Name = "button1";
-            button1.Size = new Size(178, 46);
-            button1.TabIndex = 0;
-            button1.Text = "Thanh toán";
-            button1.UseVisualStyleBackColor = true;
+            btnPayment.Location = new Point(22, 81);
+            btnPayment.Name = "btnPayment";
+            btnPayment.Size = new Size(178, 46);
+            btnPayment.TabIndex = 0;
+            btnPayment.Text = "Thanh toán";
+            btnPayment.UseVisualStyleBackColor = true;
+            btnPayment.Click += btnPayment_Click;
             // 
             // flowLayoutPanel1
             // 
@@ -71,17 +84,7 @@
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(523, 618);
-            flowLayoutPanel1.TabIndex = 1;            // 
-            // lblTotalPrice
-            // 
-            lblTotalPrice.AutoSize = true;
-            lblTotalPrice.Font = new Font("Arial", 12F, FontStyle.Bold);
-            lblTotalPrice.ForeColor = Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            lblTotalPrice.Location = new Point(22, 31);
-            lblTotalPrice.Name = "lblTotalPrice";
-            lblTotalPrice.Size = new Size(120, 19);
-            lblTotalPrice.TabIndex = 1;
-            lblTotalPrice.Text = "Tổng tiền: 0 đ";
+            flowLayoutPanel1.TabIndex = 1;
             // 
             // InvoicePanel
             // 
@@ -100,7 +103,7 @@
 
         private Panel panel1;
         private Button button2;
-        private Button button1;
+        private Button btnPayment;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label lblTotalPrice;
     }
