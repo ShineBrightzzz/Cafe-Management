@@ -41,8 +41,8 @@
             mskSoDienThoai = new MaskedTextBox();
             btnXacNhan = new Button();
             btnHuy = new Button();
-            chkNam = new CheckBox();
-            chkNu = new CheckBox();
+            rdoNu = new RadioButton();
+            rdoNam = new RadioButton();
             SuspendLayout();
             // 
             // mskNgaySinh
@@ -156,33 +156,36 @@
             btnHuy.Text = "Hủy";
             btnHuy.UseVisualStyleBackColor = true;
             // 
-            // chkNam
+            // rdoNu
             // 
-            chkNam.AutoSize = true;
-            chkNam.Location = new Point(203, 233);
-            chkNam.Name = "chkNam";
-            chkNam.Size = new Size(63, 24);
-            chkNam.TabIndex = 35;
-            chkNam.Text = "Nam";
-            chkNam.UseVisualStyleBackColor = true;
+            rdoNu.AutoSize = true;
+            rdoNu.Location = new Point(361, 233);
+            rdoNu.Name = "rdoNu";
+            rdoNu.Size = new Size(50, 24);
+            rdoNu.TabIndex = 37;
+            rdoNu.TabStop = true;
+            rdoNu.Text = "Nữ";
+            rdoNu.UseVisualStyleBackColor = true;
             // 
-            // chkNu
+            // rdoNam
             // 
-            chkNu.AutoSize = true;
-            chkNu.Location = new Point(350, 234);
-            chkNu.Name = "chkNu";
-            chkNu.Size = new Size(51, 24);
-            chkNu.TabIndex = 36;
-            chkNu.Text = "Nữ";
-            chkNu.UseVisualStyleBackColor = true;
+            rdoNam.AutoSize = true;
+            rdoNam.Location = new Point(203, 229);
+            rdoNam.Name = "rdoNam";
+            rdoNam.Size = new Size(62, 24);
+            rdoNam.TabIndex = 38;
+            rdoNam.TabStop = true;
+            rdoNam.Text = "Nam";
+            rdoNam.UseVisualStyleBackColor = true;
+            rdoNam.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // ThemNV
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1038, 599);
-            Controls.Add(chkNu);
-            Controls.Add(chkNam);
+            Controls.Add(rdoNam);
+            Controls.Add(rdoNu);
             Controls.Add(btnHuy);
             Controls.Add(btnXacNhan);
             Controls.Add(mskNgaySinh);
@@ -217,7 +220,7 @@
         private MaskedTextBox mskSoDienThoai;
         private Button btnXacNhan;
         private Button btnHuy;
-        private CheckBox chkNam;
-        private CheckBox chkNu;
+        private RadioButton rdoNu;
+        private RadioButton rdoNam;
     }
 }
