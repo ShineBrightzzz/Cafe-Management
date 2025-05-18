@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Entities;
+using CafeManagement.Forms.Employee;
 
 namespace CafeManagement.Forms
 {
@@ -36,5 +37,37 @@ namespace CafeManagement.Forms
             }
         }
 
+        private void btnCustomer_Click(object sender, EventArgs e)
+        {
+            CustomerPanel customerPanel = new CustomerPanel();
+            mainPanel.Controls.Clear();
+
+            customerPanel.Margin = new Padding(10, 0, 0, 0);
+            //customerPanel.Location = new Point(panelSidebar.Right, 0);
+            //customerPanel.Size = new Size(this.mainPanel.Width - panelSidebar.Width, this.mainPanel.Height);
+            //customerPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            //this.Resize += (s, e) =>
+            //{
+            //    customerPanel.Size = new Size(this.mainPanel.Width - panelSidebar.Width, this.mainPanel.Height);
+            //};
+
+            customerPanel.BringToFront();
+            mainPanel.Controls.Add(customerPanel);
+
+        }
+
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            EmployeePanel employeePanel = new EmployeePanel();
+            mainPanel.Controls.Clear();
+            employeePanel.Margin = new Padding(10, 0, 0, 0);
+            employeePanel.BringToFront();
+            mainPanel.Controls.Add(employeePanel);
+        }
     }
 }

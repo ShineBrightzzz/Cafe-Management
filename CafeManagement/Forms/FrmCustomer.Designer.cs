@@ -29,20 +29,14 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            btnThem = new Button();
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
             txtMaKhachHang = new TextBox();
             txtTenKhachHang = new TextBox();
             txtSoDIenThoai = new TextBox();
-            dgridKhachHang = new DataGridView();
-            btnDong = new Button();
-            btnBoQua = new Button();
-            btnLuu = new Button();
-            btnXoa = new Button();
-            btnSua = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgridKhachHang).BeginInit();
+            button1 = new Button();
+            btnHuy = new Button();
             SuspendLayout();
             // 
             // label1
@@ -51,18 +45,8 @@
             label1.Font = new Font("Segoe UI", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(134, 29);
             label1.Name = "label1";
-            label1.Size = new Size(458, 50);
+            label1.Size = new Size(0, 50);
             label1.TabIndex = 0;
-            label1.Text = "DANH MỤC KHÁCH HÀNG";
-            // 
-            // btnThem
-            // 
-            btnThem.Location = new Point(21, 544);
-            btnThem.Name = "btnThem";
-            btnThem.Size = new Size(107, 41);
-            btnThem.TabIndex = 3;
-            btnThem.Text = "Thêm ";
-            btnThem.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -112,86 +96,43 @@
             txtSoDIenThoai.Size = new Size(354, 27);
             txtSoDIenThoai.TabIndex = 15;
             // 
-            // dgridKhachHang
+            // button1
             // 
-            dgridKhachHang.BackgroundColor = SystemColors.Control;
-            dgridKhachHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridKhachHang.Location = new Point(3, 288);
-            dgridKhachHang.Name = "dgridKhachHang";
-            dgridKhachHang.RowHeadersWidth = 51;
-            dgridKhachHang.Size = new Size(798, 228);
-            dgridKhachHang.TabIndex = 16;
+            button1.Location = new Point(177, 290);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 16;
+            button1.Text = "Xác nhận";
+            button1.UseVisualStyleBackColor = true;
             // 
-            // btnDong
+            // btnHuy
             // 
-            btnDong.Location = new Point(655, 546);
-            btnDong.Name = "btnDong";
-            btnDong.Size = new Size(96, 34);
-            btnDong.TabIndex = 17;
-            btnDong.Text = "Đóng";
-            btnDong.UseVisualStyleBackColor = true;
-            // 
-            // btnBoQua
-            // 
-            btnBoQua.Location = new Point(525, 546);
-            btnBoQua.Name = "btnBoQua";
-            btnBoQua.Size = new Size(96, 34);
-            btnBoQua.TabIndex = 18;
-            btnBoQua.Text = "Bỏ qua";
-            btnBoQua.UseVisualStyleBackColor = true;
-            // 
-            // btnLuu
-            // 
-            btnLuu.Location = new Point(393, 544);
-            btnLuu.Name = "btnLuu";
-            btnLuu.Size = new Size(101, 41);
-            btnLuu.TabIndex = 19;
-            btnLuu.Text = "Lưu";
-            btnLuu.UseVisualStyleBackColor = true;
-            // 
-            // btnXoa
-            // 
-            btnXoa.Location = new Point(269, 544);
-            btnXoa.Name = "btnXoa";
-            btnXoa.Size = new Size(101, 41);
-            btnXoa.TabIndex = 20;
-            btnXoa.Text = "Xóa";
-            btnXoa.UseCompatibleTextRendering = true;
-            btnXoa.UseVisualStyleBackColor = true;
-            // 
-            // btnSua
-            // 
-            btnSua.Location = new Point(146, 544);
-            btnSua.Name = "btnSua";
-            btnSua.Size = new Size(103, 38);
-            btnSua.TabIndex = 21;
-            btnSua.Text = "Sửa";
-            btnSua.UseVisualStyleBackColor = true;
+            btnHuy.Location = new Point(312, 290);
+            btnHuy.Name = "btnHuy";
+            btnHuy.Size = new Size(94, 29);
+            btnHuy.TabIndex = 17;
+            btnHuy.Text = "Hủy";
+            btnHuy.UseVisualStyleBackColor = true;
             // 
             // FrmCustomer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Thistle;
-            ClientSize = new Size(804, 610);
-            Controls.Add(btnSua);
-            Controls.Add(btnXoa);
-            Controls.Add(btnLuu);
-            Controls.Add(btnBoQua);
-            Controls.Add(btnDong);
-            Controls.Add(dgridKhachHang);
+            ClientSize = new Size(689, 380);
+            Controls.Add(btnHuy);
+            Controls.Add(button1);
             Controls.Add(txtSoDIenThoai);
             Controls.Add(txtTenKhachHang);
             Controls.Add(txtMaKhachHang);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(btnThem);
             Controls.Add(label1);
             ForeColor = SystemColors.ActiveCaptionText;
             Name = "FrmCustomer";
             Text = "FrmCustomer";
-            ((System.ComponentModel.ISupportInitialize)dgridKhachHang).EndInit();
+            Load += FrmCustomer_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -201,7 +142,6 @@
         private Label label1;
         private TextBox textBox1;
         private MaskedTextBox maskedTextBox1;
-        private Button btnThem;
         private Label label2;
         private Label label3;
         private Label label4;
@@ -214,11 +154,7 @@
         private TextBox txtMaKhachHang;
         private TextBox txtTenKhachHang;
         private TextBox txtSoDIenThoai;
-        private DataGridView dgridKhachHang;
-        private Button btnDong;
-        private Button btnBoQua;
-        private Button btnLuu;
-        private Button btnXoa;
-        private Button btnSua;
+        private Button button1;
+        private Button btnHuy;
     }
 }

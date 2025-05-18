@@ -1,0 +1,159 @@
+﻿namespace CafeManagement.Forms.Customer
+{
+    partial class ThemKH
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            btnHuy = new Button();
+            btnXacNhan = new Button();
+            txtTenKhachHang = new TextBox();
+            txtMaKhachHang = new TextBox();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label1 = new Label();
+            mskSoDienThoai = new MaskedTextBox();
+            SuspendLayout();
+            // 
+            // btnHuy
+            // 
+            btnHuy.Location = new Point(418, 341);
+            btnHuy.Name = "btnHuy";
+            btnHuy.Size = new Size(94, 29);
+            btnHuy.TabIndex = 26;
+            btnHuy.Text = "Hủy";
+            btnHuy.UseVisualStyleBackColor = true;
+            btnHuy.Click += btnHuy_Click;
+            // 
+            // btnXacNhan
+            // 
+            btnXacNhan.Location = new Point(283, 341);
+            btnXacNhan.Name = "btnXacNhan";
+            btnXacNhan.Size = new Size(94, 29);
+            btnXacNhan.TabIndex = 25;
+            btnXacNhan.Text = "Xác nhận";
+            btnXacNhan.UseVisualStyleBackColor = true;
+            btnXacNhan.Click += btnXacNhan_Click;
+            // 
+            // txtTenKhachHang
+            // 
+            txtTenKhachHang.Location = new Point(283, 216);
+            txtTenKhachHang.Name = "txtTenKhachHang";
+            txtTenKhachHang.Size = new Size(354, 27);
+            txtTenKhachHang.TabIndex = 23;
+        //    txtTenKhachHang.TextChanged += this.txtTenKhachHang_TextChanged;
+            // 
+            // txtMaKhachHang
+            // 
+            txtMaKhachHang.Location = new Point(281, 162);
+            txtMaKhachHang.Name = "txtMaKhachHang";
+            txtMaKhachHang.Size = new Size(356, 27);
+            txtMaKhachHang.TabIndex = 22;
+         //   txtMaKhachHang.TextChanged += this.txtMaKhachHang_TextChanged;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(163, 162);
+            label9.Name = "label9";
+            label9.Size = new Size(112, 20);
+            label9.TabIndex = 21;
+            label9.Text = "Mã khách hàng:";
+        //    label9.Click += this.label9_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(163, 216);
+            label8.Name = "label8";
+            label8.Size = new Size(114, 20);
+            label8.TabIndex = 20;
+            label8.Text = "Tên khách hàng:";
+           // label8.Click += this.label8_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(163, 270);
+            label7.Name = "label7";
+            label7.Size = new Size(104, 20);
+            label7.TabIndex = 19;
+            label7.Text = "Số điện thoại: ";
+        //    label7.Click += this.label7_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(240, 80);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 50);
+            label1.TabIndex = 18;
+            label1.Click += label1_Click;
+            // 
+            // mskSoDienThoai
+            // 
+            mskSoDienThoai.Location = new Point(281, 270);
+            mskSoDienThoai.Mask = "(999) 000-0000";
+            mskSoDienThoai.Name = "mskSoDienThoai";
+            mskSoDienThoai.Size = new Size(356, 27);
+            mskSoDienThoai.TabIndex = 27;
+         //   mskSoDienThoai.MaskInputRejected += this.mskSoDienThoai_MaskInputRejected;
+            // 
+            // ThemKH
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(869, 466);
+            Controls.Add(mskSoDienThoai);
+            Controls.Add(btnHuy);
+            Controls.Add(btnXacNhan);
+            Controls.Add(txtTenKhachHang);
+            Controls.Add(txtMaKhachHang);
+            Controls.Add(label9);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(label1);
+            Name = "ThemKH";
+            Text = "ThemKH";
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Button btnHuy;
+        private Button btnXacNhan;
+        private TextBox txtTenKhachHang;
+        private TextBox txtMaKhachHang;
+        private Label label9;
+        private Label label8;
+        private Label label7;
+        private Label label1;
+        private MaskedTextBox mskSoDienThoai;
+    }
+}
