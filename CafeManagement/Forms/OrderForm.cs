@@ -61,11 +61,11 @@ namespace CafeManagement.Forms
             {
                 invoicePanel.AddProduct(selectedProduct);
             }
-        }
-
-        private void btnTable_Click(object sender, EventArgs e)
+        }        private void btnTable_Click(object sender, EventArgs e)
         {
+            this.selectedTable = null;
             LoadTablePanel();
+            LoadInvoicePanel();
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

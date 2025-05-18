@@ -55,11 +55,11 @@
             btnTable.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnTable.ForeColor = Color.White;
             btnTable.Location = new Point(3, 3);
-            btnTable.Name = "btnTable";
-            btnTable.Size = new Size(154, 37);
+            btnTable.Name = "btnTable";            btnTable.Size = new Size(154, 37);
             btnTable.TabIndex = 0;
             btnTable.Text = "Bàn";
             btnTable.UseVisualStyleBackColor = false;
+            btnTable.Click += btnTable_Click;
             // 
             // btnMenu
             // 
@@ -69,11 +69,11 @@
             btnMenu.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnMenu.ForeColor = Color.White;
             btnMenu.Location = new Point(163, 3);
-            btnMenu.Name = "btnMenu";
-            btnMenu.Size = new Size(154, 37);
+            btnMenu.Name = "btnMenu";            btnMenu.Size = new Size(154, 37);
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
             btnMenu.UseVisualStyleBackColor = false;
+            btnMenu.Click += btnMenu_Click;
             // 
             // invoicesPanel
             // 
