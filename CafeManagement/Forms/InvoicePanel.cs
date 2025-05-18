@@ -7,18 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CafeManagement.Entities; // Ensure the correct Table type is referenced
+using CafeManagement.Entities;
+using CafeManagement.Services;
+using CafeManagement.DAO;
 
 namespace CafeManagement.Forms
 {
-    public partial class InvoicePanel : UserControl    {
+    public partial class InvoicePanel : UserControl
+    {
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
+        private Order _currentOrder;
+        private OrderService _orderService;
+        private ProductDAO _productDAO;
 
         public InvoicePanel()
         {
             InitializeComponent();
             _invoiceItems = new List<InvoiceItem>();
+            _orderService = new OrderService();
+            _productDAO = new ProductDAO();
             InitializeLayout();
         }
 
@@ -27,8 +35,10 @@ namespace CafeManagement.Forms
             InitializeComponent();
             _table = table;
             _invoiceItems = new List<InvoiceItem>();
+            _orderService = new OrderService();
+            _productDAO = new ProductDAO();
             InitializeLayout();
-            // Additional initialization logic for the table can be added here
+            LoadPendingOrder(); // Load any pending order for this table
         }
 
         private void InitializeLayout()
@@ -40,7 +50,8 @@ namespace CafeManagement.Forms
             // Configure the flowLayoutPanel1 from Designer
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.WrapContents = false;
-            flowLayoutPanel1.AutoScroll = true;            flowLayoutPanel1.Padding = new Padding(10);
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.Padding = new Padding(10);
             flowLayoutPanel1.BackColor = Color.White;
         }
 
@@ -56,6 +67,31 @@ namespace CafeManagement.Forms
             lblTotalPrice.Text = $"Tổng tiền: {total:N0} đ";
         }
 
+        private void LoadPendingOrder()
+        {
+            var pendingOrders = _orderService.GetPendingOrdersByTable(_table.getId());
+            if (pendingOrders.Count > 0)
+            {
+                _currentOrder = pendingOrders[0]; // Get the first pending order
+                var orderDetails = _orderService.GetOrderDetails(_currentOrder.getId());
+                
+                foreach (var detail in orderDetails)
+                {
+                    Product product = _productDAO.GetProductById(detail.getProductId());
+                    if (product != null)
+                    {
+                        InvoiceItem invoiceItem = new InvoiceItem(product);
+                        // Set the quantity from order detail
+                        for (int i = 1; i < detail.getQuantity(); i++)
+                        {
+                            invoiceItem.IncreaseQuantity();
+                        }
+                        AddInvoiceItem(invoiceItem);
+                    }
+                }
+            }
+        }
+
         private void LoadInvoiceItems()
         {
             flowLayoutPanel1.Controls.Clear();
@@ -67,7 +103,6 @@ namespace CafeManagement.Forms
             UpdateTotalPrice();
         }
 
-        // Add a method to add a product directly
         public void AddProduct(Product product)
         {
             var result = MessageBox.Show(
@@ -79,8 +114,24 @@ namespace CafeManagement.Forms
 
             if (result == DialogResult.Yes)
             {
+                // Create new order if doesn't exist
+                if (_currentOrder == null)
+                {
+                    _currentOrder = _orderService.CreateNewOrder(_table.getId());
+                }
+
                 InvoiceItem invoiceItem = new InvoiceItem(product);
-                AddInvoiceItem(invoiceItem);
+                invoiceItem.ItemDeleted += InvoiceItem_Deleted;
+                
+                // Add to database first
+                if (_orderService.AddOrderDetail(_currentOrder.getId(), product, 1))
+                {
+                    AddInvoiceItem(invoiceItem);
+                }
+                else
+                {
+                    MessageBox.Show("Không thể thêm món vào đơn hàng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -94,9 +145,51 @@ namespace CafeManagement.Forms
             UpdateTotalPrice();
         }
 
+        private void InvoiceItem_Deleted(object sender, EventArgs e)
+        {
+            if (sender is InvoiceItem item)
+            {
+                _invoiceItems.Remove(item);
+                if (_currentOrder != null)
+                {
+                    _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
+                }
+                UpdateTotalPrice();
+            }
+        }
+
         private void InvoiceItem_QuantityChanged(object sender, EventArgs e)
         {
+            if (sender is InvoiceItem item && _currentOrder != null)
+            {
+                // Update the order detail with new quantity
+                _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
+                _orderService.AddOrderDetail(
+                    _currentOrder.getId(),
+                    item.GetProduct(),
+                    int.Parse(item.GetQuantity())
+                );
+            }
             UpdateTotalPrice();
+        }
+
+        public Order GetCurrentOrder()
+        {
+            return _currentOrder;
+        }
+
+        public void CompleteOrder()
+        {
+            if (_currentOrder != null)
+            {
+                if (_orderService.CompleteOrder(_currentOrder.getId()))
+                {
+                    _currentOrder = null;
+                    _invoiceItems.Clear();
+                    flowLayoutPanel1.Controls.Clear();
+                    UpdateTotalPrice();
+                }
+            }
         }
     }
 }

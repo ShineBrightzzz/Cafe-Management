@@ -34,6 +34,7 @@
             btnAdd = new Button();
             lblTotalPrice = new Label();
             lblProductName = new Label();
+            btnDelete = new Button();
             SuspendLayout();
             // 
             // txtPrice
@@ -90,10 +91,21 @@
             lblProductName.TabIndex = 5;
             lblProductName.Text = "label1";
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(481, 15);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(23, 23);
+            btnDelete.TabIndex = 6;
+            btnDelete.Text = "X";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // InvoiceItem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnDelete);
             Controls.Add(lblProductName);
             Controls.Add(lblTotalPrice);
             Controls.Add(btnAdd);
@@ -116,5 +128,6 @@
         private Label lblProduct;
         private Label lblTotalPrice;
         private Label lblProductName;
+        private Button btnDelete;
     }
 }
