@@ -14,9 +14,15 @@ namespace CafeManagement.DAO
         public void AddImportInvoiceDetail(ImportInvoiceDetail importInvoiceDetail)
         {
             string sql = "INSERT INTO import_invoice_details (invoice_id, product_id, quantity, unit_price, discount, amount) VALUES (@id, @product, @quantity, @price, @discount, @amount)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", importInvoiceDetail.getImportInvoiceId());
@@ -32,15 +38,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("AddImportInvoiceDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
-
 
         public void UpdateImportInvoiceDetail(ImportInvoiceDetail detail)
         {
             string sql = "UPDATE import_invoice_details SET quantity = @quantity, unit_price = @price, discount = @discount, amount = @amount WHERE invoice_id = @invoiceId AND product_id = @productId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoiceId", detail.getImportInvoiceId());
@@ -49,7 +65,6 @@ namespace CafeManagement.DAO
                     cmd.Parameters.AddWithValue("@price", detail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", detail.getDiscount());
                     cmd.Parameters.AddWithValue("@amount", detail.getTotalPrice());
-                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -57,20 +72,29 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("UpdateImportInvoiceDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
-        // Xóa chi tiết hóa đơn nhập theo mã hóa đơn và sản phẩm
         public void DeleteImportInvoiceDetail(string invoiceId, string productId)
         {
             string sql = "DELETE FROM import_invoice_details WHERE invoice_id = @invoiceId AND product_id = @productId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
                     cmd.Parameters.AddWithValue("@productId", productId);
-                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -78,21 +102,29 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("DeleteImportInvoiceDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
-        // Lấy chi tiết hóa đơn nhập theo mã hóa đơn và sản phẩm
         public ImportInvoiceDetail GetImportInvoiceDetailById(string invoiceId, string productId)
         {
             string sql = "SELECT * FROM import_invoice_details WHERE invoice_id = @invoiceId AND product_id = @productId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
                     cmd.Parameters.AddWithValue("@productId", productId);
-                    conn.Open();
-
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -113,6 +145,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetImportInvoiceDetailById Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return null;
         }
 
@@ -120,12 +157,17 @@ namespace CafeManagement.DAO
         {
             List<ImportInvoiceDetail> details = new List<ImportInvoiceDetail>();
             string sql = "SELECT * FROM import_invoice_details";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -145,6 +187,11 @@ namespace CafeManagement.DAO
             catch (Exception ex)
             {
                 Console.WriteLine("GetAllImportInvoiceDetails Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
             return details;
         }

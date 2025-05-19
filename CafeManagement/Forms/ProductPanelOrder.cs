@@ -4,11 +4,10 @@ using System.Windows.Forms;
 using CafeManagement.Entities;
 using CafeManagement.Controllers;
 using System.Collections.Generic;
-using CafeManagement.Entities; // Added to reference the Product class
 
 namespace CafeManagement.Forms
 {
-    public partial class ProductPanel : UserControl
+    public partial class ProductPanelOrder : UserControl
     {
         private Table selectedTable;
         private ProductController productController;
@@ -16,7 +15,7 @@ namespace CafeManagement.Forms
 
         public event Action<Product> ProductSelected;
 
-        public ProductPanel(Table table)
+        public ProductPanelOrder(Table table)
         {
             InitializeComponent();
             selectedTable = table;

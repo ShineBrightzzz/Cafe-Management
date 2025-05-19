@@ -1,6 +1,6 @@
 ﻿namespace CafeManagement.Forms
 {
-    partial class ProductPanel
+    partial class ProductPanelOrder
     {
         /// <summary> 
         /// Required designer variable.

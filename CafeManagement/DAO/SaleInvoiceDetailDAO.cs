@@ -10,19 +10,24 @@ namespace CafeManagement.DAO
     {
         public void AddDetail(SaleInvoiceDetail detail)
         {
-            string sql = "INSERT INTO sale_invoice_details (invoice_id, product_id, quantity, unit_price, discount_percent, total) " +
-                         "VALUES (@invoice_id, @product_id, @quantity, @unit_price, @discount_percent, @total)";
+            string sql = "INSERT INTO sale_invoice_details (invoice_id, product_id, quantity, unit_price, discount) " +
+                         "VALUES (@invoice_id, @product_id, @quantity, @unit_price, @discount)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", detail.getInvoiceId());
                     cmd.Parameters.AddWithValue("@product_id", detail.getProductId());
                     cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
                     cmd.Parameters.AddWithValue("@unit_price", detail.getUnitPrice());
-                    cmd.Parameters.AddWithValue("@discount_percent", detail.getDiscountPercent());
-                    cmd.Parameters.AddWithValue("@total", detail.getTotal());
+                    cmd.Parameters.AddWithValue("@discount", detail.getDiscountPercent());
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -30,25 +35,34 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("AddDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
-
 
         public void UpdateDetail(SaleInvoiceDetail detail)
         {
             string sql = "UPDATE sale_invoice_details SET quantity = @quantity, unit_price = @unit_price, " +
-                         "discount_percent = @discount_percent, total = @total " +
+                         "discount = @discount" +
                          "WHERE invoice_id = @invoice_id AND product_id = @product_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", detail.getInvoiceId());
                     cmd.Parameters.AddWithValue("@product_id", detail.getProductId());
                     cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
                     cmd.Parameters.AddWithValue("@unit_price", detail.getUnitPrice());
-                    cmd.Parameters.AddWithValue("@discount_percent", detail.getDiscountPercent());
-                    cmd.Parameters.AddWithValue("@total", detail.getTotal());
+                    cmd.Parameters.AddWithValue("@discount", detail.getDiscountPercent());
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -56,15 +70,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("UpdateDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
-        // Xoá chi tiết hóa đơn
         public void DeleteDetail(string invoiceId, string productId)
         {
             string sql = "DELETE FROM sale_invoice_details WHERE invoice_id = @invoice_id AND product_id = @product_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
@@ -76,16 +100,26 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("DeleteDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
-        // Lấy chi tiết hóa đơn theo invoice_id
         public List<SaleInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
         {
             List<SaleInvoiceDetail> details = new List<SaleInvoiceDetail>();
             string sql = "SELECT * FROM sale_invoice_details WHERE invoice_id = @invoice_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
@@ -98,7 +132,7 @@ namespace CafeManagement.DAO
                                 reader["product_id"].ToString(),
                                 Convert.ToInt32(reader["quantity"]),
                                 Convert.ToDouble(reader["unit_price"]),
-                                Convert.ToDouble(reader["discount_percent"])
+                                Convert.ToDouble(reader["discount"])
                             ));
                         }
                     }
@@ -108,17 +142,27 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetDetailsByInvoiceId Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return details;
         }
 
-        // Lấy toàn bộ chi tiết của tất cả các hóa đơn
         public List<SaleInvoiceDetail> GetAllDetails()
         {
             List<SaleInvoiceDetail> details = new List<SaleInvoiceDetail>();
             string sql = "SELECT * FROM sale_invoice_details";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -130,7 +174,7 @@ namespace CafeManagement.DAO
                                 reader["product_id"].ToString(),
                                 Convert.ToInt32(reader["quantity"]),
                                 Convert.ToDouble(reader["unit_price"]),
-                                Convert.ToDouble(reader["discount_percent"])
+                                Convert.ToDouble(reader["discount"])
                             ));
                         }
                     }
@@ -139,6 +183,11 @@ namespace CafeManagement.DAO
             catch (Exception ex)
             {
                 Console.WriteLine("GetAllDetails Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
             return details;
         }

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CafeManagement.Entities
-{
-    public class ProductType
+{    public class ProductType
     {
         private string id;
         private string name;
@@ -16,18 +15,35 @@ namespace CafeManagement.Entities
             this.id = id;
             this.name = name;
         }
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        // Keep the old methods for compatibility
         public string getId()
         {
-            return id;
+            return Id;
         }
+
         public string getName()
         {
-            return name;
+            return Name;
         }
+
         public void setId(string id)
         {
-            this.id = id;
+            Id = id;
         }
+
         public void setName(string name)
         {
             this.name = name;

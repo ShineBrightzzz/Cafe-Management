@@ -14,9 +14,15 @@ namespace CafeManagement.DAO
         public void AddImportInvoice(ImportInvoice importInvoice)
         {
             string sql = "INSERT INTO import_invoices (id, import_date, employee_id, supplier_id, total_amount) VALUES (@id, @date, @employee, @supplier,@total)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", importInvoice.getImportInvoiceId());
@@ -31,15 +37,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("AddImportInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
-        //sửa thông tin hóa đơn nhập
         public void UpdateImportInvoice(ImportInvoice importInvoice)
         {
-            string sql = "UPDATE import_invoices SET import_date = @date,  employee_id = @employee, supplier_id = @supplier, total_amount = @total WHERE id = @id";
+            string sql = "UPDATE import_invoices SET import_date = @date, employee_id = @employee, supplier_id = @supplier, total_amount = @total WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", importInvoice.getImportInvoiceId());
@@ -54,14 +70,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("UpdateImportInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public void DeleteImportInvoice(string id)
         {
             string sql = "DELETE FROM import_invoices WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
@@ -72,14 +99,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("DeleteImportInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public ImportInvoice GetImportInvoiceById(string id)
         {
             string sql = "SELECT * FROM import_invoices WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
@@ -90,10 +128,9 @@ namespace CafeManagement.DAO
                             return new ImportInvoice(
                                 reader["id"].ToString(),
                                 Convert.ToDateTime(reader["import_date"]),
-                                reader["emplyee_id"].ToString(),
-                                reader["emplyee_id"].ToString(),
+                                reader["employee_id"].ToString(),
+                                reader["supplier_id"].ToString(),
                                 Convert.ToDouble(reader["total_amount"])
-
                             );
                         }
                     }
@@ -103,6 +140,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetImportInvoiceById Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return null;
         }
 
@@ -110,9 +152,15 @@ namespace CafeManagement.DAO
         {
             List<ImportInvoice> importInvoices = new List<ImportInvoice>();
             string sql = "SELECT * FROM import_invoices";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -122,8 +170,8 @@ namespace CafeManagement.DAO
                             importInvoices.Add(new ImportInvoice(
                                 reader["id"].ToString(),
                                 Convert.ToDateTime(reader["import_date"]),
-                                reader["emplyee_id"].ToString(),
-                                reader["emplyee_id"].ToString(),
+                                reader["employee_id"].ToString(),
+                                reader["supplier_id"].ToString(),
                                 Convert.ToDouble(reader["total_amount"])
                             ));
                         }
@@ -132,9 +180,13 @@ namespace CafeManagement.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetAllCustomers Error: " + ex.Message);
+                Console.WriteLine("GetAllImportInvoice Error: " + ex.Message);
             }
-
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return importInvoices;
         }
 
@@ -142,15 +194,18 @@ namespace CafeManagement.DAO
         {
             List<ImportInvoice> importInvoices = new List<ImportInvoice>();
             string sql = "SELECT * FROM import_invoices WHERE import_date = @date";
-
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@date", date);
-                    conn.Open();
-
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -170,7 +225,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetImportInvoicesByDate Error: " + ex.Message);
             }
-
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return importInvoices;
         }
     }

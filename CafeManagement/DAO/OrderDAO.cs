@@ -11,46 +11,62 @@ namespace CafeManagement.DAO
         public void AddOrder(Order order)
         {
             string sql = "INSERT INTO orders (id, table_id, status, order_date) VALUES (@id, @tableId, @status, @orderDate)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", order.getId());
-                        cmd.Parameters.AddWithValue("@tableId", order.getTableId());
-                        cmd.Parameters.AddWithValue("@status", order.getStatus());
-                        cmd.Parameters.AddWithValue("@orderDate", order.getOrderDate());
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", order.getId());
+                    cmd.Parameters.AddWithValue("@tableId", order.getTableId());
+                    cmd.Parameters.AddWithValue("@status", order.getStatus());
+                    cmd.Parameters.AddWithValue("@orderDate", order.getOrderDate());
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("AddOrder Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public void UpdateOrderStatus(string orderId, string status)
         {
             string sql = "UPDATE orders SET status = @status WHERE id = @orderId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@orderId", orderId);
-                        cmd.Parameters.AddWithValue("@status", status);
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("UpdateOrderStatus Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
 
@@ -58,25 +74,28 @@ namespace CafeManagement.DAO
         {
             List<Order> orders = new List<Order>();
             string sql = "SELECT * FROM orders WHERE table_id = @tableId AND status = 'pending'";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tableId", tableId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@tableId", tableId);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                orders.Add(new Order(
-                                    reader["id"].ToString(),
-                                    reader["table_id"].ToString(),
-                                    reader["status"].ToString(),
-                                    Convert.ToDateTime(reader["order_date"])
-                                ));
-                            }
+                            orders.Add(new Order(
+                                reader["id"].ToString(),
+                                reader["table_id"].ToString(),
+                                reader["status"].ToString(),
+                                Convert.ToDateTime(reader["order_date"])
+                            ));
                         }
                     }
                 }
@@ -85,31 +104,39 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetOrdersByTableId Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return orders;
         }
 
         public Order GetOrderById(string orderId)
         {
             string sql = "SELECT * FROM orders WHERE id = @orderId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@orderId", orderId);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                return new Order(
-                                    reader["id"].ToString(),
-                                    reader["table_id"].ToString(),
-                                    reader["status"].ToString(),
-                                    Convert.ToDateTime(reader["order_date"])
-                                );
-                            }
+                            return new Order(
+                                reader["id"].ToString(),
+                                reader["table_id"].ToString(),
+                                reader["status"].ToString(),
+                                Convert.ToDateTime(reader["order_date"])
+                            );
                         }
                     }
                 }
@@ -117,6 +144,11 @@ namespace CafeManagement.DAO
             catch (Exception ex)
             {
                 Console.WriteLine("GetOrderById Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
             return null;
         }

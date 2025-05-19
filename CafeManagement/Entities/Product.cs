@@ -26,6 +26,7 @@ namespace CafeManagement.Entities
             this.image = image;
         }
 
+
         public string getId() => id;
         public void setId(string id) => this.id = id;
 

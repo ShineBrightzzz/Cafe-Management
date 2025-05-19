@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CafeManagement.Entities;
 using CafeManagement.Forms.Customer;
 using CafeManagement.Forms.Employee;
+using CafeManagement.Forms.ProductManagement;
 
 namespace CafeManagement.Forms
 {
@@ -22,20 +23,9 @@ namespace CafeManagement.Forms
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            var products = new List<Product>
-            {
-                new Product("SP01", "Cà phê đen", "CF", 15000, 20000, "https://caphenguyenchat.vn/wp-content/uploads/2017/07/cafe-sach-giup-ban-song-lau-khoe-manh-hon-cach-nao-3-1024x1024.png"),
-                new Product("SP02", "Trà sữa", "TS", 22000, 30000, "Images/trasua.jpg"),
-                new Product("SP03", "Sinh tố bơ", "ST", 25000, 35000, "Images/sinhtobo.jpg")
-            };
-
+            ProductPanel productPanel = new ProductPanel();
             mainPanel.Controls.Clear();
-
-            foreach (var product in products)
-            {
-                ProductCard card = new ProductCard(product);
-                mainPanel.Controls.Add(card);
-            }
+            mainPanel.Controls.Add(productPanel);
         }
 
         private void btnCustomer_Click(object sender, EventArgs e)

@@ -41,7 +41,7 @@ namespace CafeManagement.Forms
 
         private void LoadProductPanel(Table selectedTable)
         {
-            ProductPanel productPanel = new ProductPanel(selectedTable);
+            ProductPanelOrder productPanel = new ProductPanelOrder(selectedTable);
             productPanel.ProductSelected += ProductPanel_ProductSelected;
 
             mainPanel.Controls.Clear();

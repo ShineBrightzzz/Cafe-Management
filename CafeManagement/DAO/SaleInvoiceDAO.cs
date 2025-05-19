@@ -12,9 +12,15 @@ namespace CafeManagement.DAO
         {
             string sql = "INSERT INTO sale_invoices (invoice_id, sale_date, employee_id, customer_id, total_amount) " +
                          "VALUES (@invoice_id, @sale_date, @employee_id, @customer_id, @total_amount)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoice.getInvoiceId());
@@ -29,15 +35,26 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("AddInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public void UpdateInvoice(Sale_Invoice invoice)
         {
             string sql = "UPDATE sale_invoices SET sale_date = @sale_date, employee_id = @employee_id, " +
                          "customer_id = @customer_id, total_amount = @total_amount WHERE invoice_id = @invoice_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoice.getInvoiceId());
@@ -52,14 +69,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("UpdateInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public void DeleteInvoice(string invoiceId)
         {
             string sql = "DELETE FROM sale_invoices WHERE invoice_id = @invoice_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
@@ -70,14 +98,25 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("DeleteInvoice Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public Sale_Invoice GetInvoiceById(string invoiceId)
         {
             string sql = "SELECT * FROM sale_invoices WHERE invoice_id = @invoice_id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
@@ -100,6 +139,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetInvoiceById Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return null;
         }
 
@@ -107,9 +151,15 @@ namespace CafeManagement.DAO
         {
             List<Sale_Invoice> saleInvoices = new List<Sale_Invoice>();
             string sql = "SELECT * FROM sale_invoices";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -131,7 +181,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetAllInvoices Error: " + ex.Message);
             }
-
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return saleInvoices;
         }
     }

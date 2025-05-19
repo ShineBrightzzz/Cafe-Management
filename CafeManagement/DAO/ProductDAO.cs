@@ -12,26 +12,42 @@ namespace CafeManagement.DAO
         {
             string sql = "INSERT INTO products (id, name, type, import_price, sale_price, image) " +
                          "VALUES (@id, @name, @type, @import_price, @sale_price, @image)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", product.getId());
-                        cmd.Parameters.AddWithValue("@name", product.getName());
-                        cmd.Parameters.AddWithValue("@type", product.getType());
-                        cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
-                        cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", product.getId());
+                    cmd.Parameters.AddWithValue("@name", product.getName());
+                    cmd.Parameters.AddWithValue("@type", product.getType());
+                    cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
+                    cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
+                    
+                    // Xử lý image có thể null
+                    if (string.IsNullOrEmpty(product.getImage()))
+                        cmd.Parameters.AddWithValue("@image", DBNull.Value);
+                    else
                         cmd.Parameters.AddWithValue("@image", product.getImage());
-                        cmd.ExecuteNonQuery();
-                    }
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error adding product: " + ex.Message);
+                MessageBox.Show("Error adding product: " + ex.Message);
+                throw; // Rethrow để Controller có thể xử lý
+            }
+            finally 
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
 
@@ -39,67 +55,93 @@ namespace CafeManagement.DAO
         {
             string sql = "UPDATE products SET name = @name, type = @type, import_price = @import_price, " +
                          "sale_price = @sale_price, image = @image WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", product.getId());
-                        cmd.Parameters.AddWithValue("@name", product.getName());
-                        cmd.Parameters.AddWithValue("@type", product.getType());
-                        cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
-                        cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", product.getId());
+                    cmd.Parameters.AddWithValue("@name", product.getName());
+                    cmd.Parameters.AddWithValue("@type", product.getType());
+                    cmd.Parameters.AddWithValue("@import_price", product.getImportPrice());
+                    cmd.Parameters.AddWithValue("@sale_price", product.getSalePrice());
+                    
+                    // Xử lý image có thể null
+                    if (string.IsNullOrEmpty(product.getImage()))
+                        cmd.Parameters.AddWithValue("@image", DBNull.Value);
+                    else
                         cmd.Parameters.AddWithValue("@image", product.getImage());
-                        cmd.ExecuteNonQuery();
-                    }
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Lỗi cập nhật sản phẩm: " + ex.Message);
+                throw; // Rethrow để Controller có thể xử lý
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
 
         public void DeleteProduct(string id)
         {
             string sql = "DELETE FROM products WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Lỗi xoá sản phẩm: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public Product GetProductById(string id)
         {
             string sql = "SELECT * FROM products WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                return MapReaderToProduct(reader);
-                            }
+                            return MapReaderToProduct(reader);
                         }
                     }
                 }
@@ -108,6 +150,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("Lỗi lấy sản phẩm theo ID: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return null;
         }
 
@@ -115,19 +162,22 @@ namespace CafeManagement.DAO
         {
             List<Product> products = new List<Product>();
             string sql = "SELECT * FROM products";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                products.Add(MapReaderToProduct(reader));
-                            }
+                            products.Add(MapReaderToProduct(reader));
                         }
                     }
                 }
@@ -136,7 +186,11 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("Lỗi lấy danh sách sản phẩm: " + ex.Message);
             }
-
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return products;
         }
 

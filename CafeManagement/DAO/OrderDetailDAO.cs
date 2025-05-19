@@ -11,47 +11,63 @@ namespace CafeManagement.DAO
         public void AddOrderDetail(OrderDetail detail)
         {
             string sql = "INSERT INTO order_details (order_id, product_id, quantity, unit_price, amount) VALUES (@orderId, @productId, @quantity, @unitPrice, @amount)";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@orderId", detail.getOrderId());
-                        cmd.Parameters.AddWithValue("@productId", detail.getProductId());
-                        cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
-                        cmd.Parameters.AddWithValue("@unitPrice", detail.getUnitPrice());
-                        cmd.Parameters.AddWithValue("@amount", detail.getAmount());
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", detail.getOrderId());
+                    cmd.Parameters.AddWithValue("@productId", detail.getProductId());
+                    cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
+                    cmd.Parameters.AddWithValue("@unitPrice", detail.getUnitPrice());
+                    cmd.Parameters.AddWithValue("@amount", detail.getAmount());
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("AddOrderDetail Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
         }
 
         public void DeleteOrderDetail(string orderId, string productId)
         {
             string sql = "DELETE FROM order_details WHERE order_id = @orderId AND product_id = @productId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@orderId", orderId);
-                        cmd.Parameters.AddWithValue("@productId", productId);
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("DeleteOrderDetail Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
 
@@ -59,26 +75,29 @@ namespace CafeManagement.DAO
         {
             List<OrderDetail> details = new List<OrderDetail>();
             string sql = "SELECT * FROM order_details WHERE order_id = @orderId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@orderId", orderId);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                details.Add(new OrderDetail(
-                                    reader["order_id"].ToString(),
-                                    reader["product_id"].ToString(),
-                                    Convert.ToInt32(reader["quantity"]),
-                                    Convert.ToDecimal(reader["unit_price"]),
-                                    Convert.ToDecimal(reader["amount"])
-                                ));
-                            }
+                            details.Add(new OrderDetail(
+                                reader["order_id"].ToString(),
+                                reader["product_id"].ToString(),
+                                Convert.ToInt32(reader["quantity"]),
+                                Convert.ToDecimal(reader["unit_price"]),
+                                Convert.ToDecimal(reader["amount"])
+                            ));
                         }
                     }
                 }
@@ -87,30 +106,43 @@ namespace CafeManagement.DAO
             {
                 Console.WriteLine("GetOrderDetailsByOrderId Error: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
             return details;
         }
         
         public void UpdateOrderDetailQuantity(string orderId, string productId, int quantity, decimal amount)
         {
             string sql = "UPDATE order_details SET quantity = @quantity, amount = @amount WHERE order_id = @orderId AND product_id = @productId";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
-                {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@orderId", orderId);
-                        cmd.Parameters.AddWithValue("@productId", productId);
-                        cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@amount", amount);
-                        cmd.ExecuteNonQuery();
-                    }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.Parameters.AddWithValue("@quantity", quantity);
+                    cmd.Parameters.AddWithValue("@amount", amount);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("UpdateOrderDetailQuantity Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
     }
