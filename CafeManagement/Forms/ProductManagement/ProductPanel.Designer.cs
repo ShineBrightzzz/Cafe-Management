@@ -40,6 +40,7 @@
             dgridProduct = new DataGridView();
             txtImportPrice = new TextBox();
             txtSalePrice = new TextBox();
+            btnExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)dgridProduct).BeginInit();
             SuspendLayout();
             // 
@@ -96,7 +97,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(503, 563);
+            btnDelete.Location = new Point(379, 562);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 20;
@@ -106,7 +107,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(342, 563);
+            btnUpdate.Location = new Point(218, 562);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 19;
@@ -116,7 +117,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(180, 563);
+            btnAdd.Location = new Point(56, 562);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 18;
@@ -146,10 +147,21 @@
             txtSalePrice.Size = new Size(131, 23);
             txtSalePrice.TabIndex = 32;
             // 
+            // btnExcel
+            // 
+            btnExcel.Location = new Point(535, 564);
+            btnExcel.Name = "btnExcel";
+            btnExcel.Size = new Size(113, 48);
+            btnExcel.TabIndex = 33;
+            btnExcel.Text = "Xuất file excel";
+            btnExcel.UseVisualStyleBackColor = true;
+            btnExcel.Click += btnExcel_Click;
+            // 
             // ProductPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnExcel);
             Controls.Add(txtSalePrice);
             Controls.Add(txtImportPrice);
             Controls.Add(cbType);
@@ -183,5 +195,6 @@
         private DataGridView dgridProduct;
         private TextBox txtImportPrice;
         private TextBox txtSalePrice;
+        private Button btnExcel;
     }
 }

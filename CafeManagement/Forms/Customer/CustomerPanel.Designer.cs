@@ -36,6 +36,7 @@
             mtxtPhone = new MaskedTextBox();
             label1 = new Label();
             label2 = new Label();
+            btnExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)dgidCustomer).BeginInit();
             SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(140, 548);
+            btnAdd.Location = new Point(51, 548);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 1;
@@ -59,7 +60,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(302, 548);
+            btnUpdate.Location = new Point(213, 548);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 2;
@@ -69,7 +70,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(463, 548);
+            btnDelete.Location = new Point(374, 548);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 3;
@@ -109,10 +110,21 @@
             label2.TabIndex = 7;
             label2.Text = "Số điện thoại";
             // 
+            // btnExcel
+            // 
+            btnExcel.Location = new Point(549, 548);
+            btnExcel.Name = "btnExcel";
+            btnExcel.Size = new Size(113, 50);
+            btnExcel.TabIndex = 8;
+            btnExcel.Text = "Xuất file excel";
+            btnExcel.UseVisualStyleBackColor = true;
+            btnExcel.Click += btnExcel_Click;
+            // 
             // CustomerPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnExcel);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(mtxtPhone);
@@ -138,5 +150,6 @@
         private MaskedTextBox mtxtPhone;
         private Label label1;
         private Label label2;
+        private Button btnExcel;
     }
 }

@@ -42,6 +42,7 @@
             mtxtDateOfBirth = new MaskedTextBox();
             label5 = new Label();
             cbGender = new ComboBox();
+            btnExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)dgidEmployee).BeginInit();
             SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(500, 596);
+            btnDelete.Location = new Point(355, 595);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 11;
@@ -90,7 +91,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(339, 596);
+            btnUpdate.Location = new Point(194, 595);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 10;
@@ -100,7 +101,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(177, 596);
+            btnAdd.Location = new Point(32, 595);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 9;
@@ -167,10 +168,21 @@
             cbGender.Size = new Size(131, 23);
             cbGender.TabIndex = 16;
             // 
+            // btnExcel
+            // 
+            btnExcel.Location = new Point(514, 595);
+            btnExcel.Name = "btnExcel";
+            btnExcel.Size = new Size(117, 50);
+            btnExcel.TabIndex = 17;
+            btnExcel.Text = "Xuất file excel";
+            btnExcel.UseVisualStyleBackColor = true;
+            btnExcel.Click += btnExcel_Click;
+            // 
             // EmployeePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnExcel);
             Controls.Add(cbGender);
             Controls.Add(label5);
             Controls.Add(label2);
@@ -208,5 +220,6 @@
         private MaskedTextBox mtxtDateOfBirth;
         private Label label5;
         private ComboBox cbGender;
+        private Button btnExcel;
     }
 }

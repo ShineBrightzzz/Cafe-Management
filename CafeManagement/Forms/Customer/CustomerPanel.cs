@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Controllers;
 using CafeManagement.Entities;
+using CafeManagement.Utils;
 
 namespace CafeManagement.Forms.Customer
 {
@@ -21,10 +22,10 @@ namespace CafeManagement.Forms.Customer
         {
             InitializeComponent();
             customerController = new CustomerController();
-            
+
             // Đăng ký sự kiện click cho DataGridView
             dgidCustomer.CellClick += new DataGridViewCellEventHandler(dgidCustomer_CellClick);
-            
+
             LoadCustomers();
         }
 
@@ -243,8 +244,22 @@ namespace CafeManagement.Forms.Customer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi khi chọn dữ liệu: " + ex.Message, 
+                MessageBox.Show("Có lỗi khi chọn dữ liệu: " + ex.Message,
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }        
+        
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            var exporter = new exportExcel();
+            DataTable dt = (DataTable)dgidCustomer.DataSource;
+            if (dt != null)
+            {
+                exporter.Export(dt, "DanhSachKhachHang");
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

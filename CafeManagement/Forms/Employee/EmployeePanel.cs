@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Controllers;
 using CafeManagement.Entities;
+using CafeManagement.Utils;
 
 namespace CafeManagement.Forms.Employee
 {
     public partial class EmployeePanel : UserControl
     {
         private readonly EmployeeController employeeController;
-        private string selectedEmployeeId;        
+        private string selectedEmployeeId;
         public EmployeePanel()
         {
             InitializeComponent();
             employeeController = new EmployeeController();
-            
+
             // Đăng ký sự kiện click cho DataGridView
             dgidEmployee.CellClick += new DataGridViewCellEventHandler(dgidEmployee_CellClick);
-            
+
             // Thiết lập ComboBox giới tính
             cbGender.Items.AddRange(new string[] { "Nam", "Nữ" });
             cbGender.SelectedIndex = 0;
@@ -35,7 +36,7 @@ namespace CafeManagement.Forms.Employee
             // Thiết lập định dạng cho ô nhập số điện thoại
             mtxtPhone.Mask = "0000000000";
             mtxtPhone.ValidatingType = typeof(string);
-            
+
             LoadEmployees();
         }
 
@@ -58,7 +59,7 @@ namespace CafeManagement.Forms.Employee
                 foreach (var emp in employees)
                 {
                     dt.Rows.Add(
-                        emp.getId(), 
+                        emp.getId(),
                         emp.getName(),
                         emp.getAddress(),
                         emp.getGender(),
@@ -111,15 +112,15 @@ namespace CafeManagement.Forms.Employee
                     DataPropertyName = "gender",
                     HeaderText = "Giới tính"
                 };
-                dgidEmployee.Columns.Add(colGender);                
-                
+                dgidEmployee.Columns.Add(colGender);
+
                 var colDateOfBirth = new DataGridViewTextBoxColumn
                 {
                     Name = "date_of_birth", // Đổi tên cột thành date_of_birth
                     DataPropertyName = "date_of_birth",
                     HeaderText = "Ngày sinh",
-                    DefaultCellStyle = new DataGridViewCellStyle 
-                    { 
+                    DefaultCellStyle = new DataGridViewCellStyle
+                    {
                         Format = "dd/MM/yyyy"
                     }
                 };
@@ -217,31 +218,32 @@ namespace CafeManagement.Forms.Employee
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
-        {            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtAddress.Text) ||
+        {
+            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtAddress.Text) ||
                 string.IsNullOrEmpty(mtxtDateOfBirth.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.", "Thông báo", 
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy", 
+            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy",
                 System.Globalization.CultureInfo.InvariantCulture,
                 System.Globalization.DateTimeStyles.None, out DateTime dateOfBirth))
             {
-                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.", 
+                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.",
                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn thêm nhân viên này?", "Xác nhận", 
+            var result = MessageBox.Show("Bạn có chắc muốn thêm nhân viên này?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 string newId = Guid.NewGuid().ToString();
                 bool success = employeeController.AddEmployee(
-                    newId, 
-                    txtName.Text.Trim(), 
+                    newId,
+                    txtName.Text.Trim(),
                     txtAddress.Text.Trim(),
                     cbGender.Text,
                     dateOfBirth,
@@ -250,40 +252,40 @@ namespace CafeManagement.Forms.Employee
 
                 if (success)
                 {
-                    MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", 
+                    MessageBox.Show("Thêm nhân viên thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadEmployees();
                     ClearInputs();
                 }
                 else
                 {
-                    MessageBox.Show("Thêm nhân viên thất bại!", "Lỗi", 
+                    MessageBox.Show("Thêm nhân viên thất bại!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
-        {            
+        {
             if (string.IsNullOrEmpty(selectedEmployeeId) || string.IsNullOrEmpty(txtName.Text) ||
                 string.IsNullOrEmpty(txtAddress.Text) || string.IsNullOrEmpty(mtxtDateOfBirth.Text) ||
                 string.IsNullOrEmpty(mtxtPhone.Text))
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần cập nhật.", "Thông báo", 
+                MessageBox.Show("Vui lòng chọn nhân viên cần cập nhật.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy", 
+            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy",
                 System.Globalization.CultureInfo.InvariantCulture,
                 System.Globalization.DateTimeStyles.None, out DateTime dateOfBirth))
             {
-                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.", 
+                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.",
                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn cập nhật thông tin nhân viên này?", 
+            var result = MessageBox.Show("Bạn có chắc muốn cập nhật thông tin nhân viên này?",
                 "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
@@ -298,14 +300,14 @@ namespace CafeManagement.Forms.Employee
 
                 if (success)
                 {
-                    MessageBox.Show("Cập nhật thông tin nhân viên thành công!", "Thông báo", 
+                    MessageBox.Show("Cập nhật thông tin nhân viên thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadEmployees();
                     ClearInputs();
                 }
                 else
                 {
-                    MessageBox.Show("Cập nhật thông tin nhân viên thất bại!", "Lỗi", 
+                    MessageBox.Show("Cập nhật thông tin nhân viên thất bại!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -315,28 +317,42 @@ namespace CafeManagement.Forms.Employee
         {
             if (string.IsNullOrEmpty(selectedEmployeeId))
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần xóa.", "Thông báo", 
+                MessageBox.Show("Vui lòng chọn nhân viên cần xóa.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn xóa nhân viên này?", "Xác nhận", 
+            var result = MessageBox.Show("Bạn có chắc muốn xóa nhân viên này?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 bool success = employeeController.DeleteEmployee(selectedEmployeeId);
                 if (success)
                 {
-                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", 
+                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadEmployees();
                     ClearInputs();
                 }
                 else
                 {
-                    MessageBox.Show("Xóa nhân viên thất bại!", "Lỗi", 
+                    MessageBox.Show("Xóa nhân viên thất bại!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            var exporter = new exportExcel();
+            DataTable dt = (DataTable)dgidEmployee.DataSource;
+            if (dt != null)
+            {
+                exporter.Export(dt, "DanhSachKhachHang");
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using CafeManagement.Controllers;
 using CafeManagement.Entities;
+using CafeManagement.Utils;
 
 namespace CafeManagement.Forms.ProductManagement
 {
@@ -38,13 +39,13 @@ namespace CafeManagement.Forms.ProductManagement
                 }
                 else
                 {
-                    MessageBox.Show("Không có dữ liệu loại sản phẩm.", "Thông báo", 
+                    MessageBox.Show("Không có dữ liệu loại sản phẩm.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách loại sản phẩm: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách loại sản phẩm: {ex.Message}",
                     "Lỗi Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -83,7 +84,7 @@ namespace CafeManagement.Forms.ProductManagement
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách sản phẩm: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách sản phẩm: {ex.Message}",
                     "Lỗi Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -193,7 +194,7 @@ namespace CafeManagement.Forms.ProductManagement
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Có lỗi khi chọn sản phẩm: {ex.Message}", 
+                MessageBox.Show($"Có lỗi khi chọn sản phẩm: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -245,7 +246,7 @@ namespace CafeManagement.Forms.ProductManagement
                     return;
                 }
 
-                var result = MessageBox.Show("Bạn có chắc muốn thêm sản phẩm này?", "Xác nhận", 
+                var result = MessageBox.Show("Bạn có chắc muốn thêm sản phẩm này?", "Xác nhận",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
@@ -255,21 +256,21 @@ namespace CafeManagement.Forms.ProductManagement
                     bool success = productController.AddProduct(newId, txtName.Text.Trim(), typeId, importPrice, salePrice, null);
                     if (success)
                     {
-                        MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", 
+                        MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadProducts();
                         ClearInputs();
                     }
                     else
                     {
-                        MessageBox.Show("Thêm thất bại!", "Lỗi", 
+                        MessageBox.Show("Thêm thất bại!", "Lỗi",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -280,14 +281,14 @@ namespace CafeManagement.Forms.ProductManagement
             {
                 if (string.IsNullOrEmpty(selectedProductId))
                 {
-                    MessageBox.Show("Vui lòng chọn sản phẩm cần cập nhật.", "Thông báo", 
+                    MessageBox.Show("Vui lòng chọn sản phẩm cần cập nhật.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txtName.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên sản phẩm.", "Thông báo", 
+                    MessageBox.Show("Vui lòng nhập tên sản phẩm.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtName.Focus();
                     return;
@@ -295,7 +296,7 @@ namespace CafeManagement.Forms.ProductManagement
 
                 if (cbType.SelectedItem == null)
                 {
-                    MessageBox.Show("Vui lòng chọn loại sản phẩm.", "Thông báo", 
+                    MessageBox.Show("Vui lòng chọn loại sản phẩm.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     cbType.Focus();
                     return;
@@ -303,7 +304,7 @@ namespace CafeManagement.Forms.ProductManagement
 
                 if (!double.TryParse(txtImportPrice.Text, out double importPrice))
                 {
-                    MessageBox.Show("Giá nhập không hợp lệ.", "Lỗi", 
+                    MessageBox.Show("Giá nhập không hợp lệ.", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtImportPrice.Focus();
                     return;
@@ -311,7 +312,7 @@ namespace CafeManagement.Forms.ProductManagement
 
                 if (!double.TryParse(txtSalePrice.Text, out double salePrice))
                 {
-                    MessageBox.Show("Giá bán không hợp lệ.", "Lỗi", 
+                    MessageBox.Show("Giá bán không hợp lệ.", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtSalePrice.Focus();
                     return;
@@ -319,36 +320,36 @@ namespace CafeManagement.Forms.ProductManagement
 
                 if (importPrice < 0 || salePrice < 0)
                 {
-                    MessageBox.Show("Giá không thể âm.", "Lỗi", 
+                    MessageBox.Show("Giá không thể âm.", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                var result = MessageBox.Show("Bạn có chắc muốn cập nhật sản phẩm này?", "Xác nhận", 
+                var result = MessageBox.Show("Bạn có chắc muốn cập nhật sản phẩm này?", "Xác nhận",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     string typeId = ((ProductType)cbType.SelectedItem).getId();
 
-                    bool success = productController.UpdateProduct(selectedProductId, txtName.Text.Trim(), 
+                    bool success = productController.UpdateProduct(selectedProductId, txtName.Text.Trim(),
                         typeId, importPrice, salePrice, null);
                     if (success)
                     {
-                        MessageBox.Show("Cập nhật thành công!", "Thông báo", 
+                        MessageBox.Show("Cập nhật thành công!", "Thông báo",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadProducts();
                         ClearInputs();
                     }
                     else
                     {
-                        MessageBox.Show("Cập nhật thất bại!", "Lỗi", 
+                        MessageBox.Show("Cập nhật thất bại!", "Lỗi",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -361,23 +362,37 @@ namespace CafeManagement.Forms.ProductManagement
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn xóa sản phẩm này?", "Xác nhận", 
+            var result = MessageBox.Show("Bạn có chắc muốn xóa sản phẩm này?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 bool success = productController.DeleteProduct(selectedProductId);
                 if (success)
                 {
-                    MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo", 
+                    MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadProducts();
                     ClearInputs();
                 }
                 else
                 {
-                    MessageBox.Show("Xóa sản phẩm thất bại!", "Lỗi", 
+                    MessageBox.Show("Xóa sản phẩm thất bại!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            var exporter = new exportExcel();
+            DataTable dt = (DataTable)dgridProduct.DataSource;
+            if (dt != null)
+            {
+                exporter.Export(dt, "DanhSachKhachHang");
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
