@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Entities;
+using CafeManagement.Forms.Customer;
+using CafeManagement.Forms.Employee;
 
 namespace CafeManagement.Forms
 {
@@ -36,5 +38,18 @@ namespace CafeManagement.Forms
             }
         }
 
+        private void btnCustomer_Click(object sender, EventArgs e)
+        {
+            mainPanel.Controls.Clear();
+            CustomerPanel customerPanel = new Customer.CustomerPanel();
+            mainPanel.Controls.Add(customerPanel);
+        }
+
+        private void btnEmployee_Click(object sender, EventArgs e)
+        {
+            mainPanel.Controls.Clear();
+            EmployeePanel employeePanel = new EmployeePanel();
+            mainPanel.Controls.Add(employeePanel);
+        }
     }
 }

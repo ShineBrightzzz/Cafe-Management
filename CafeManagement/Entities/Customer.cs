@@ -12,6 +12,25 @@ namespace CafeManagement.Entities
         private string name;
         private string phone;
 
+        // Thêm các thuộc tính public để binding với DataGridView
+        public string Id 
+        { 
+            get { return id; }
+            set { id = value; }
+        }
+        
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        
+        public string Phone
+        {
+            get { return phone; }
+            set { phone = value; }
+        }
+
         public Customer(string id, string name, string phone)
         {
             this.id = id;

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CafeManagement.Database;
+using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using CafeManagement.Database;
 using CafeManagement.Entities;
@@ -12,109 +9,134 @@ namespace CafeManagement.DAO
 {
     public class EmployeeDAO
     {
-        public void AddEmployee(Employee employee)
+        public bool AddEmployee(Employee employee)
         {
-            string sql = "insert into employees (id, name, address, gender, dateOfBirth,phone) values (@id, @name, @address, @gender, @dateOfBirth, @phone)";
+            string sql = "INSERT INTO employees (id, name, address, gender, date_of_birth, phone) VALUES (@id, @name, @address, @gender, @dateOfBirth, @phone)";
+            SqlConnection conn = null;
+            MessageBox.Show("Adding employee...");
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                conn = DBConnect.GetConnection();
+                if (conn == null) return false;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", employee.getId());
-                        cmd.Parameters.AddWithValue("@name", employee.getName());
-                        cmd.Parameters.AddWithValue("@address", employee.getAddress());
-                        cmd.Parameters.AddWithValue("@gender", employee.getGender());
-                        cmd.Parameters.AddWithValue("@dateOfBirth", employee.getDateOfBirth());
-                        cmd.Parameters.AddWithValue("@phone", employee.getPhoneNumber());
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@id", employee.getId());
+                    cmd.Parameters.AddWithValue("@name", employee.getName());
+                    cmd.Parameters.AddWithValue("@address", employee.getAddress());
+                    cmd.Parameters.AddWithValue("@gender", employee.getGender());
+                    cmd.Parameters.AddWithValue("@dateOfBirth", employee.getDateOfBirth().Date);
+                    cmd.Parameters.AddWithValue("@phone", employee.getPhoneNumber());
+                    int result = cmd.ExecuteNonQuery();
+                    return result > 0;
                 }
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("AddEmployee error: "+e.Message);
+                MessageBox.Show($"Error adding employee: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-        }
-        public void UpdateEmployee(Employee employee)
-        {
-            string sql = "update employees set name = @name, address = @address, gender =@gender, dateOfBirth = @dateOfBirth, phone =@phone where id = @id";
-            try
+            finally
             {
-                using(SqlConnection conn = DBConnect.GetConnection())
-                {
-                    conn.Open();
-                    using(SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", employee.getId());
-                        cmd.Parameters.AddWithValue("@name", employee.getName());
-                        cmd.Parameters.AddWithValue("@address", employee.getAddress());
-                        cmd.Parameters.AddWithValue("@gender", employee.getGender());
-                        cmd.Parameters.AddWithValue("@dateOfBirth", employee.getDateOfBirth());
-                        cmd.Parameters.AddWithValue("@phone", employee.getPhoneNumber());
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("UpdateEmployee error: " + e.Message);
+                DBConnect.CloseConnection(conn);
             }
         }
 
-        public void DeleteEmployee(String id)
+        public bool UpdateEmployee(Employee employee)
         {
-            string sql = "delete from employees where id = @id";
+            string sql = "UPDATE employees SET name = @name, address = @address, gender = @gender, date_of_birth = @dateOfBirth, phone = @phone WHERE id = @id";
+            SqlConnection conn = null;
+            
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                conn = DBConnect.GetConnection();
+                if (conn == null) return false;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    using(SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@id", employee.getId());
+                    cmd.Parameters.AddWithValue("@name", employee.getName());
+                    cmd.Parameters.AddWithValue("@address", employee.getAddress());
+                    cmd.Parameters.AddWithValue("@gender", employee.getGender());
+                    cmd.Parameters.AddWithValue("@dateOfBirth", employee.getDateOfBirth().Date);
+                    cmd.Parameters.AddWithValue("@phone", employee.getPhoneNumber());
+                    int result = cmd.ExecuteNonQuery();
+                    return result > 0;
                 }
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("DeleteEmployee error: " + e.Message);
-
+                MessageBox.Show($"Error updating employee: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                DBConnect.CloseConnection(conn);
             }
         }
 
-        public Employee GetEmployee(String id)
+        public bool DeleteEmployee(string id)
+        {
+            string sql = "DELETE FROM employees WHERE id = @id";
+            SqlConnection conn = null;
+            try
+            {
+                conn = DBConnect.GetConnection();
+                if (conn == null) return false;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    int result = cmd.ExecuteNonQuery();
+                    return result > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting employee: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                DBConnect.CloseConnection(conn);
+            }
+        }
+
+        public Employee GetEmployee(string id)
         {
             string sql = "SELECT * FROM employees WHERE id = @id";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                conn = DBConnect.GetConnection();
+                if (conn == null) return null;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                return new Employee(
-                                    reader["id"].ToString(),
-                                    reader["name"].ToString(),
-                                    reader["address"].ToString(),
-                                    reader["gender"].ToString(),
-                                    Convert.ToDateTime(reader["dateOfBirth"]),
-                                    reader["phone"].ToString()
-                                );
-                            }
+                            return new Employee(
+                                reader["id"].ToString(),
+                                reader["name"].ToString(),
+                                reader["address"].ToString(),
+                                reader["gender"].ToString(),
+                                Convert.ToDateTime(reader["date_of_birth"]).Date,
+                                reader["phone"].ToString()
+                            );
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetEmployeeById Error: " + ex.Message);
+                MessageBox.Show($"Error retrieving employee: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBConnect.CloseConnection(conn);
             }
             return null;
         }
@@ -123,33 +145,37 @@ namespace CafeManagement.DAO
         {
             List<Employee> employees = new List<Employee>();
             string sql = "SELECT * FROM employees";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                conn = DBConnect.GetConnection();
+                if (conn == null) return employees;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                employees.Add(new Employee(
-                                    reader["id"].ToString(),
-                                    reader["name"].ToString(),
-                                    reader["address"].ToString(),
-                                    reader["gender"].ToString(),
-                                    Convert.ToDateTime(reader["dateOfBirth"]),
-                                    reader["phone"].ToString()
-                                ));
-                            }
+                            employees.Add(new Employee(
+                                reader["id"].ToString(),
+                                reader["name"].ToString(),
+                                reader["address"].ToString(),
+                                reader["gender"].ToString(),
+                                Convert.ToDateTime(reader["date_of_birth"]).Date,
+                                reader["phone"].ToString()
+                            ));
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetAllEmployees Error: " + ex.Message);
+                MessageBox.Show($"Error retrieving employees: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBConnect.CloseConnection(conn);
             }
             return employees;
         }
@@ -158,34 +184,38 @@ namespace CafeManagement.DAO
         {
             List<Employee> employees = new List<Employee>();
             string sql = "SELECT * FROM employees WHERE name LIKE @name";
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DBConnect.GetConnection())
+                conn = DBConnect.GetConnection();
+                if (conn == null) return employees;
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmd.Parameters.AddWithValue("@name", "%" + name + "%");
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@name", "%" + name + "%");
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                employees.Add(new Employee(
-                                    reader["id"].ToString(),
-                                    reader["name"].ToString(),
-                                    reader["address"].ToString(),
-                                    reader["gender"].ToString(),
-                                    Convert.ToDateTime(reader["dateOfBirth"]),
-                                    reader["phone"].ToString()
-                                ));
-                            }
+                            employees.Add(new Employee(
+                                reader["id"].ToString(),
+                                reader["name"].ToString(),
+                                reader["address"].ToString(),
+                                reader["gender"].ToString(),
+                                Convert.ToDateTime(reader["date_of_birth"]).Date,
+                                reader["phone"].ToString()
+                            ));
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetEmployeesByName Error: " + ex.Message);
+                MessageBox.Show($"Error searching employees: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBConnect.CloseConnection(conn);
             }
             return employees;
         }

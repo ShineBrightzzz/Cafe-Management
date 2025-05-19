@@ -30,8 +30,8 @@
         {
             panel1 = new Panel();
             panel2 = new Panel();
-            button7 = new Button();
-            button6 = new Button();
+            btnEmployee = new Button();
+            btnCustomer = new Button();
             button5 = new Button();
             button4 = new Button();
             button3 = new Button();
@@ -51,8 +51,8 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(button7);
-            panel2.Controls.Add(button6);
+            panel2.Controls.Add(btnEmployee);
+            panel2.Controls.Add(btnCustomer);
             panel2.Controls.Add(button5);
             panel2.Controls.Add(button4);
             panel2.Controls.Add(button3);
@@ -64,23 +64,25 @@
             panel2.Size = new Size(200, 706);
             panel2.TabIndex = 1;
             // 
-            // button7
+            // btnEmployee
             // 
-            button7.Location = new Point(0, 320);
-            button7.Name = "button7";
-            button7.Size = new Size(200, 44);
-            button7.TabIndex = 0;
-            button7.Text = "Nhân viên";
-            button7.UseVisualStyleBackColor = true;
+            btnEmployee.Location = new Point(0, 320);
+            btnEmployee.Name = "btnEmployee";
+            btnEmployee.Size = new Size(200, 44);
+            btnEmployee.TabIndex = 0;
+            btnEmployee.Text = "Nhân viên";
+            btnEmployee.UseVisualStyleBackColor = true;
+            btnEmployee.Click += btnEmployee_Click;
             // 
-            // button6
+            // btnCustomer
             // 
-            button6.Location = new Point(0, 270);
-            button6.Name = "button6";
-            button6.Size = new Size(200, 44);
-            button6.TabIndex = 0;
-            button6.Text = "Khách hàng";
-            button6.UseVisualStyleBackColor = true;
+            btnCustomer.Location = new Point(0, 270);
+            btnCustomer.Name = "btnCustomer";
+            btnCustomer.Size = new Size(200, 44);
+            btnCustomer.TabIndex = 0;
+            btnCustomer.Text = "Khách hàng";
+            btnCustomer.UseVisualStyleBackColor = true;
+            btnCustomer.Click += btnCustomer_Click;
             // 
             // button5
             // 
@@ -154,12 +156,12 @@
         private Panel panel1;
         private Panel panel2;
         private Button button1;
-        private Button button6;
+        private Button btnCustomer;
         private Button button5;
         private Button button4;
         private Button button3;
         private Button btnMenu;
-        private Button button7;
+        private Button btnEmployee;
         private FlowLayoutPanel mainPanel;
     }
 }

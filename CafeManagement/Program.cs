@@ -20,7 +20,7 @@ namespace CafeManagement
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-                Application.Run(new OrderForm());
+                Application.Run(new FormMain());
         }
     }
 }

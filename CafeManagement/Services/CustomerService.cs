@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using CafeManagement.DAO;
 using CafeManagement.Entities;
 
@@ -7,7 +8,7 @@ namespace CafeManagement.Services
 {
     public class CustomerService
     {
-        private CustomerDAO customerDAO;
+        private readonly CustomerDAO customerDAO;
 
         public CustomerService()
         {
@@ -18,40 +19,29 @@ namespace CafeManagement.Services
         {
             try
             {
-                if (string.IsNullOrEmpty(customer.getId()) || string.IsNullOrEmpty(customer.getName()) || string.IsNullOrEmpty(customer.getPhoneNumber()))
+                if (string.IsNullOrEmpty(customer.getName()) || string.IsNullOrEmpty(customer.getPhoneNumber()))
                 {
-                    throw new ArgumentException("All customer fields (ID, Name, Phone) must be provided.");
-                }
-
-                // Kiểm tra dữ liệu hợp lệ, ví dụ: định dạng số điện thoại
-                if (!IsValidPhoneNumber(customer.getPhoneNumber()))
-                {
-                    throw new FormatException("Phone number is not in a valid format.");
-                }
-
-                Customer existing = customerDAO.GetCustomerById(customer.getId());
-                if (existing != null)
-                {
-                    Console.WriteLine("Customer ID already exists.");
+                    MessageBox.Show("Vui lòng nhập đầy đủ tên và số điện thoại khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
 
-                customerDAO.AddCustomer(customer);
-                return true;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
+                if (!IsValidPhoneNumber(customer.getPhoneNumber()))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại 10 chữ số, bắt đầu bằng số 0.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                if (GetCustomerById(customer.getId()) != null)
+                {
+                    MessageBox.Show("Mã khách hàng đã tồn tại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                return customerDAO.AddCustomer(customer);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                MessageBox.Show($"Lỗi thêm khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -60,39 +50,31 @@ namespace CafeManagement.Services
         {
             try
             {
-                if (string.IsNullOrEmpty(customer.getId()) || string.IsNullOrEmpty(customer.getName()) || string.IsNullOrEmpty(customer.getPhoneNumber()))
+                if (string.IsNullOrEmpty(customer.getId()) || string.IsNullOrEmpty(customer.getName()) || 
+                    string.IsNullOrEmpty(customer.getPhoneNumber()))
                 {
-                    throw new ArgumentException("All customer fields (ID, Name, Phone) must be provided.");
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
 
                 if (!IsValidPhoneNumber(customer.getPhoneNumber()))
                 {
-                    throw new FormatException("Phone number is not in a valid format.");
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại 10 chữ số, bắt đầu bằng số 0.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
 
                 Customer existing = customerDAO.GetCustomerById(customer.getId());
                 if (existing == null)
                 {
-                    Console.WriteLine("Customer not found.");
+                    MessageBox.Show("Không tìm thấy khách hàng cần cập nhật.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
 
-                customerDAO.UpdateCustomer(customer);
-                return true;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
+                return customerDAO.UpdateCustomer(customer);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                MessageBox.Show($"Lỗi cập nhật khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -103,27 +85,22 @@ namespace CafeManagement.Services
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    throw new ArgumentException("Customer ID must be provided.");
+                    MessageBox.Show("Vui lòng chọn khách hàng cần xóa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
 
                 Customer existing = customerDAO.GetCustomerById(id);
                 if (existing == null)
                 {
-                    Console.WriteLine("Customer not found.");
+                    MessageBox.Show("Không tìm thấy khách hàng cần xóa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
 
-                customerDAO.DeleteCustomer(id);
-                return true;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
+                return customerDAO.DeleteCustomer(id);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                MessageBox.Show($"Lỗi xóa khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -134,19 +111,13 @@ namespace CafeManagement.Services
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    throw new ArgumentException("Customer ID must be provided.");
+                    return null;
                 }
-
                 return customerDAO.GetCustomerById(id);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                MessageBox.Show($"Lỗi tìm khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -159,8 +130,8 @@ namespace CafeManagement.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return null;
+                MessageBox.Show($"Lỗi lấy danh sách khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<Customer>();
             }
         }
 
@@ -168,29 +139,21 @@ namespace CafeManagement.Services
         {
             try
             {
-                if (string.IsNullOrEmpty(name))
-                {
-                    throw new ArgumentException("Customer name must be provided.");
-                }
-
-                return customerDAO.GetCustomerByName(name);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return null;
+                return string.IsNullOrEmpty(name) 
+                    ? customerDAO.GetAllCustomers() 
+                    : customerDAO.GetCustomerByName(name);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return null;
+                MessageBox.Show($"Lỗi tìm kiếm khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<Customer>();
             }
         }
 
         private bool IsValidPhoneNumber(string phoneNumber)
         {
-            // Cấu trúc kiểm tra định dạng số điện thoại (ví dụ đơn giản)
-            return phoneNumber.Length == 10 && phoneNumber.All(char.IsDigit);
+            if (string.IsNullOrEmpty(phoneNumber)) return false;
+            return System.Text.RegularExpressions.Regex.IsMatch(phoneNumber, @"^0\d{9}$");
         }
     }
 }
