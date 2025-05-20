@@ -200,27 +200,19 @@ namespace CafeManagement.Forms
                 return;
             }
 
-            var result = MessageBox.Show(
-                $"Xác nhận thanh toán hóa đơn?\nTổng tiền: {lblTotalPrice.Text}",
-                "Xác nhận thanh toán",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-
-            if (result == DialogResult.Yes)
+            using (var paymentForm = new PaymentForm(_table, _invoiceItems))
             {
-                if (_orderService.CompleteOrder(_currentOrder.getId()))
+                if (paymentForm.ShowDialog() == DialogResult.OK)
                 {
-                    MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    // CompleteOrder() already handles:
-                    // 1. Update order status to completed
-                    // 2. Update table status to available if no other pending orders
-                    // 3. Clear the order and items from memory
-                    CompleteOrder(); // This method will clear the UI
-                }
-                else
-                {
-                    MessageBox.Show("Có lỗi xảy ra khi thanh toán!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (_orderService.CompleteOrder(_currentOrder.getId()))
+                    {
+                        MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CompleteOrder(); // This method will clear the UI
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có lỗi xảy ra khi thanh toán!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
