@@ -17,6 +17,7 @@ namespace CafeManagement.Forms
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
         private TableService _tableService;
+        private double _total = 0;
 
         public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
         {
@@ -24,7 +25,41 @@ namespace CafeManagement.Forms
             _table = table;
             _invoiceItems = invoiceItems;
             _tableService = new TableService();
+            
+            // Set default values
+            txtDiscount.Text = "0";
+            rdCash.Checked = true;
+            
+            // Handle discount changes
+            txtDiscount.TextChanged += TxtDiscount_TextChanged;
+            
             LoadInvoiceItems();
+        }
+
+        private void TxtDiscount_TextChanged(object sender, EventArgs e)
+        {
+            UpdateTotalAmount();
+        }
+
+        private void UpdateTotalAmount()
+        {
+            try
+            {
+                double discountPercent = string.IsNullOrEmpty(txtDiscount.Text) ? 0 : double.Parse(txtDiscount.Text);
+                if (discountPercent < 0) discountPercent = 0;
+                if (discountPercent > 100) discountPercent = 100;
+                
+                double discountAmount = _total * discountPercent / 100;
+                double finalTotal = _total - discountAmount;
+                
+                txtTotalCustomer.Text = $"{finalTotal:N0} đ";
+                txtCustomerPayment.Text = finalTotal.ToString("N0");
+            }
+            catch
+            {
+                txtTotalCustomer.Text = $"{_total:N0} đ";
+                txtCustomerPayment.Text = _total.ToString("N0");
+            }
         }
 
         private void LoadInvoiceItems()
@@ -39,14 +74,14 @@ namespace CafeManagement.Forms
                 itemPanel.Columns.Add("Thành tiền", 90);
             }
 
-            double total = 0;
+            _total = 0;
             foreach (var item in _invoiceItems)
             {
                 string productName = item.GetProduct().getName();
                 int quantity = int.Parse(item.GetQuantity());
                 double price = item.GetPrice();
                 double subtotal = quantity * price;
-                total += subtotal;
+                _total += subtotal;
 
                 ListViewItem listItem = new ListViewItem(new string[] {
                     productName,
@@ -57,14 +92,30 @@ namespace CafeManagement.Forms
                 itemPanel.Items.Add(listItem);
             }
 
-            // Update total amount label
-            lblTotal.Text = $"Tổng tiền: {total:N0} đ";
+            // Update total amount labels
+            lblTotal.Text = $"{_total:N0} đ";
+            UpdateTotalAmount();
         }        
         
         private void btnPayment_Click(object sender, EventArgs e)
         {
             try
             {                
+                // Validate payment amount
+                double customerPayment = 0;
+                if (!double.TryParse(txtCustomerPayment.Text.Replace(",", ""), out customerPayment))
+                {
+                    MessageBox.Show("Vui lòng nhập số tiền thanh toán hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                double finalTotal = double.Parse(txtTotalCustomer.Text.Replace(",", "").Replace(" đ", ""));
+                if (customerPayment < finalTotal)
+                {
+                    MessageBox.Show("Số tiền thanh toán không đủ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 // Update table status to available
                 _table.setIsOccupied(false);
                 _tableService.UpdateTable(_table);
