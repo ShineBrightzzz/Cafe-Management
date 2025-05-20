@@ -172,24 +172,70 @@ namespace CafeManagement.Forms
             {
                 MessageBox.Show($"Lỗi tạo mã QR: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void btnPrintInvoice_Click(object sender, EventArgs e)
+        }        private void btnPrintInvoice_Click(object sender, EventArgs e)
         {
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
-            pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, 600);
-
-            // Tạo và cấu hình PrintPreviewDialog
-            PrintPreviewDialog ppd = new PrintPreviewDialog();
-            ppd.Document = pd;
-            ppd.WindowState = FormWindowState.Maximized;
-            ppd.PrintPreviewControl.Zoom = 1.0;
-            ppd.Text = "Xem trước hóa đơn";
-            
             try
             {
-                ppd.ShowDialog();
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
+                pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, 600);
+
+                // Tạo form xem trước tùy chỉnh
+                Form previewForm = new Form();
+                previewForm.Text = "Xem trước hóa đơn";
+                previewForm.WindowState = FormWindowState.Maximized;
+                previewForm.BackColor = Color.Gray;
+
+                // Tạo PrintPreviewControl
+                PrintPreviewControl previewControl = new PrintPreviewControl();
+                previewControl.Document = pd;
+                previewControl.Zoom = 1.0;
+                previewControl.BackColor = Color.White;
+                previewControl.Dock = DockStyle.Fill;
+                previewForm.Controls.Add(previewControl);
+
+                // Tạo ToolStrip với các nút điều khiển
+                ToolStrip toolStrip = new ToolStrip();
+                toolStrip.BackColor = Color.White;
+                  // Nút In
+                ToolStripButton printButton = new ToolStripButton();
+                printButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+                printButton.Text = "In";
+                printButton.Image = CreatePrintIcon();
+                printButton.Click += (s, args) =>
+                {
+                    try
+                    {
+                        pd.Print();
+                        previewForm.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi in hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+
+                // Nút Zoom in
+                ToolStripButton zoomInButton = new ToolStripButton();
+                zoomInButton.Text = "Phóng to";
+                zoomInButton.Click += (s, args) => { previewControl.Zoom *= 1.25; };
+
+                // Nút Zoom out
+                ToolStripButton zoomOutButton = new ToolStripButton();
+                zoomOutButton.Text = "Thu nhỏ";
+                zoomOutButton.Click += (s, args) => { previewControl.Zoom /= 1.25; };
+
+                // Thêm các nút vào ToolStrip
+                toolStrip.Items.Add(printButton);
+                toolStrip.Items.Add(new ToolStripSeparator());
+                toolStrip.Items.Add(zoomInButton);
+                toolStrip.Items.Add(zoomOutButton);
+
+                // Thêm ToolStrip vào form
+                previewForm.Controls.Add(toolStrip);
+
+                // Hiển thị form xem trước
+                previewForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -240,14 +286,12 @@ namespace CafeManagement.Forms
 
             // Vẽ đường kẻ ngang
             e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
-            startY += 10;
-
-            // Vẽ tiêu đề cột
+            startY += 10;            // Vẽ tiêu đề cột
             StringFormat rightAlign = new StringFormat() { Alignment = StringAlignment.Far };
             e.Graphics.DrawString("Tên SP", boldFont, brush, startX, startY);
-            e.Graphics.DrawString("SL", boldFont, brush, startX + 140, startY, rightAlign);
-            e.Graphics.DrawString("Đơn giá", boldFont, brush, startX + 190, startY, rightAlign);
-            e.Graphics.DrawString("T.Tiền", boldFont, brush, startX + pageWidth, startY, rightAlign);
+            e.Graphics.DrawString("SL", boldFont, brush, startX + 120, startY, rightAlign);
+            e.Graphics.DrawString("Đơn giá", boldFont, brush, startX + 180, startY, rightAlign);
+            e.Graphics.DrawString("T.Tiền", boldFont, brush, startX + pageWidth - 10, startY, rightAlign);
             startY += lineHeight;
 
             // Vẽ đường kẻ ngang
@@ -260,12 +304,10 @@ namespace CafeManagement.Forms
                 string productName = item.GetProduct().getName();
                 int quantity = int.Parse(item.GetQuantity());
                 double price = item.GetPrice();
-                double subtotal = quantity * price;
-
-                e.Graphics.DrawString(productName, regularFont, brush, startX, startY);
-                e.Graphics.DrawString(quantity.ToString(), regularFont, brush, startX + 140, startY, rightAlign);
-                e.Graphics.DrawString($"{price:N0}", regularFont, brush, startX + 190, startY, rightAlign);
-                e.Graphics.DrawString($"{subtotal:N0}", regularFont, brush, startX + pageWidth, startY, rightAlign);
+                double subtotal = quantity * price;                e.Graphics.DrawString(productName, regularFont, brush, startX, startY);
+                e.Graphics.DrawString(quantity.ToString(), regularFont, brush, startX + 120, startY, rightAlign);
+                e.Graphics.DrawString($"{price:N0}", regularFont, brush, startX + 180, startY, rightAlign);
+                e.Graphics.DrawString($"{subtotal:N0}", regularFont, brush, startX + pageWidth - 10, startY, rightAlign);
                 startY += lineHeight;
             }
 
@@ -330,6 +372,28 @@ namespace CafeManagement.Forms
 
             // Giải phóng tài nguyên
             pen.Dispose();
+        }
+
+        private Bitmap CreatePrintIcon()
+        {
+            // Tạo bitmap 16x16 cho icon
+            Bitmap bmp = new Bitmap(16, 16);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.White);
+                // Vẽ máy in
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    // Thân máy in
+                    g.DrawRectangle(pen, 2, 4, 12, 8);
+                    // Khay giấy
+                    g.DrawRectangle(pen, 4, 2, 8, 2);
+                    // Giấy in
+                    g.DrawLine(pen, 6, 7, 10, 7);
+                    g.DrawLine(pen, 6, 9, 10, 9);
+                }
+            }
+            return bmp;
         }
     }
 }
