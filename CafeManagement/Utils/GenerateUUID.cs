@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CafeManagement.Utils
-{
-    class GenerateUUID
+{    public class GenerateUUID
     {
-        public static string Generate()
+        public static string GenerateUniqueId()
         {
             return Guid.NewGuid().ToString();
         }

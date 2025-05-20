@@ -9,15 +9,15 @@ namespace CafeManagement.Entities
     public class ImportInvoiceDetail
     {
         private String importInvoiceId;
-        private String productId;
+        private String ingredientId;
         private int quantity;
         private double unitPrice;
         private double discount;
         private double totalPrice;
 
-        public ImportInvoiceDetail(String importInvoiceId, String productId, int quantity, double unitPrice, double discount, double totalPrice) {
+        public ImportInvoiceDetail(String importInvoiceId, String ingredientId, int quantity, double unitPrice, double discount, double totalPrice) {
             this.importInvoiceId = importInvoiceId; 
-            this.productId = productId;
+            this.ingredientId = ingredientId;
             this.quantity = quantity;
             this.unitPrice = unitPrice;
             this.discount = discount;
@@ -25,18 +25,18 @@ namespace CafeManagement.Entities
         }
 
         public String getImportInvoiceId() { return importInvoiceId; }
-        public String getProductId() { return productId; }
+        public String getIngredientId() { return ingredientId; }
         public int getQuantity() { return quantity; }
         public double getUnitPrice() { return unitPrice; }
         public double getDiscount() { return discount; }
         public double getTotalPrice() { return totalPrice; }
 
-        public void setImportInvoice(String importInvoiceId)
+        public void setImportInvoiceId(String importInvoiceId)
         {
-            this.importInvoiceId=importInvoiceId;
+            this.importInvoiceId = importInvoiceId;
         }
-        public void setProductId(String productId) { 
-            this.productId=productId; 
+        public void setIngredientId(String ingredientId) { 
+            this.ingredientId = ingredientId; 
         }
         public void setQuantity(int quantity) {
             this.quantity = quantity; 
@@ -53,7 +53,5 @@ namespace CafeManagement.Entities
         {
             this.totalPrice = totalPrice;
         }
-
-
     }
 }

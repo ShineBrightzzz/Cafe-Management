@@ -11,6 +11,7 @@ using CafeManagement.Entities;
 using CafeManagement.Forms.Customer;
 using CafeManagement.Forms.Employee;
 using CafeManagement.Forms.SaleInvoice;
+using CafeManagement.Forms.ImportInvoice;
 using CafeManagement.Forms.ProductManagement;
 
 namespace CafeManagement.Forms
@@ -48,6 +49,13 @@ namespace CafeManagement.Forms
             mainPanel.Controls.Clear();
             SaleInvoicePanel saleInvoicePanel = new SaleInvoicePanel();
             mainPanel.Controls.Add(saleInvoicePanel);
+        }
+
+        private void btnImportInvoice_Click(object sender, EventArgs e)
+        {
+            mainPanel.Controls.Clear();
+            ImportInvoicePanel importInvoicePanel = new ImportInvoicePanel();
+            mainPanel.Controls.Add(importInvoicePanel);
         }
     }
 }

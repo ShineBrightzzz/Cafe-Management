@@ -30,6 +30,8 @@ namespace CafeManagement.Entities
         
         public String getSupplierId() { return supplierId; }
         public double getImportTotalPrice() { return importTotalPrice; }
+        public double getTotalAmount() { return importTotalPrice; }
+        public DateTime getImportDate() { return dateOfImport; }
 
         public void setImportInvoiceID(String importInvoiceID)
         {
@@ -56,6 +58,6 @@ namespace CafeManagement.Entities
             this.importTotalPrice = importTotalPrice;
         }
 
-
+        public void setTotalAmount(double totalAmount) { this.importTotalPrice = totalAmount; }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CafeManagement.Entities;
 using CafeManagement.Services;
 
 namespace CafeManagement.Controllers
 {
-    internal class ImportInvoiceDetailController
+    public class ImportInvoiceDetailController
     {
         private readonly ImportInvoiceDetailService importInvoiceDetailService;
 
@@ -17,26 +14,28 @@ namespace CafeManagement.Controllers
             importInvoiceDetailService = new ImportInvoiceDetailService();
         }
 
-        public bool AddImportInvoiceDetail(string importInvoiceId, string productId, int quantity, double unitPrice, double discount, double totalPrice)
+        public bool AddImportInvoiceDetail(string importInvoiceId, string ingredientId, int quantity, double unitPrice, double discount)
         {
-            var detail = new ImportInvoiceDetail(importInvoiceId, productId, quantity, unitPrice, discount, totalPrice);
+            double totalPrice = (quantity * unitPrice) * (1 - discount / 100);
+            var detail = new ImportInvoiceDetail(importInvoiceId, ingredientId, quantity, unitPrice, discount, totalPrice);
             return importInvoiceDetailService.AddImportInvoiceDetail(detail);
         }
 
-        public bool UpdateImportInvoiceDetail(string importInvoiceId, string productId, int quantity, double unitPrice, double discount, double totalPrice)
+        public bool UpdateImportInvoiceDetail(string importInvoiceId, string ingredientId, int quantity, double unitPrice, double discount)
         {
-            var detail = new ImportInvoiceDetail(importInvoiceId, productId, quantity, unitPrice, discount, totalPrice);
+            double totalPrice = (quantity * unitPrice) * (1 - discount / 100);
+            var detail = new ImportInvoiceDetail(importInvoiceId, ingredientId, quantity, unitPrice, discount, totalPrice);
             return importInvoiceDetailService.UpdateImportInvoiceDetail(detail);
         }
 
-        public bool DeleteImportInvoiceDetail(string importInvoiceId, string productId)
+        public bool DeleteImportInvoiceDetail(string importInvoiceId, string ingredientId)
         {
-            return importInvoiceDetailService.DeleteImportInvoiceDetail(importInvoiceId, productId);
+            return importInvoiceDetailService.DeleteImportInvoiceDetail(importInvoiceId, ingredientId);
         }
 
-        public ImportInvoiceDetail GetImportInvoiceDetailsByInvoiceId(string importInvoiceId, string productId)
+        public List<ImportInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
         {
-            return importInvoiceDetailService.GetImportInvoiceDetailById(importInvoiceId, productId);
+            return importInvoiceDetailService.GetDetailsByInvoiceId(invoiceId);
         }
 
         public List<ImportInvoiceDetail> GetAllImportInvoiceDetails()

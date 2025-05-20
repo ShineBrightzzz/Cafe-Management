@@ -26,7 +26,7 @@ namespace CafeManagement.DAO
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", importInvoiceDetail.getImportInvoiceId());
-                    cmd.Parameters.AddWithValue("@product", importInvoiceDetail.getProductId());
+                    cmd.Parameters.AddWithValue("@product", importInvoiceDetail.getIngredientId());
                     cmd.Parameters.AddWithValue("@quantity", importInvoiceDetail.getQuantity());
                     cmd.Parameters.AddWithValue("@price", importInvoiceDetail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", importInvoiceDetail.getDiscount());
@@ -60,7 +60,7 @@ namespace CafeManagement.DAO
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@invoiceId", detail.getImportInvoiceId());
-                    cmd.Parameters.AddWithValue("@productId", detail.getProductId());
+                    cmd.Parameters.AddWithValue("@productId", detail.getIngredientId());
                     cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
                     cmd.Parameters.AddWithValue("@price", detail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", detail.getDiscount());
@@ -107,6 +107,50 @@ namespace CafeManagement.DAO
                 if (conn != null && conn.State == System.Data.ConnectionState.Open)
                     conn.Close();
             }
+        }
+
+        public List<ImportInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
+        {
+            List<ImportInvoiceDetail> details = new List<ImportInvoiceDetail>();
+            string sql = "SELECT * FROM import_invoice_details WHERE invoice_id = @invoiceId";
+            SqlConnection conn = null;
+            try
+            {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            details.Add(new ImportInvoiceDetail(
+                                reader["invoice_id"].ToString(),
+                                reader["product_id"].ToString(),
+                                Convert.ToInt32(reader["quantity"]),
+                                Convert.ToDouble(reader["unit_price"]),
+                                Convert.ToDouble(reader["discount"]),
+                                Convert.ToDouble(reader["amount"])
+                            ));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetDetailsByInvoiceId Error: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            return details;
         }
 
         public ImportInvoiceDetail GetImportInvoiceDetailById(string invoiceId, string productId)

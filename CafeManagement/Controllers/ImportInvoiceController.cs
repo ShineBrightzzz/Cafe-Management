@@ -17,15 +17,16 @@ namespace CafeManagement.Controllers
             importInvoiceService = new ImportInvoiceService();
         }
 
-        public bool AddImportInvoice(string importInvoiceId, DateTime dateOfImport, string employeeId, string supplierId, double totalPrice)
+        public bool AddImportInvoice(DateTime dateOfImport, string employeeId, string supplierId, double totalAmount)
         {
-            var invoice = new ImportInvoice(importInvoiceId, dateOfImport, employeeId, supplierId, totalPrice);
+            string invoiceId = Guid.NewGuid().ToString();
+            var invoice = new ImportInvoice(invoiceId, dateOfImport, employeeId, supplierId, totalAmount);
             return importInvoiceService.AddImportInvoice(invoice);
         }
 
-        public bool UpdateSaleInvoice(string importInvoiceId, DateTime dateOfImport, string employeeId, string supplierId, double totalPrice)
+        public bool UpdateImportInvoice(string invoiceId, DateTime dateOfImport, string employeeId, string supplierId, double totalAmount)
         {
-            var invoice = new ImportInvoice(importInvoiceId, dateOfImport, employeeId, supplierId, totalPrice);
+            var invoice = new ImportInvoice(invoiceId, dateOfImport, employeeId, supplierId, totalAmount);
             return importInvoiceService.UpdateImportInvoice(invoice);
         }
 

@@ -33,7 +33,7 @@
             btnEmployee = new Button();
             btnCustomer = new Button();
             btnSaleInvoice = new Button();
-            button4 = new Button();
+            btnImportInvoice = new Button();
             btnMenu = new Button();
             button1 = new Button();
             mainPanel = new FlowLayoutPanel();
@@ -53,7 +53,7 @@
             panel2.Controls.Add(btnEmployee);
             panel2.Controls.Add(btnCustomer);
             panel2.Controls.Add(btnSaleInvoice);
-            panel2.Controls.Add(button4);
+            panel2.Controls.Add(btnImportInvoice);
             panel2.Controls.Add(btnMenu);
             panel2.Controls.Add(button1);
             panel2.Dock = DockStyle.Left;
@@ -92,14 +92,15 @@
             btnSaleInvoice.UseVisualStyleBackColor = true;
             btnSaleInvoice.Click += btnSaleInvoice_Click;
             // 
-            // button4
+            // btnImportInvoice
             // 
-            button4.Location = new Point(0, 100);
-            button4.Name = "button4";
-            button4.Size = new Size(200, 44);
-            button4.TabIndex = 0;
-            button4.Text = "Hóa đơn nhập";
-            button4.UseVisualStyleBackColor = true;
+            btnImportInvoice.Location = new Point(0, 100);
+            btnImportInvoice.Name = "btnImportInvoice";
+            btnImportInvoice.Size = new Size(200, 44);
+            btnImportInvoice.TabIndex = 0;
+            btnImportInvoice.Text = "Hóa đơn nhập";
+            btnImportInvoice.UseVisualStyleBackColor = true;
+            btnImportInvoice.Click += btnImportInvoice_Click;
             // 
             // btnMenu
             // 
@@ -149,7 +150,7 @@
         private Button button1;
         private Button btnCustomer;
         private Button btnSaleInvoice;
-        private Button button4;
+        private Button btnImportInvoice;
         private Button btnMenu;
         private Button btnEmployee;
         private FlowLayoutPanel mainPanel;

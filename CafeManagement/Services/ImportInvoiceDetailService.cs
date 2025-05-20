@@ -8,7 +8,7 @@ using CafeManagement.Entities;
 
 namespace CafeManagement.Services
 {
-    internal class ImportInvoiceDetailService
+    public class ImportInvoiceDetailService
     {
         private readonly ImportInvoiceDetailDao importInvoiceDetailDao;
 
@@ -57,14 +57,14 @@ namespace CafeManagement.Services
             }
         }
 
-        public bool DeleteImportInvoiceDetail(string invoiceId, string productId)
+        public bool DeleteImportInvoiceDetail(string invoiceId, string ingredientId)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(invoiceId) || string.IsNullOrWhiteSpace(productId))
-                    throw new ArgumentException("Invoice ID and Product ID must be provided.");
+                if (string.IsNullOrWhiteSpace(invoiceId) || string.IsNullOrWhiteSpace(ingredientId))
+                    throw new ArgumentException("Invoice ID and Ingredient ID must be provided.");
 
-                importInvoiceDetailDao.DeleteImportInvoiceDetail(invoiceId, productId);
+                importInvoiceDetailDao.DeleteImportInvoiceDetail(invoiceId, ingredientId);
                 return true;
             }
             catch (ArgumentException ex)
@@ -79,14 +79,35 @@ namespace CafeManagement.Services
             }
         }
 
-        public ImportInvoiceDetail GetImportInvoiceDetailById(string importInvoiceId, string productId)
+        public ImportInvoiceDetail GetImportInvoiceDetailById(string importInvoiceId, string ingredientId)
         {
-            return importInvoiceDetailDao.GetImportInvoiceDetailById(importInvoiceId, productId);
+            return importInvoiceDetailDao.GetImportInvoiceDetailById(importInvoiceId, ingredientId);
         }
 
         public List<ImportInvoiceDetail> GetAllImportInvoiceDetails()
         {
             return importInvoiceDetailDao.GetAllImportInvoiceDetails();
+        }
+
+        public List<ImportInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(invoiceId))
+                    throw new ArgumentException("Invoice ID must be provided.");
+
+                return importInvoiceDetailDao.GetDetailsByInvoiceId(invoiceId);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Validation Error: {ex.Message}");
+                return new List<ImportInvoiceDetail>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
+                return new List<ImportInvoiceDetail>();
+            }
         }
 
         private void ValidateImportInvoiceDetail(ImportInvoiceDetail detail)
@@ -97,8 +118,8 @@ namespace CafeManagement.Services
             if (string.IsNullOrWhiteSpace(detail.getImportInvoiceId()))
                 throw new ArgumentException("Invoice ID is required.");
 
-            if (string.IsNullOrWhiteSpace(detail.getProductId()))
-                throw new ArgumentException("Product ID is required.");
+            if (string.IsNullOrWhiteSpace(detail.getIngredientId()))
+                throw new ArgumentException("Ingredient ID is required.");
 
             if (detail.getQuantity() <= 0)
                 throw new ArgumentException("Quantity must be greater than 0.");
