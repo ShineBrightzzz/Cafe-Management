@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,24 +19,24 @@ namespace CafeManagement.Forms
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
         private TableService _tableService;
-        private double _total = 0;        public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
+        private double _total = 0; public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
         {
             InitializeComponent();
             _table = table;
             _invoiceItems = invoiceItems;
             _tableService = new TableService();
-            
+
             // Set default values
             txtDiscount.Text = "0";
             rdCash.Checked = true;
             picQR.Visible = false;
             picQR.SizeMode = PictureBoxSizeMode.Zoom;
-            
+
             // Handle discount changes
             txtDiscount.TextChanged += TxtDiscount_TextChanged;
             rdCash.CheckedChanged += RdPayment_CheckedChanged;
             rdBank.CheckedChanged += RdPayment_CheckedChanged;
-            
+
             LoadInvoiceItems();
         }
 
@@ -51,10 +52,10 @@ namespace CafeManagement.Forms
                 double discountPercent = string.IsNullOrEmpty(txtDiscount.Text) ? 0 : double.Parse(txtDiscount.Text);
                 if (discountPercent < 0) discountPercent = 0;
                 if (discountPercent > 100) discountPercent = 100;
-                
+
                 double discountAmount = _total * discountPercent / 100;
                 double finalTotal = _total - discountAmount;
-                
+
                 txtTotalCustomer.Text = $"{finalTotal:N0} đ";
                 txtCustomerPayment.Text = finalTotal.ToString("N0");
             }
@@ -98,12 +99,12 @@ namespace CafeManagement.Forms
             // Update total amount labels
             lblTotal.Text = $"{_total:N0} đ";
             UpdateTotalAmount();
-        }        
-        
+        }
+
         private void btnPayment_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 // Validate payment amount
                 double customerPayment = 0;
                 if (!double.TryParse(txtCustomerPayment.Text.Replace(",", ""), out customerPayment))
@@ -161,7 +162,7 @@ namespace CafeManagement.Forms
                 QRCoder.QRCodeGenerator qrGenerator = new QRCoder.QRCodeGenerator();
                 QRCoder.QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCoder.QRCodeGenerator.ECCLevel.Q);
                 QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
-                
+
                 // Tạo QR code với kích thước phù hợp với PictureBox
                 int minDimension = Math.Min(picQR.Width, picQR.Height);
                 picQR.Image = qrCode.GetGraphic(minDimension / 50); // Điều chỉnh pixel size
@@ -171,6 +172,164 @@ namespace CafeManagement.Forms
             {
                 MessageBox.Show($"Lỗi tạo mã QR: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnPrintInvoice_Click(object sender, EventArgs e)
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
+            pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, 600);
+
+            // Tạo và cấu hình PrintPreviewDialog
+            PrintPreviewDialog ppd = new PrintPreviewDialog();
+            ppd.Document = pd;
+            ppd.WindowState = FormWindowState.Maximized;
+            ppd.PrintPreviewControl.Zoom = 1.0;
+            ppd.Text = "Xem trước hóa đơn";
+            
+            try
+            {
+                ppd.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi hiển thị hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Thiết lập font và bút vẽ
+            Font regularFont = new Font("Arial", 8, FontStyle.Regular);
+            Font boldFont = new Font("Arial", 10, FontStyle.Bold);
+            Font titleFont = new Font("Arial", 12, FontStyle.Bold);
+            SolidBrush brush = new SolidBrush(Color.Black);
+            Pen pen = new Pen(Color.Black, 1);
+            
+            float pageWidth = 270; // Chiều rộng thực tế để in
+            int startX = 5;
+            int startY = 10;
+            int lineHeight = 20;
+
+            // Vẽ tiêu đề
+            StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
+            e.Graphics.DrawString("HÓA ĐƠN BÁN HÀNG", titleFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight * 2;
+
+            // Vẽ thông tin cửa hàng
+            e.Graphics.DrawString("HIGHLANDS COFFEE", boldFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight;
+            e.Graphics.DrawString("181 Nam Kỳ Khởi Nghĩa, Quận 1, HCM", regularFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight;
+            e.Graphics.DrawString("Tel: (84-28) 3821 2958", regularFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight;
+
+            // Vẽ đường kẻ ngang
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 5;
+
+            // Vẽ mã cửa hàng và mã số thuế
+            e.Graphics.DrawString($"ShopID: {96999}", regularFont, brush, startX, startY);
+            startY += lineHeight;
+            e.Graphics.DrawString($"Mã số thuế: M1-24-FR602-8809100134", regularFont, brush, startX, startY);
+            startY += lineHeight;
+
+            // Vẽ thông tin giao dịch
+            e.Graphics.DrawString($"Ngày: {DateTime.Now:dd/MM/yyyy HH:mm}", regularFont, brush, startX, startY);
+            startY += lineHeight;
+
+            // Vẽ đường kẻ ngang
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 10;
+
+            // Vẽ tiêu đề cột
+            StringFormat rightAlign = new StringFormat() { Alignment = StringAlignment.Far };
+            e.Graphics.DrawString("Tên SP", boldFont, brush, startX, startY);
+            e.Graphics.DrawString("SL", boldFont, brush, startX + 140, startY, rightAlign);
+            e.Graphics.DrawString("Đơn giá", boldFont, brush, startX + 190, startY, rightAlign);
+            e.Graphics.DrawString("T.Tiền", boldFont, brush, startX + pageWidth, startY, rightAlign);
+            startY += lineHeight;
+
+            // Vẽ đường kẻ ngang
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 5;
+
+            // Vẽ danh sách sản phẩm
+            foreach (var item in _invoiceItems)
+            {
+                string productName = item.GetProduct().getName();
+                int quantity = int.Parse(item.GetQuantity());
+                double price = item.GetPrice();
+                double subtotal = quantity * price;
+
+                e.Graphics.DrawString(productName, regularFont, brush, startX, startY);
+                e.Graphics.DrawString(quantity.ToString(), regularFont, brush, startX + 140, startY, rightAlign);
+                e.Graphics.DrawString($"{price:N0}", regularFont, brush, startX + 190, startY, rightAlign);
+                e.Graphics.DrawString($"{subtotal:N0}", regularFont, brush, startX + pageWidth, startY, rightAlign);
+                startY += lineHeight;
+            }
+
+            // Vẽ đường kẻ ngang
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 10;            // Vẽ tổng tiền
+            int totalY = startY;
+            string subTotalText = "Tổng cộng:";
+            e.Graphics.DrawString(subTotalText, boldFont, brush, startX + pageWidth - 150, totalY);
+            e.Graphics.DrawString($"{_total:N0} đ", boldFont, brush, startX + pageWidth, totalY, rightAlign);
+            totalY += lineHeight;
+
+            double discountPercent = string.IsNullOrEmpty(txtDiscount.Text) ? 0 : double.Parse(txtDiscount.Text);
+            if (discountPercent > 0)
+            {
+                string discountText = $"Giảm giá ({discountPercent}%):";
+                double discountAmount = _total * discountPercent / 100;
+                e.Graphics.DrawString(discountText, regularFont, brush, startX + pageWidth - 150, totalY);
+                e.Graphics.DrawString($"-{discountAmount:N0} đ", regularFont, brush, startX + pageWidth, totalY, rightAlign);
+                totalY += lineHeight;
+
+                // Vẽ tổng tiền sau giảm giá
+                double finalTotal = _total - discountAmount;
+                e.Graphics.DrawString("Thành tiền:", boldFont, brush, startX + pageWidth - 150, totalY);
+                e.Graphics.DrawString($"{finalTotal:N0} đ", boldFont, brush, startX + pageWidth, totalY, rightAlign);
+            }
+
+            startY = totalY + lineHeight * 2;
+
+            // Vẽ đường kẻ ngang
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 10;
+
+            // Vẽ thông tin liên hệ
+            e.Graphics.DrawString("*Chia sẻ ý kiến của bạn với chúng tôi*", regularFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight;
+            e.Graphics.DrawString("customerservice@highlandscoffee.com.vn", regularFont, brush, startX + pageWidth/2, startY, centerFormat);
+            startY += lineHeight;
+
+            // Vẽ thông báo
+            string notice = "Quý khách có nhu cầu xuất hóa đơn vui lòng gửi yêu cầu và thông tin trong vòng 03 giờ kể từ lúc mua hàng";
+            using (Font noticeFont = new Font("Arial", 7, FontStyle.Italic))
+            {
+                e.Graphics.DrawString(notice, noticeFont, brush, new RectangleF(startX, startY, pageWidth, lineHeight * 3), centerFormat);
+            }
+            startY += lineHeight * 3;
+
+            // Vẽ QR code nếu thanh toán bằng ngân hàng
+            if (rdBank.Checked && picQR.Image != null)
+            {
+                int qrSize = 100;
+                e.Graphics.DrawImage(picQR.Image, startX + (pageWidth - qrSize)/2, startY, qrSize, qrSize);
+                startY += qrSize + lineHeight;
+            }
+
+            // Vẽ đường kẻ ngang cuối cùng
+            e.Graphics.DrawLine(pen, startX, startY, startX + pageWidth, startY);
+            startY += 10;
+
+            // Vẽ đường dẫn website
+            e.Graphics.DrawString("https://invoice.highlandscoffee.com.vn", regularFont, brush, startX + pageWidth/2, startY, centerFormat);
+
+            // Giải phóng tài nguyên
+            pen.Dispose();
         }
     }
 }
