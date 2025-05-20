@@ -13,7 +13,7 @@ namespace CafeManagement
 
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new OrderForm());
+            Application.Run(new LoginForm());
         }
     }
 }
