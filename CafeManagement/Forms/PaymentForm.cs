@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CafeManagement.Entities;
 using CafeManagement.Services;
+using QRCoder;
 
 namespace CafeManagement.Forms
 {
@@ -17,9 +18,7 @@ namespace CafeManagement.Forms
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
         private TableService _tableService;
-        private double _total = 0;
-
-        public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
+        private double _total = 0;        public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
         {
             InitializeComponent();
             _table = table;
@@ -29,9 +28,13 @@ namespace CafeManagement.Forms
             // Set default values
             txtDiscount.Text = "0";
             rdCash.Checked = true;
+            picQR.Visible = false;
+            picQR.SizeMode = PictureBoxSizeMode.Zoom;
             
             // Handle discount changes
             txtDiscount.TextChanged += TxtDiscount_TextChanged;
+            rdCash.CheckedChanged += RdPayment_CheckedChanged;
+            rdBank.CheckedChanged += RdPayment_CheckedChanged;
             
             LoadInvoiceItems();
         }
@@ -129,6 +132,44 @@ namespace CafeManagement.Forms
                 MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
+            }
+        }
+
+        private void RdPayment_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdCash.Checked)
+            {
+                picQR.Visible = false;
+            }
+            else if (rdBank.Checked)
+            {
+                picQR.Visible = true;
+                GenerateQRCode();
+            }
+        }
+
+        private void GenerateQRCode()
+        {
+            try
+            {
+                double amount = double.Parse(txtTotalCustomer.Text.Replace(",", "").Replace(" đ", ""));
+                string qrContent = $"Thanh toán: {amount:N0} VND\n" +
+                                 "Số tài khoản: 123456789\n" +
+                                 "Ngân hàng: VPBank\n" +
+                                 "Tên: CAFE MANAGEMENT";
+
+                QRCoder.QRCodeGenerator qrGenerator = new QRCoder.QRCodeGenerator();
+                QRCoder.QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCoder.QRCodeGenerator.ECCLevel.Q);
+                QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
+                
+                // Tạo QR code với kích thước phù hợp với PictureBox
+                int minDimension = Math.Min(picQR.Width, picQR.Height);
+                picQR.Image = qrCode.GetGraphic(minDimension / 50); // Điều chỉnh pixel size
+                picQR.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi tạo mã QR: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

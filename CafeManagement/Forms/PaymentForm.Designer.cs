@@ -31,6 +31,7 @@
             panel1 = new Panel();
             itemPanel = new ListView();
             paymentPanel = new Panel();
+            picQR = new PictureBox();
             txtDiscount = new TextBox();
             txtCustomerPayment = new TextBox();
             rdBank = new RadioButton();
@@ -43,6 +44,7 @@
             lblTotal = new Label();
             btnPayment = new Button();
             paymentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picQR).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -65,6 +67,7 @@
             // 
             // paymentPanel
             // 
+            paymentPanel.Controls.Add(picQR);
             paymentPanel.Controls.Add(txtDiscount);
             paymentPanel.Controls.Add(txtCustomerPayment);
             paymentPanel.Controls.Add(rdBank);
@@ -81,6 +84,14 @@
             paymentPanel.Name = "paymentPanel";
             paymentPanel.Size = new Size(497, 697);
             paymentPanel.TabIndex = 5;
+            // 
+            // picQR
+            // 
+            picQR.Location = new Point(112, 351);
+            picQR.Name = "picQR";
+            picQR.Size = new Size(296, 271);
+            picQR.TabIndex = 5;
+            picQR.TabStop = false;
             // 
             // txtDiscount
             // 
@@ -99,7 +110,7 @@
             // rdBank
             // 
             rdBank.AutoSize = true;
-            rdBank.Location = new Point(269, 302);
+            rdBank.Location = new Point(306, 302);
             rdBank.Name = "rdBank";
             rdBank.Size = new Size(102, 19);
             rdBank.TabIndex = 3;
@@ -200,6 +211,7 @@
             Text = "Thanh toán";
             paymentPanel.ResumeLayout(false);
             paymentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picQR).EndInit();
             ResumeLayout(false);
         }
 
@@ -219,5 +231,6 @@
         private Label label4;
         private Label label3;
         private Label label1;
+        private PictureBox picQR;
     }
 }
