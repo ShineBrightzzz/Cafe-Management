@@ -42,9 +42,10 @@
             flowLayoutPanel1.Controls.Add(btnTable);
             flowLayoutPanel1.Controls.Add(btnMenu);
             flowLayoutPanel1.Dock = DockStyle.Top;
-            flowLayoutPanel1.Location = new Point(0, 61);
+            flowLayoutPanel1.Location = new Point(0, 130);
+            flowLayoutPanel1.Margin = new Padding(6, 6, 6, 6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(665, 46);
+            flowLayoutPanel1.Size = new Size(1235, 98);
             flowLayoutPanel1.TabIndex = 10;
             // 
             // btnTable
@@ -54,8 +55,10 @@
             btnTable.FlatStyle = FlatStyle.Flat;
             btnTable.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnTable.ForeColor = Color.White;
-            btnTable.Location = new Point(3, 3);
-            btnTable.Name = "btnTable";            btnTable.Size = new Size(154, 37);
+            btnTable.Location = new Point(6, 6);
+            btnTable.Margin = new Padding(6, 6, 6, 6);
+            btnTable.Name = "btnTable";
+            btnTable.Size = new Size(286, 79);
             btnTable.TabIndex = 0;
             btnTable.Text = "Bàn";
             btnTable.UseVisualStyleBackColor = false;
@@ -68,8 +71,10 @@
             btnMenu.FlatStyle = FlatStyle.Flat;
             btnMenu.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnMenu.ForeColor = Color.White;
-            btnMenu.Location = new Point(163, 3);
-            btnMenu.Name = "btnMenu";            btnMenu.Size = new Size(154, 37);
+            btnMenu.Location = new Point(304, 6);
+            btnMenu.Margin = new Padding(6, 6, 6, 6);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(286, 79);
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
             btnMenu.UseVisualStyleBackColor = false;
@@ -78,36 +83,41 @@
             // invoicesPanel
             // 
             invoicesPanel.Dock = DockStyle.Right;
-            invoicesPanel.Location = new Point(665, 61);
+            invoicesPanel.Location = new Point(1235, 130);
+            invoicesPanel.Margin = new Padding(6, 6, 6, 6);
             invoicesPanel.Name = "invoicesPanel";
-            invoicesPanel.Size = new Size(523, 761);
+            invoicesPanel.Size = new Size(971, 1624);
             invoicesPanel.TabIndex = 9;
+            invoicesPanel.Paint += invoicesPanel_Paint;
             // 
             // panel1
             // 
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(6, 6, 6, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1188, 61);
+            panel1.Size = new Size(2206, 130);
             panel1.TabIndex = 8;
             // 
             // mainPanel
             // 
             mainPanel.Dock = DockStyle.Fill;
-            mainPanel.Location = new Point(0, 107);
+            mainPanel.Location = new Point(0, 228);
+            mainPanel.Margin = new Padding(6, 6, 6, 6);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(665, 715);
+            mainPanel.Size = new Size(1235, 1526);
             mainPanel.TabIndex = 11;
             // 
             // OrderForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1188, 822);
+            ClientSize = new Size(2206, 1754);
             Controls.Add(mainPanel);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(invoicesPanel);
             Controls.Add(panel1);
+            Margin = new Padding(6, 6, 6, 6);
             Name = "OrderForm";
             Text = "OrderForm";
             Load += OrderForm_Load;

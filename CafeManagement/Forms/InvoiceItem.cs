@@ -117,5 +117,10 @@ namespace CafeManagement.Forms
             ItemDeleted?.Invoke(this, EventArgs.Empty); // Notify listeners about deletion
             this.Parent?.Controls.Remove(this); // Remove this control from its parent
         }
+
+        private void InvoiceItem_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

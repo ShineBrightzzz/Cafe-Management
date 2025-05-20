@@ -61,7 +61,8 @@ namespace CafeManagement.Forms
             {
                 invoicePanel.AddProduct(selectedProduct);
             }
-        }        private void btnTable_Click(object sender, EventArgs e)
+        }
+        private void btnTable_Click(object sender, EventArgs e)
         {
             this.selectedTable = null;
             LoadTablePanel();
@@ -74,6 +75,11 @@ namespace CafeManagement.Forms
             {
                 LoadProductPanel(selectedTable);
             }
+        }
+
+        private void invoicesPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

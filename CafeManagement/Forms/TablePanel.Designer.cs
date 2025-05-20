@@ -32,10 +32,12 @@
             // 
             // TablePanel
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            Margin = new Padding(6, 6, 6, 6);
             Name = "TablePanel";
-            Size = new Size(665, 715);
+            Size = new Size(1235, 1525);
+            Load += TablePanel_Load;
             ResumeLayout(false);
         }
 

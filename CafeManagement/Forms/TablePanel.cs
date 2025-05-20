@@ -29,7 +29,7 @@ namespace CafeManagement.Forms
             InitializeComponent();
             InitializeTablePanel();
             tableController = new TableController();
-            
+
             // Load tables when component is initialized
             LoadTables();
         }
@@ -47,9 +47,10 @@ namespace CafeManagement.Forms
             };
 
             this.Controls.Add(tableFlowPanel);
-        }        public void LoadTables()
+        }
+        public void LoadTables()
         {
-            try 
+            try
             {
                 tables = tableController.GetAllTables();
                 if (tables == null || tables.Count == 0)
@@ -119,14 +120,15 @@ namespace CafeManagement.Forms
 
             // Make label click trigger the table selection directly
             nameLabel.Click += (s, e) => TableSelected?.Invoke(this, table);
-            
+
             tablePanel.Controls.Add(nameLabel);
 
             // Add click event handler to panel
             tablePanel.Click += TablePanel_Click;
 
             // Add border
-            tablePanel.Paint += (sender, e) => {
+            tablePanel.Paint += (sender, e) =>
+            {
                 var p = sender as Panel;
                 e.Graphics.DrawRectangle(new Pen(Color.Black, 2), 0, 0, p.Width - 1, p.Height - 1);
             };
@@ -154,7 +156,7 @@ namespace CafeManagement.Forms
                     table.getName(),
                     table.getIsOccupied()
                 );
-                
+
                 // Refresh display
                 LoadTables();
             }
@@ -171,6 +173,11 @@ namespace CafeManagement.Forms
                 tables = tableController.GetTablesByOccupationStatus(isOccupied.Value);
             }
             DisplayTables();
+        }
+
+        private void TablePanel_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
