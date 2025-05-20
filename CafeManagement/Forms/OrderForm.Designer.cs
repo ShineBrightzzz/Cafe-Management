@@ -32,7 +32,7 @@
             btnTable = new Button();
             btnMenu = new Button();
             invoicesPanel = new FlowLayoutPanel();
-            panel1 = new Panel();
+            header = new Panel();
             mainPanel = new FlowLayoutPanel();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -55,7 +55,8 @@
             btnTable.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnTable.ForeColor = Color.White;
             btnTable.Location = new Point(3, 3);
-            btnTable.Name = "btnTable";            btnTable.Size = new Size(154, 37);
+            btnTable.Name = "btnTable";
+            btnTable.Size = new Size(154, 37);
             btnTable.TabIndex = 0;
             btnTable.Text = "Bàn";
             btnTable.UseVisualStyleBackColor = false;
@@ -69,7 +70,8 @@
             btnMenu.Font = new Font("Arial", 10F, FontStyle.Bold);
             btnMenu.ForeColor = Color.White;
             btnMenu.Location = new Point(163, 3);
-            btnMenu.Name = "btnMenu";            btnMenu.Size = new Size(154, 37);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(154, 37);
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
             btnMenu.UseVisualStyleBackColor = false;
@@ -83,13 +85,13 @@
             invoicesPanel.Size = new Size(523, 761);
             invoicesPanel.TabIndex = 9;
             // 
-            // panel1
+            // header
             // 
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1188, 61);
-            panel1.TabIndex = 8;
+            header.Dock = DockStyle.Top;
+            header.Location = new Point(0, 0);
+            header.Name = "header";
+            header.Size = new Size(1188, 61);
+            header.TabIndex = 8;
             // 
             // mainPanel
             // 
@@ -107,7 +109,7 @@
             Controls.Add(mainPanel);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(invoicesPanel);
-            Controls.Add(panel1);
+            Controls.Add(header);
             Name = "OrderForm";
             Text = "OrderForm";
             Load += OrderForm_Load;
@@ -121,7 +123,7 @@
         private Button btnTable;
         private Button btnMenu;
         private FlowLayoutPanel invoicesPanel;
-        private Panel panel1;
+        private Panel header;
         private FlowLayoutPanel mainPanel;
     }
 }

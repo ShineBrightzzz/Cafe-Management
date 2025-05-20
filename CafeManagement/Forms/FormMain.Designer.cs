@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            header = new Panel();
             panel2 = new Panel();
             btnEmployee = new Button();
             btnCustomer = new Button();
@@ -40,13 +40,13 @@
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // header
             // 
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1086, 77);
-            panel1.TabIndex = 0;
+            header.Dock = DockStyle.Top;
+            header.Location = new Point(0, 0);
+            header.Name = "header";
+            header.Size = new Size(1086, 61);
+            header.TabIndex = 0;
             // 
             // panel2
             // 
@@ -57,9 +57,9 @@
             panel2.Controls.Add(btnMenu);
             panel2.Controls.Add(button1);
             panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(0, 77);
+            panel2.Location = new Point(0, 61);
             panel2.Name = "panel2";
-            panel2.Size = new Size(200, 706);
+            panel2.Size = new Size(200, 722);
             panel2.TabIndex = 1;
             // 
             // btnEmployee
@@ -124,9 +124,9 @@
             // mainPanel
             // 
             mainPanel.Dock = DockStyle.Fill;
-            mainPanel.Location = new Point(200, 77);
+            mainPanel.Location = new Point(200, 61);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(886, 706);
+            mainPanel.Size = new Size(886, 722);
             mainPanel.TabIndex = 2;
             // 
             // FormMain
@@ -136,7 +136,7 @@
             ClientSize = new Size(1086, 783);
             Controls.Add(mainPanel);
             Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(header);
             Name = "FormMain";
             Text = "FormMain";
             panel2.ResumeLayout(false);
@@ -145,7 +145,7 @@
 
         #endregion
 
-        private Panel panel1;
+        private Panel header;
         private Panel panel2;
         private Button button1;
         private Button btnCustomer;

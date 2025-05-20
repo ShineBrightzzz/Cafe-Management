@@ -1,76 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CafeManagement.Entities
 {
     public class Account
     {
-        private String Id;
-        private String employeeId;
-        private String username;
-        private String password;
-        private String role;
+        private Guid id;
+        private string username;
+        private string password;
+        private string role;
 
-        public Account(string id, string employeeId, string username, string password, string role)
+        public Account(string username, string password, string role)
         {
-            this.Id = id;
-            this.employeeId = employeeId;
+            this.id = Guid.NewGuid();
             this.username = username;
             this.password = password;
             this.role = role;
         }
 
-        public string getId()
+        // For loading from DB with existing ID
+        public Account(Guid id, string username, string password, string role)
         {
-            return Id;
-        }
-
-        public string getEmployeeId()
-        {
-            return employeeId;
-        }
-
-        public string getUsername()
-        {
-            return username;
-        }
-
-        public string getPassword()
-        {
-            return password;
-        }
-
-        public string getRole()
-        {
-            return role;
-        }
-
-        public void setId(string id)
-        {
-            Id = id;
-        }
-
-        public void setEmployeeId(string employeeId)
-        {
-            this.employeeId = employeeId;
-        }
-
-        public void setUsername(string username)
-        {
+            this.id = id;
             this.username = username;
-        }
-
-        public void setPassword(string password)
-        {
             this.password = password;
-        }
-
-        public void setRole(string role)
-        {
             this.role = role;
         }
+
+        public Guid getId() => id;
+        public void setId(Guid id) => this.id = id;
+
+        public string getUsername() => username;
+        public void setUsername(string username) => this.username = username;
+
+        public string getPassword() => password;
+        public void setPassword(string password) => this.password = password;
+
+        public string getRole() => role;
+        public void setRole(string role) => this.role = role;
     }
 }

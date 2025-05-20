@@ -28,6 +28,7 @@ namespace CafeManagement.Forms
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(tablePanel);
         }
+    
 
         private void LoadInvoicePanel()
         {

@@ -8,6 +8,7 @@ using CafeManagement.Entities;
 using DocumentFormat.OpenXml.Presentation;
 using System.Security.Cryptography;
 using BCrypt.Net;
+using System.Windows.Forms;
 
 namespace CafeManagement.Services
 {
@@ -23,7 +24,7 @@ namespace CafeManagement.Services
         //Truyền password để mã hóa
         public Account GetAccountByUsername(string username)
         {
-            return accountDao.GetAccountByUserName(username);
+            return accountDao.GetAccountByUsername(username);
         }
         public string HashPassword(string password)
         {
@@ -32,28 +33,17 @@ namespace CafeManagement.Services
 
         public bool Login(string username, string password)
         {
-            var account = accountDao.GetAccountByUserName(username);
+            var account = accountDao.GetAccountByUsername(username);
             if (account == null) return false;
 
             return BCrypt.Net.BCrypt.Verify(password, account.getPassword()); 
         }
 
-        public bool Register(Account account, string rawPassword)
+        public bool Register(string username, string rawPassword, string role)
         {
-            if (accountDao.IsEmployeeIdRegistered(account.getEmployeeId()))
-            {
-                MessageBox.Show("Nhân viên này đã có tài khoản!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!accountDao.IsEmployeeIdExist(account.getEmployeeId()))
-            {
-                MessageBox.Show("Mã nhân viên không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            account.setPassword(HashPassword(rawPassword));
-            return accountDao.CreateAccount(account);
+            var hashedPassword = HashPassword(rawPassword);
+            var account = new Account(username, hashedPassword, role);
+            return accountDao.AddAccount(account);
         }
     }
 }

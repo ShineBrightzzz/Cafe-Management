@@ -16,15 +16,15 @@ namespace CafeManagement.Controllers
         {
             return accountService.GetAccountByUsername(username);
         }
+
         public bool Login(string username, string password)
         {
             return accountService.Login(username, password);
         }
 
-        public bool Register(string id, string employeeId, string username, string password, string role)
+        public bool Register(string username, string password, string role)
         {
-            Account acc = new Account(id, employeeId, username, password, role);
-            return accountService.Register(acc, password);
+            return accountService.Register(username, password, role);
         }
     }
 }
