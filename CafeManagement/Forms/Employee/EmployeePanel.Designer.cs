@@ -49,7 +49,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(376, 490);
+            label2.Location = new Point(506, 533);
             label2.Name = "label2";
             label2.Size = new Size(76, 15);
             label2.TabIndex = 14;
@@ -58,7 +58,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(20, 438);
+            label1.Location = new Point(150, 481);
             label1.Name = "label1";
             label1.Size = new Size(80, 15);
             label1.TabIndex = 15;
@@ -66,7 +66,7 @@
             // 
             // mtxtPhone
             // 
-            mtxtPhone.Location = new Point(500, 490);
+            mtxtPhone.Location = new Point(630, 533);
             mtxtPhone.Mask = "(999) 000-0000";
             mtxtPhone.Name = "mtxtPhone";
             mtxtPhone.Size = new Size(131, 23);
@@ -74,14 +74,14 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(159, 435);
+            txtName.Location = new Point(289, 478);
             txtName.Name = "txtName";
             txtName.Size = new Size(131, 23);
             txtName.TabIndex = 12;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(355, 595);
+            btnDelete.Location = new Point(485, 638);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 11;
@@ -91,7 +91,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(194, 595);
+            btnUpdate.Location = new Point(324, 638);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 10;
@@ -101,7 +101,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(32, 595);
+            btnAdd.Location = new Point(162, 638);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 9;
@@ -112,14 +112,14 @@
             // dgidEmployee
             // 
             dgidEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgidEmployee.Location = new Point(3, 3);
+            dgidEmployee.Location = new Point(133, 46);
             dgidEmployee.Name = "dgidEmployee";
             dgidEmployee.Size = new Size(739, 408);
             dgidEmployee.TabIndex = 8;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(159, 524);
+            txtAddress.Location = new Point(289, 567);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(131, 23);
             txtAddress.TabIndex = 12;
@@ -127,7 +127,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(20, 524);
+            label3.Location = new Point(150, 567);
             label3.Name = "label3";
             label3.Size = new Size(43, 15);
             label3.TabIndex = 15;
@@ -136,7 +136,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(20, 485);
+            label4.Location = new Point(150, 528);
             label4.Name = "label4";
             label4.Size = new Size(52, 15);
             label4.TabIndex = 15;
@@ -144,7 +144,7 @@
             // 
             // mtxtDateOfBirth
             // 
-            mtxtDateOfBirth.Location = new Point(500, 435);
+            mtxtDateOfBirth.Location = new Point(630, 478);
             mtxtDateOfBirth.Mask = "00/00/0000";
             mtxtDateOfBirth.Name = "mtxtDateOfBirth";
             mtxtDateOfBirth.Size = new Size(131, 23);
@@ -154,7 +154,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(376, 438);
+            label5.Location = new Point(506, 481);
             label5.Name = "label5";
             label5.Size = new Size(60, 15);
             label5.TabIndex = 14;
@@ -163,14 +163,14 @@
             // cbGender
             // 
             cbGender.FormattingEnabled = true;
-            cbGender.Location = new Point(159, 482);
+            cbGender.Location = new Point(289, 525);
             cbGender.Name = "cbGender";
             cbGender.Size = new Size(131, 23);
             cbGender.TabIndex = 16;
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(514, 595);
+            btnExcel.Location = new Point(644, 638);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(117, 50);
             btnExcel.TabIndex = 17;
@@ -198,7 +198,7 @@
             Controls.Add(btnAdd);
             Controls.Add(dgidEmployee);
             Name = "EmployeePanel";
-            Size = new Size(748, 670);
+            Size = new Size(988, 761);
             ((System.ComponentModel.ISupportInitialize)dgidEmployee).EndInit();
             ResumeLayout(false);
             PerformLayout();

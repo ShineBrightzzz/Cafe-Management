@@ -40,8 +40,8 @@ namespace CafeManagement.Forms.ImportInvoice
         {
             dgridImportInvoiceDetails = new DataGridView();
             dgridImportInvoice = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dgridImportInvoiceDetails).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgridImportInvoice).BeginInit();
+            ((ISupportInitialize)dgridImportInvoiceDetails).BeginInit();
+            ((ISupportInitialize)dgridImportInvoice).BeginInit();
             SuspendLayout();
             // 
             // dgridImportInvoiceDetails
@@ -67,9 +67,9 @@ namespace CafeManagement.Forms.ImportInvoice
             Controls.Add(dgridImportInvoiceDetails);
             Controls.Add(dgridImportInvoice);
             Name = "ImportInvoicePanel";
-            Size = new Size(885, 737);
-            ((System.ComponentModel.ISupportInitialize)dgridImportInvoiceDetails).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgridImportInvoice).EndInit();
+            Size = new Size(988, 761);
+            ((ISupportInitialize)dgridImportInvoiceDetails).EndInit();
+            ((ISupportInitialize)dgridImportInvoice).EndInit();
             ResumeLayout(false);
         }
 

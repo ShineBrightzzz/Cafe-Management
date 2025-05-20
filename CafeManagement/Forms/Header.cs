@@ -19,13 +19,18 @@ namespace CafeManagement.Forms
 
         private void lblLogout_Click(object sender, EventArgs e)
         {
+            // Find the parent form
             Form currentForm = this.FindForm();
             if (currentForm != null)
             {
-                currentForm.Controls.Clear();
+                currentForm.Close();
+                // Create and show the login form
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show();
+                
+                // Close the current form
+                
             }
-            LoginForm loginForm = new LoginForm();
-            loginForm.ShowLoginControls();
         }
     }
 }

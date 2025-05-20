@@ -15,12 +15,19 @@ using CafeManagement.Forms.ImportInvoice;
 using CafeManagement.Forms.ProductManagement;
 
 namespace CafeManagement.Forms
-{
-    public partial class FormMain : Form
+{    public partial class FormMain : Form
     {
         public FormMain()
         {
             InitializeComponent();
+            InitializeHeader();
+        }
+
+        private void InitializeHeader()
+        {
+            Header _header = new Header();
+            header.Controls.Clear();
+            header.Controls.Add(_header);
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

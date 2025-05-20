@@ -45,11 +45,12 @@
             header.Dock = DockStyle.Top;
             header.Location = new Point(0, 0);
             header.Name = "header";
-            header.Size = new Size(1086, 61);
+            header.Size = new Size(1188, 61);
             header.TabIndex = 0;
             // 
             // panel2
             // 
+            panel2.BackColor = SystemColors.Control;
             panel2.Controls.Add(btnEmployee);
             panel2.Controls.Add(btnCustomer);
             panel2.Controls.Add(btnSaleInvoice);
@@ -59,81 +60,93 @@
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 61);
             panel2.Name = "panel2";
-            panel2.Size = new Size(200, 722);
+            panel2.Size = new Size(200, 761);
             panel2.TabIndex = 1;
             // 
             // btnEmployee
             // 
-            btnEmployee.Location = new Point(0, 250);
+            btnEmployee.BackColor = SystemColors.GradientActiveCaption;
+            btnEmployee.FlatStyle = FlatStyle.Flat;
+            btnEmployee.Location = new Point(0, 275);
             btnEmployee.Name = "btnEmployee";
             btnEmployee.Size = new Size(200, 44);
             btnEmployee.TabIndex = 0;
             btnEmployee.Text = "Nhân viên";
-            btnEmployee.UseVisualStyleBackColor = true;
+            btnEmployee.UseVisualStyleBackColor = false;
             btnEmployee.Click += btnEmployee_Click;
             // 
             // btnCustomer
             // 
-            btnCustomer.Location = new Point(0, 200);
+            btnCustomer.BackColor = SystemColors.GradientActiveCaption;
+            btnCustomer.FlatStyle = FlatStyle.Flat;
+            btnCustomer.Location = new Point(0, 225);
             btnCustomer.Name = "btnCustomer";
             btnCustomer.Size = new Size(200, 44);
             btnCustomer.TabIndex = 0;
             btnCustomer.Text = "Khách hàng";
-            btnCustomer.UseVisualStyleBackColor = true;
+            btnCustomer.UseVisualStyleBackColor = false;
             btnCustomer.Click += btnCustomer_Click;
             // 
             // btnSaleInvoice
             // 
-            btnSaleInvoice.Location = new Point(0, 150);
+            btnSaleInvoice.BackColor = SystemColors.GradientActiveCaption;
+            btnSaleInvoice.FlatStyle = FlatStyle.Flat;
+            btnSaleInvoice.Location = new Point(0, 175);
             btnSaleInvoice.Name = "btnSaleInvoice";
             btnSaleInvoice.Size = new Size(200, 44);
             btnSaleInvoice.TabIndex = 0;
             btnSaleInvoice.Text = "Hóa đơn bán";
-            btnSaleInvoice.UseVisualStyleBackColor = true;
+            btnSaleInvoice.UseVisualStyleBackColor = false;
             btnSaleInvoice.Click += btnSaleInvoice_Click;
             // 
             // btnImportInvoice
             // 
-            btnImportInvoice.Location = new Point(0, 100);
+            btnImportInvoice.BackColor = SystemColors.GradientActiveCaption;
+            btnImportInvoice.FlatStyle = FlatStyle.Flat;
+            btnImportInvoice.Location = new Point(0, 125);
             btnImportInvoice.Name = "btnImportInvoice";
             btnImportInvoice.Size = new Size(200, 44);
             btnImportInvoice.TabIndex = 0;
             btnImportInvoice.Text = "Hóa đơn nhập";
-            btnImportInvoice.UseVisualStyleBackColor = true;
+            btnImportInvoice.UseVisualStyleBackColor = false;
             btnImportInvoice.Click += btnImportInvoice_Click;
             // 
             // btnMenu
             // 
-            btnMenu.Location = new Point(0, 50);
+            btnMenu.BackColor = SystemColors.GradientActiveCaption;
+            btnMenu.FlatStyle = FlatStyle.Flat;
+            btnMenu.Location = new Point(0, 75);
             btnMenu.Name = "btnMenu";
             btnMenu.Size = new Size(200, 44);
             btnMenu.TabIndex = 0;
             btnMenu.Text = "Thực đơn";
-            btnMenu.UseVisualStyleBackColor = true;
+            btnMenu.UseVisualStyleBackColor = false;
             btnMenu.Click += btnMenu_Click;
             // 
             // button1
             // 
-            button1.Location = new Point(0, 0);
+            button1.BackColor = SystemColors.GradientActiveCaption;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(0, 25);
             button1.Name = "button1";
             button1.Size = new Size(200, 44);
             button1.TabIndex = 0;
             button1.Text = "Trang chủ";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             // 
             // mainPanel
             // 
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(200, 61);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(886, 722);
+            mainPanel.Size = new Size(988, 761);
             mainPanel.TabIndex = 2;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1086, 783);
+            ClientSize = new Size(1188, 822);
             Controls.Add(mainPanel);
             Controls.Add(panel2);
             Controls.Add(header);

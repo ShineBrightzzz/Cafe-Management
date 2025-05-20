@@ -6,12 +6,20 @@ namespace CafeManagement.Forms
 {
     public partial class OrderForm : Form
     {
-        private Table selectedTable;
-        private InvoicePanel invoicePanel;
+    private Table selectedTable;
+    private InvoicePanel invoicePanel;
 
-        public OrderForm()
+    public OrderForm()
+    {
+        InitializeComponent();
+        InitializeHeader();
+    }
+
+    private void InitializeHeader()
         {
-            InitializeComponent();
+            Header _header = new Header();
+            header.Controls.Clear();
+            header.Controls.Add(_header);
         }
 
         private void OrderForm_Load(object sender, EventArgs e)

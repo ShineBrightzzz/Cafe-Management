@@ -47,7 +47,7 @@
             // cbType
             // 
             cbType.FormattingEnabled = true;
-            cbType.Location = new Point(162, 494);
+            cbType.Location = new Point(297, 558);
             cbType.Name = "cbType";
             cbType.Size = new Size(131, 23);
             cbType.TabIndex = 30;
@@ -55,7 +55,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(379, 450);
+            label5.Location = new Point(514, 514);
             label5.Name = "label5";
             label5.Size = new Size(51, 15);
             label5.TabIndex = 25;
@@ -64,7 +64,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(379, 502);
+            label2.Location = new Point(514, 566);
             label2.Name = "label2";
             label2.Size = new Size(47, 15);
             label2.TabIndex = 26;
@@ -73,7 +73,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(23, 497);
+            label4.Location = new Point(158, 561);
             label4.Name = "label4";
             label4.Size = new Size(84, 15);
             label4.TabIndex = 27;
@@ -82,7 +82,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(23, 450);
+            label1.Location = new Point(158, 514);
             label1.Name = "label1";
             label1.Size = new Size(80, 15);
             label1.TabIndex = 29;
@@ -90,14 +90,14 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(162, 447);
+            txtName.Location = new Point(297, 511);
             txtName.Name = "txtName";
             txtName.Size = new Size(131, 23);
             txtName.TabIndex = 22;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(379, 562);
+            btnDelete.Location = new Point(514, 626);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 20;
@@ -107,7 +107,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(218, 562);
+            btnUpdate.Location = new Point(353, 626);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 19;
@@ -117,7 +117,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(56, 562);
+            btnAdd.Location = new Point(191, 626);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 18;
@@ -128,28 +128,28 @@
             // dgridProduct
             // 
             dgridProduct.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridProduct.Location = new Point(3, 3);
+            dgridProduct.Location = new Point(138, 67);
             dgridProduct.Name = "dgridProduct";
             dgridProduct.Size = new Size(739, 408);
             dgridProduct.TabIndex = 17;
             // 
             // txtImportPrice
             // 
-            txtImportPrice.Location = new Point(503, 447);
+            txtImportPrice.Location = new Point(638, 511);
             txtImportPrice.Name = "txtImportPrice";
             txtImportPrice.Size = new Size(131, 23);
             txtImportPrice.TabIndex = 31;
             // 
             // txtSalePrice
             // 
-            txtSalePrice.Location = new Point(503, 497);
+            txtSalePrice.Location = new Point(638, 561);
             txtSalePrice.Name = "txtSalePrice";
             txtSalePrice.Size = new Size(131, 23);
             txtSalePrice.TabIndex = 32;
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(535, 564);
+            btnExcel.Location = new Point(670, 628);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 48);
             btnExcel.TabIndex = 33;
@@ -175,7 +175,7 @@
             Controls.Add(btnAdd);
             Controls.Add(dgridProduct);
             Name = "ProductPanel";
-            Size = new Size(751, 656);
+            Size = new Size(988, 761);
             ((System.ComponentModel.ISupportInitialize)dgridProduct).EndInit();
             ResumeLayout(false);
             PerformLayout();
