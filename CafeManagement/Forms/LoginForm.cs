@@ -71,15 +71,13 @@ namespace CafeManagement.Forms
                 var account = controller.GetAccount(user); // ✅ Lấy thông tin tài khoản
                 if (account.getRole() == "Admin")
                 {
-                    MessageBox.Show("Đăng nhập với quyền Admin");
-                    FormMain mainForm = new FormMain();
+                    MessageBox.Show("Đăng nhập với quyền Admin");                    FormMain mainForm = new FormMain(account);
                     mainForm.Show();
                     this.Hide();
                 }
                 else if (account.getRole() == "Employee")
-                {
-                    MessageBox.Show("Đăng nhập với quyền Nhân viên");
-                    OrderForm orderForm = new OrderForm();
+                {                    MessageBox.Show("Đăng nhập với quyền Nhân viên");
+                    OrderForm orderForm = new OrderForm(account);
                     orderForm.Show();
                     this.Hide();
                 }

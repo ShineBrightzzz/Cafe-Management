@@ -5,13 +5,14 @@ using CafeManagement.Entities;
 namespace CafeManagement.Forms
 {
     public partial class OrderForm : Form
-    {
-    private Table selectedTable;
+    {    private Table selectedTable;
     private InvoicePanel invoicePanel;
+    public Account CurrentAccount { get; set; }
 
-    public OrderForm()
+    public OrderForm(Account account)
     {
         InitializeComponent();
+        CurrentAccount = account;
         InitializeHeader();
     }
 

@@ -15,19 +15,22 @@ using CafeManagement.Forms.ImportInvoice;
 using CafeManagement.Forms.ProductManagement;
 
 namespace CafeManagement.Forms
-{    public partial class FormMain : Form
+{    
+    public partial class FormMain : Form
     {
-        public FormMain()
+        public Account CurrentAccount { get; set; }
+
+        public FormMain(Account account)
         {
             InitializeComponent();
+            CurrentAccount = account;
             InitializeHeader();
-        }
-
-        private void InitializeHeader()
+        }        private void InitializeHeader()
         {
             Header _header = new Header();
             header.Controls.Clear();
             header.Controls.Add(_header);
+            _header.Dock = DockStyle.Fill;
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

@@ -30,6 +30,7 @@
         {
             lblUsername = new Label();
             lblLogout = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // lblUsername
@@ -53,11 +54,23 @@
             lblLogout.UseVisualStyleBackColor = true;
             lblLogout.Click += lblLogout_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(433, 5);
+            label1.Name = "label1";
+            label1.Size = new Size(268, 45);
+            label1.TabIndex = 2;
+            label1.Text = "Quản lí quán cafe";
+            // 
             // Header
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuHighlight;
+            Controls.Add(label1);
             Controls.Add(lblLogout);
             Controls.Add(lblUsername);
             Name = "Header";
@@ -70,5 +83,6 @@
 
         private Label lblUsername;
         private Button lblLogout;
+        private Label label1;
     }
 }
