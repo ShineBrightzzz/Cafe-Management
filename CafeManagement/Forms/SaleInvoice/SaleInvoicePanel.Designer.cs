@@ -39,15 +39,15 @@
             dgridSaleInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgridSaleInvoice.Location = new Point(108, 76);
             dgridSaleInvoice.Name = "dgridSaleInvoice";
-            dgridSaleInvoice.Size = new Size(739, 250);
+            dgridSaleInvoice.Size = new Size(609, 250);
             dgridSaleInvoice.TabIndex = 33;
             // 
             // dgridSaleInvoiceDetails
             // 
             dgridSaleInvoiceDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridSaleInvoiceDetails.Location = new Point(108, 433);
+            dgridSaleInvoiceDetails.Location = new Point(770, 76);
             dgridSaleInvoiceDetails.Name = "dgridSaleInvoiceDetails";
-            dgridSaleInvoiceDetails.Size = new Size(739, 250);
+            dgridSaleInvoiceDetails.Size = new Size(657, 250);
             dgridSaleInvoiceDetails.TabIndex = 33;
             // 
             // SaleInvoicePanel
@@ -57,7 +57,7 @@
             Controls.Add(dgridSaleInvoiceDetails);
             Controls.Add(dgridSaleInvoice);
             Name = "SaleInvoicePanel";
-            Size = new Size(988, 761);
+            Size = new Size(1477, 808);
             ((System.ComponentModel.ISupportInitialize)dgridSaleInvoice).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgridSaleInvoiceDetails).EndInit();
             ResumeLayout(false);

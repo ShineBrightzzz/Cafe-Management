@@ -43,14 +43,14 @@
             // dgidCustomer
             // 
             dgidCustomer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgidCustomer.Location = new Point(134, 65);
+            dgidCustomer.Location = new Point(371, 100);
             dgidCustomer.Name = "dgidCustomer";
             dgidCustomer.Size = new Size(743, 408);
             dgidCustomer.TabIndex = 0;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(182, 610);
+            btnAdd.Location = new Point(419, 645);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 1;
@@ -60,7 +60,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(344, 610);
+            btnUpdate.Location = new Point(581, 645);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(505, 610);
+            btnDelete.Location = new Point(742, 645);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 3;
@@ -80,14 +80,14 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(433, 497);
+            txtName.Location = new Point(670, 532);
             txtName.Name = "txtName";
             txtName.Size = new Size(274, 23);
             txtName.TabIndex = 4;
             // 
             // mtxtPhone
             // 
-            mtxtPhone.Location = new Point(433, 548);
+            mtxtPhone.Location = new Point(670, 583);
             mtxtPhone.Name = "mtxtPhone";
             mtxtPhone.Size = new Size(274, 23);
             mtxtPhone.TabIndex = 6;
@@ -95,7 +95,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(294, 500);
+            label1.Location = new Point(531, 535);
             label1.Name = "label1";
             label1.Size = new Size(90, 15);
             label1.TabIndex = 7;
@@ -104,7 +104,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(308, 548);
+            label2.Location = new Point(545, 583);
             label2.Name = "label2";
             label2.Size = new Size(76, 15);
             label2.TabIndex = 7;
@@ -112,7 +112,7 @@
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(680, 610);
+            btnExcel.Location = new Point(917, 645);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 50);
             btnExcel.TabIndex = 8;
@@ -134,7 +134,7 @@
             Controls.Add(btnAdd);
             Controls.Add(dgidCustomer);
             Name = "CustomerPanel";
-            Size = new Size(988, 761);
+            Size = new Size(1477, 808);
             ((System.ComponentModel.ISupportInitialize)dgidCustomer).EndInit();
             ResumeLayout(false);
             PerformLayout();

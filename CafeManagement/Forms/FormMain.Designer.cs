@@ -45,7 +45,7 @@
             header.Dock = DockStyle.Top;
             header.Location = new Point(0, 0);
             header.Name = "header";
-            header.Size = new Size(1188, 61);
+            header.Size = new Size(1677, 61);
             header.TabIndex = 0;
             // 
             // panel2
@@ -60,7 +60,7 @@
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 61);
             panel2.Name = "panel2";
-            panel2.Size = new Size(200, 761);
+            panel2.Size = new Size(200, 808);
             panel2.TabIndex = 1;
             // 
             // btnEmployee
@@ -140,14 +140,14 @@
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(200, 61);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(988, 761);
+            mainPanel.Size = new Size(1477, 808);
             mainPanel.TabIndex = 2;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1188, 822);
+            ClientSize = new Size(1677, 869);
             Controls.Add(mainPanel);
             Controls.Add(panel2);
             Controls.Add(header);

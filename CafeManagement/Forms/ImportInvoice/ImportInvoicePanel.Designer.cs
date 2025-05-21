@@ -47,9 +47,9 @@ namespace CafeManagement.Forms.ImportInvoice
             // dgridImportInvoiceDetails
             // 
             dgridImportInvoiceDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridImportInvoiceDetails.Location = new Point(73, 422);
+            dgridImportInvoiceDetails.Location = new Point(761, 65);
             dgridImportInvoiceDetails.Name = "dgridImportInvoiceDetails";
-            dgridImportInvoiceDetails.Size = new Size(739, 250);
+            dgridImportInvoiceDetails.Size = new Size(658, 567);
             dgridImportInvoiceDetails.TabIndex = 34;
             // 
             // dgridImportInvoice
@@ -57,7 +57,7 @@ namespace CafeManagement.Forms.ImportInvoice
             dgridImportInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgridImportInvoice.Location = new Point(73, 65);
             dgridImportInvoice.Name = "dgridImportInvoice";
-            dgridImportInvoice.Size = new Size(739, 250);
+            dgridImportInvoice.Size = new Size(587, 567);
             dgridImportInvoice.TabIndex = 35;
             // 
             // ImportInvoicePanel
@@ -67,7 +67,7 @@ namespace CafeManagement.Forms.ImportInvoice
             Controls.Add(dgridImportInvoiceDetails);
             Controls.Add(dgridImportInvoice);
             Name = "ImportInvoicePanel";
-            Size = new Size(988, 761);
+            Size = new Size(1477, 808);
             ((ISupportInitialize)dgridImportInvoiceDetails).EndInit();
             ((ISupportInitialize)dgridImportInvoice).EndInit();
             ResumeLayout(false);
