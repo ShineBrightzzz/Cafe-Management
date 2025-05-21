@@ -24,10 +24,7 @@ namespace CafeManagement.Services
                 {
                     Console.WriteLine("Sale invoice ID already exists.");
                     return false;
-                }
-
-                saleInvoiceDAO.AddInvoice(invoice);
-                return true;
+                }                return saleInvoiceDAO.AddInvoice(invoice);
             }
             catch (ArgumentException ex)
             {
@@ -45,15 +42,17 @@ namespace CafeManagement.Services
         {
             try
             {
-                ValidateSaleInvoice(invoice);
-
-                if (saleInvoiceDAO.GetInvoiceById(invoice.getInvoiceId()) == null)
+                ValidateSaleInvoice(invoice);                if (saleInvoiceDAO.GetInvoiceById(invoice.getInvoiceId()) == null)
                 {
                     Console.WriteLine("Sale invoice not found.");
                     return false;
                 }
 
-                saleInvoiceDAO.UpdateInvoice(invoice);
+                if (!saleInvoiceDAO.UpdateInvoice(invoice))
+                {
+                    Console.WriteLine("Failed to update sale invoice.");
+                    return false;
+                }
                 return true;
             }
             catch (ArgumentException ex)
@@ -73,15 +72,17 @@ namespace CafeManagement.Services
             try
             {
                 if (string.IsNullOrWhiteSpace(invoiceId))
-                    throw new ArgumentException("Sale invoice ID must be provided.");
-
-                if (saleInvoiceDAO.GetInvoiceById(invoiceId) == null)
+                    throw new ArgumentException("Sale invoice ID must be provided.");                if (saleInvoiceDAO.GetInvoiceById(invoiceId) == null)
                 {
                     Console.WriteLine("Sale invoice not found.");
                     return false;
                 }
 
-                saleInvoiceDAO.DeleteInvoice(invoiceId);
+                if (!saleInvoiceDAO.DeleteInvoice(invoiceId))
+                {
+                    Console.WriteLine("Failed to delete sale invoice.");
+                    return false;
+                }
                 return true;
             }
             catch (ArgumentException ex)
@@ -139,15 +140,7 @@ namespace CafeManagement.Services
                 throw new ArgumentException("Invoice ID is required.");
 
             if (invoice.getSaleDate() == default)
-                throw new ArgumentException("Sale date is required.");
-
-            if (string.IsNullOrWhiteSpace(invoice.getEmployeeId()))
-                throw new ArgumentException("Employee ID is required.");
-
-            if (string.IsNullOrWhiteSpace(invoice.getCustomerId()))
-                throw new ArgumentException("Customer ID is required.");
-
-            if (invoice.getTotalAmount() < 0)
+                throw new ArgumentException("Sale date is required.");            if (invoice.getTotalAmount() < 0)
                 throw new ArgumentException("Total amount must be non-negative.");
         }
     }

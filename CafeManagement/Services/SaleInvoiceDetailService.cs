@@ -18,9 +18,7 @@ namespace CafeManagement.Services
         {
             try
             {
-                ValidateDetail(detail);
-                detailDAO.AddDetail(detail);
-                return true;
+                ValidateDetail(detail);                return detailDAO.AddDetail(detail);
             }
             catch (ArgumentException ex)
             {

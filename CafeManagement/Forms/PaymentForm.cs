@@ -19,12 +19,18 @@ namespace CafeManagement.Forms
         private List<InvoiceItem> _invoiceItems;
         private Table _table;
         private TableService _tableService;
-        private double _total = 0; public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
+        private SaleInvoiceService _saleInvoiceService;
+        private SaleInvoiceDetailService _saleInvoiceDetailService;
+        private double _total = 0;
+
+        public PaymentForm(Table table, List<InvoiceItem> invoiceItems)
         {
             InitializeComponent();
             _table = table;
             _invoiceItems = invoiceItems;
             _tableService = new TableService();
+            _saleInvoiceService = new SaleInvoiceService();
+            _saleInvoiceDetailService = new SaleInvoiceDetailService();
 
             // Set default values
             txtDiscount.Text = "0";
@@ -208,13 +214,86 @@ namespace CafeManagement.Forms
             }
         }        private void UpdateTableAndClose()
         {
-            // Update table status to available
-            _table.setIsOccupied(false);
-            _tableService.UpdateTable(_table);
+            try
+            {
+                // Tạo mã hóa đơn mới
+                string invoiceId = DateTime.Now.ToString("yyyyMMddHHmmss");
+                
+                // Lấy tổng tiền sau khi trừ giảm giá
+                double finalTotal = double.Parse(txtTotalCustomer.Text.Replace(",", "").Replace(" đ", ""));
+                
+                // Tạo đối tượng hóa đơn mới
+                Sale_Invoice saleInvoice = new Sale_Invoice(
+                    invoiceId,
+                    DateTime.Now,
+                    "7ab07743-0169-423c-83e2-cea0c82d2d43", 
+                    "03d35fa5-2308-444a-b5f5-c22334171d30", 
+                    finalTotal
+                );
 
-            // Close form with success result
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+                // Lưu hóa đơn vào database
+                try 
+                {
+                    _saleInvoiceService.AddSaleInvoice(saleInvoice);
+
+                    // Nếu thêm hóa đơn thành công, kiểm tra xem có thật sự được thêm hay không
+                    var addedInvoice = _saleInvoiceService.GetSaleInvoiceById(invoiceId);
+                    if (addedInvoice == null)
+                    {
+                        throw new Exception("Không thể xác nhận hóa đơn đã được lưu");
+                    }
+
+                    // Lưu chi tiết hóa đơn
+                    double discountPercent = string.IsNullOrEmpty(txtDiscount.Text) ? 0 : double.Parse(txtDiscount.Text);
+                    foreach (var item in _invoiceItems)
+                    {
+                        SaleInvoiceDetail detail = new SaleInvoiceDetail(
+                            invoiceId,
+                            item.GetProduct().getId(),
+                            int.Parse(item.GetQuantity()),
+                            item.GetPrice(),
+                            discountPercent
+                        );
+
+                        try
+                        {
+                            _saleInvoiceDetailService.AddSaleInvoiceDetail(detail);
+                            
+                            // Kiểm tra chi tiết hóa đơn đã được thêm
+                            var details = _saleInvoiceDetailService.GetDetailsByInvoiceId(invoiceId);
+                            if (details == null || !details.Any(d => d.getProductId() == item.GetProduct().getId()))
+                            {
+                                throw new Exception($"Không thể xác nhận chi tiết hóa đơn cho sản phẩm {item.GetProduct().getName()} đã được lưu");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Nếu có lỗi khi thêm chi tiết, xóa hóa đơn đã thêm
+                            _saleInvoiceService.DeleteSaleInvoice(invoiceId);
+                            throw new Exception($"Lỗi khi lưu chi tiết hóa đơn: {ex.Message}");
+                        }
+                    }
+
+                    // Cập nhật trạng thái bàn
+                    _table.setIsOccupied(false);
+                    _tableService.UpdateTable(_table);
+
+                    // Đóng form với kết quả thành công
+                    MessageBox.Show("Thanh toán hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Lỗi khi lưu hóa đơn: {ex.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+            }
         }
 
         private void RdPayment_CheckedChanged(object sender, EventArgs e)

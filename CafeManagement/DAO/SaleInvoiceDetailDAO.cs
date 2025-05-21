@@ -7,12 +7,12 @@ using Microsoft.Data.SqlClient;
 namespace CafeManagement.DAO
 {
     public class SaleInvoiceDetailDAO
-    {
-        public void AddDetail(SaleInvoiceDetail detail)
+    {        public bool AddDetail(SaleInvoiceDetail detail)
         {
             string sql = "INSERT INTO sale_invoice_details (invoice_id, product_id, quantity, unit_price, discount) " +
                          "VALUES (@invoice_id, @product_id, @quantity, @unit_price, @discount)";
             SqlConnection conn = null;
+            SqlTransaction transaction = null;
             try
             {
                 if (conn == null)
@@ -20,20 +20,32 @@ namespace CafeManagement.DAO
                 
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
+
+                transaction = conn.BeginTransaction();
                 
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (SqlCommand cmd = new SqlCommand(sql, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@invoice_id", detail.getInvoiceId());
                     cmd.Parameters.AddWithValue("@product_id", detail.getProductId());
                     cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
                     cmd.Parameters.AddWithValue("@unit_price", detail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", detail.getDiscountPercent());
-                    cmd.ExecuteNonQuery();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        transaction.Commit();
+                        return true;
+                    }
+                    transaction.Rollback();
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("AddDetail Error: " + ex.Message);
+                if (transaction != null)
+                    transaction.Rollback();
+                return false;
             }
             finally
             {
