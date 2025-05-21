@@ -15,6 +15,15 @@ namespace CafeManagement.Forms.ProductManagement
         private readonly ProductController productController;
         private readonly ProductTypeController typeController;
         private string selectedProductId;
+        private ActionMode currentMode = ActionMode.None;
+
+        private enum ActionMode
+        {
+            None,
+            Add,
+            Edit,
+            Delete
+        }
 
         public ProductPanel()
         {
@@ -25,7 +34,33 @@ namespace CafeManagement.Forms.ProductManagement
             dgridProduct.CellClick += dgidProduct_CellClick;
             LoadProductTypes();
             LoadProducts();
+            UpdateButtonState();
         }
+
+        private void UpdateButtonState()
+        {
+            // Default state (no action in progress)
+            if (currentMode == ActionMode.None)
+            {
+                btnAdd.Enabled = true;
+                btnUpdate.Enabled = true;
+                btnDelete.Enabled = true;
+                btnSave.Enabled = false;
+                btnCancel.Enabled = false;
+                dgridProduct.Enabled = true;
+            }
+            // Add/Edit/Delete action in progress
+            else
+            {
+                btnAdd.Enabled = false;
+                btnUpdate.Enabled = false;
+                btnDelete.Enabled = false;
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
+                dgridProduct.Enabled = false;
+            }
+        }
+
         private void LoadProductTypes()
         {
             try
@@ -210,148 +245,21 @@ namespace CafeManagement.Forms.ProductManagement
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(txtName.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập tên sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtName.Focus();
-                    return;
-                }
-
-                if (cbType.SelectedItem == null)
-                {
-                    MessageBox.Show("Vui lòng chọn loại sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cbType.Focus();
-                    return;
-                }
-
-                if (!double.TryParse(txtImportPrice.Text, out double importPrice))
-                {
-                    MessageBox.Show("Giá nhập không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtImportPrice.Focus();
-                    return;
-                }
-
-                if (!double.TryParse(txtSalePrice.Text, out double salePrice))
-                {
-                    MessageBox.Show("Giá bán không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtSalePrice.Focus();
-                    return;
-                }
-
-                if (importPrice < 0 || salePrice < 0)
-                {
-                    MessageBox.Show("Giá không thể âm.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                var result = MessageBox.Show("Bạn có chắc muốn thêm sản phẩm này?", "Xác nhận",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    string newId = Guid.NewGuid().ToString();
-                    string typeId = ((ProductType)cbType.SelectedItem).getId();
-
-                    bool success = productController.AddProduct(newId, txtName.Text.Trim(), typeId, importPrice, salePrice, null);
-                    if (success)
-                    {
-                        MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadProducts();
-                        ClearInputs();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Thêm thất bại!", "Lỗi",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            currentMode = ActionMode.Add;
+            ClearInputs();
+            UpdateButtonState();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            try
+            if (string.IsNullOrEmpty(selectedProductId))
             {
-                if (string.IsNullOrEmpty(selectedProductId))
-                {
-                    MessageBox.Show("Vui lòng chọn sản phẩm cần cập nhật.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtName.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập tên sản phẩm.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtName.Focus();
-                    return;
-                }
-
-                if (cbType.SelectedItem == null)
-                {
-                    MessageBox.Show("Vui lòng chọn loại sản phẩm.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cbType.Focus();
-                    return;
-                }
-
-                if (!double.TryParse(txtImportPrice.Text, out double importPrice))
-                {
-                    MessageBox.Show("Giá nhập không hợp lệ.", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtImportPrice.Focus();
-                    return;
-                }
-
-                if (!double.TryParse(txtSalePrice.Text, out double salePrice))
-                {
-                    MessageBox.Show("Giá bán không hợp lệ.", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtSalePrice.Focus();
-                    return;
-                }
-
-                if (importPrice < 0 || salePrice < 0)
-                {
-                    MessageBox.Show("Giá không thể âm.", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                var result = MessageBox.Show("Bạn có chắc muốn cập nhật sản phẩm này?", "Xác nhận",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    string typeId = ((ProductType)cbType.SelectedItem).getId();
-
-                    bool success = productController.UpdateProduct(selectedProductId, txtName.Text.Trim(),
-                        typeId, importPrice, salePrice, null);
-                    if (success)
-                    {
-                        MessageBox.Show("Cập nhật thành công!", "Thông báo",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadProducts();
-                        ClearInputs();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cập nhật thất bại!", "Lỗi",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Vui lòng chọn sản phẩm cần cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            currentMode = ActionMode.Edit;
+            UpdateButtonState();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -362,24 +270,71 @@ namespace CafeManagement.Forms.ProductManagement
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn xóa sản phẩm này?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            currentMode = ActionMode.Delete;
+            UpdateButtonState();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text) || cbType.SelectedValue == null ||
+                string.IsNullOrEmpty(txtImportPrice.Text) || string.IsNullOrEmpty(txtSalePrice.Text))
             {
-                bool success = productController.DeleteProduct(selectedProductId);
-                if (success)
-                {
-                    MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadProducts();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa sản phẩm thất bại!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            bool success = false;
+            string message = "";
+
+            if (!double.TryParse(txtImportPrice.Text, out double importPrice) ||
+                !double.TryParse(txtSalePrice.Text, out double salePrice))
+            {
+                MessageBox.Show("Giá nhập hoặc giá bán không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string typeId = cbType.SelectedValue.ToString();
+
+            switch (currentMode)
+            {
+                case ActionMode.Add:
+                    string newId = Guid.NewGuid().ToString();
+                    success = productController.AddProduct(newId, txtName.Text.Trim(), typeId,
+                        importPrice, salePrice, null); // passing null for image parameter
+                    message = success ? "Thêm sản phẩm thành công!" : "Thêm sản phẩm thất bại!";
+                    break;
+
+                case ActionMode.Edit:
+                    success = productController.UpdateProduct(selectedProductId, txtName.Text.Trim(), typeId,
+                        importPrice, salePrice, null); // passing null for image parameter
+                    message = success ? "Cập nhật thông tin sản phẩm thành công!" : "Cập nhật thông tin sản phẩm thất bại!";
+                    break;
+
+                case ActionMode.Delete:
+                    success = productController.DeleteProduct(selectedProductId);
+                    message = success ? "Xóa sản phẩm thành công!" : "Xóa sản phẩm thất bại!";
+                    break;
+            }
+
+            if (success)
+            {
+                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadProducts();
+                ClearInputs();
+                currentMode = ActionMode.None;
+                UpdateButtonState();
+            }
+            else
+            {
+                MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
+            currentMode = ActionMode.None;
+            UpdateButtonState();
         }
 
         private void btnExcel_Click(object sender, EventArgs e)

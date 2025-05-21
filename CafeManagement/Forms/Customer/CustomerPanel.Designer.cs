@@ -32,6 +32,8 @@
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
+            btnSave = new Button();
+            btnCancel = new Button();
             txtName = new TextBox();
             mtxtPhone = new MaskedTextBox();
             label1 = new Label();
@@ -50,7 +52,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(419, 645);
+            btnAdd.Location = new Point(306, 642);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 1;
@@ -60,7 +62,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(581, 645);
+            btnUpdate.Location = new Point(468, 642);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 2;
@@ -70,13 +72,35 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(742, 645);
+            btnDelete.Location = new Point(629, 642);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.Enabled = false;
+            btnSave.Location = new Point(785, 642);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(113, 50);
+            btnSave.TabIndex = 9;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Location = new Point(936, 642);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(113, 50);
+            btnCancel.TabIndex = 10;
+            btnCancel.Text = "Hủy";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Visible = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // txtName
             // 
@@ -112,7 +136,7 @@
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(917, 645);
+            btnExcel.Location = new Point(1094, 642);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 50);
             btnExcel.TabIndex = 8;
@@ -124,6 +148,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
             Controls.Add(btnExcel);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -151,5 +177,7 @@
         private Label label1;
         private Label label2;
         private Button btnExcel;
+        private Button btnSave;
+        private Button btnCancel;
     }
 }

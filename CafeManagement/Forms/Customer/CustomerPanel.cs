@@ -17,6 +17,15 @@ namespace CafeManagement.Forms.Customer
     {
         private readonly CustomerController customerController;
         private string selectedCustomerId;
+        private ActionMode currentMode = ActionMode.None;
+
+        private enum ActionMode
+        {
+            None,
+            Add,
+            Edit,
+            Delete
+        }
 
         public CustomerPanel()
         {
@@ -27,6 +36,31 @@ namespace CafeManagement.Forms.Customer
             dgidCustomer.CellClick += new DataGridViewCellEventHandler(dgidCustomer_CellClick);
 
             LoadCustomers();
+            UpdateButtonState();
+        }
+
+        private void UpdateButtonState()
+        {
+            // Default state (no action in progress)
+            if (currentMode == ActionMode.None)
+            {
+                btnAdd.Enabled = true;
+                btnUpdate.Enabled = true;
+                btnDelete.Enabled = true;
+                btnSave.Enabled = false;
+                btnCancel.Enabled = false;
+                dgidCustomer.Enabled = true;
+            }
+            // Add/Edit/Delete action in progress
+            else
+            {
+                btnAdd.Enabled = false;
+                btnUpdate.Enabled = false;
+                btnDelete.Enabled = false;
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
+                dgidCustomer.Enabled = false;
+            }
         }
 
         private void LoadCustomers()
@@ -144,53 +178,21 @@ namespace CafeManagement.Forms.Customer
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
-            {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var result = MessageBox.Show("Bạn có chắc muốn thêm khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                string newId = Guid.NewGuid().ToString(); // Tạo ID mới
-                bool success = customerController.AddCustomer(newId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
-                if (success)
-                {
-                    MessageBox.Show("Thêm khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadCustomers();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Thêm khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            currentMode = ActionMode.Add;
+            ClearInputs();
+            UpdateButtonState();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(selectedCustomerId) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
+            if (string.IsNullOrEmpty(selectedCustomerId))
             {
                 MessageBox.Show("Vui lòng chọn khách hàng cần cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn cập nhật thông tin khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                bool success = customerController.UpdateCustomer(selectedCustomerId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
-                if (success)
-                {
-                    MessageBox.Show("Cập nhật thông tin khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadCustomers();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật thông tin khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            currentMode = ActionMode.Edit;
+            UpdateButtonState();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -201,21 +203,59 @@ namespace CafeManagement.Forms.Customer
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            currentMode = ActionMode.Delete;
+            UpdateButtonState();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
             {
-                bool success = customerController.DeleteCustomer(selectedCustomerId);
-                if (success)
-                {
-                    MessageBox.Show("Xóa khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadCustomers();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            bool success = false;
+            string message = "";
+
+            switch (currentMode)
+            {
+                case ActionMode.Add:
+                    string newId = Guid.NewGuid().ToString();
+                    success = customerController.AddCustomer(newId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
+                    message = success ? "Thêm khách hàng thành công!" : "Thêm khách hàng thất bại!";
+                    break;
+
+                case ActionMode.Edit:
+                    success = customerController.UpdateCustomer(selectedCustomerId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
+                    message = success ? "Cập nhật thông tin khách hàng thành công!" : "Cập nhật thông tin khách hàng thất bại!";
+                    break;
+
+                case ActionMode.Delete:
+                    success = customerController.DeleteCustomer(selectedCustomerId);
+                    message = success ? "Xóa khách hàng thành công!" : "Xóa khách hàng thất bại!";
+                    break;
+            }
+
+            if (success)
+            {
+                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadCustomers();
+                ClearInputs();
+                currentMode = ActionMode.None;
+                UpdateButtonState();
+            }
+            else
+            {
+                MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
+            currentMode = ActionMode.None;
+            UpdateButtonState();
         }
 
         private void ClearInputs()

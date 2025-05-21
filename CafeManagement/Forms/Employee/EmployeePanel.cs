@@ -17,6 +17,16 @@ namespace CafeManagement.Forms.Employee
     {
         private readonly EmployeeController employeeController;
         private string selectedEmployeeId;
+        private ActionMode currentMode = ActionMode.None;
+
+        private enum ActionMode
+        {
+            None,
+            Add,
+            Edit,
+            Delete
+        }
+
         public EmployeePanel()
         {
             InitializeComponent();
@@ -38,6 +48,31 @@ namespace CafeManagement.Forms.Employee
             mtxtPhone.ValidatingType = typeof(string);
 
             LoadEmployees();
+            UpdateButtonState();
+        }
+
+        private void UpdateButtonState()
+        {
+            // Default state (no action in progress)
+            if (currentMode == ActionMode.None)
+            {
+                btnAdd.Enabled = true;
+                btnUpdate.Enabled = true;
+                btnDelete.Enabled = true;
+                btnSave.Enabled = false;
+                btnCancel.Enabled = false;
+                dgidEmployee.Enabled = true;
+            }
+            // Add/Edit/Delete action in progress
+            else
+            {
+                btnAdd.Enabled = false;
+                btnUpdate.Enabled = false;
+                btnDelete.Enabled = false;
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
+                dgidEmployee.Enabled = false;
+            }
         }
 
         private void LoadEmployees()
@@ -219,127 +254,96 @@ namespace CafeManagement.Forms.Employee
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtAddress.Text) ||
-                string.IsNullOrEmpty(mtxtDateOfBirth.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
-            {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None, out DateTime dateOfBirth))
-            {
-                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var result = MessageBox.Show("Bạn có chắc muốn thêm nhân viên này?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                string newId = Guid.NewGuid().ToString();
-                bool success = employeeController.AddEmployee(
-                    newId,
-                    txtName.Text.Trim(),
-                    txtAddress.Text.Trim(),
-                    cbGender.Text,
-                    dateOfBirth,
-                    mtxtPhone.Text.Trim()
-                );
-
-                if (success)
-                {
-                    MessageBox.Show("Thêm nhân viên thành công!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadEmployees();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Thêm nhân viên thất bại!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            currentMode = ActionMode.Add;
+            ClearInputs();
+            UpdateButtonState();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(selectedEmployeeId) || string.IsNullOrEmpty(txtName.Text) ||
-                string.IsNullOrEmpty(txtAddress.Text) || string.IsNullOrEmpty(mtxtDateOfBirth.Text) ||
-                string.IsNullOrEmpty(mtxtPhone.Text))
+            if (string.IsNullOrEmpty(selectedEmployeeId))
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần cập nhật.", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn nhân viên cần cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!DateTime.TryParseExact(mtxtDateOfBirth.Text, "dd/MM/yyyy",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None, out DateTime dateOfBirth))
-            {
-                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng dd/MM/yyyy.",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var result = MessageBox.Show("Bạn có chắc muốn cập nhật thông tin nhân viên này?",
-                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                bool success = employeeController.UpdateEmployee(
-                    selectedEmployeeId,
-                    txtName.Text.Trim(),
-                    txtAddress.Text.Trim(),
-                    cbGender.Text,
-                    dateOfBirth,
-                    mtxtPhone.Text.Trim()
-                );
-
-                if (success)
-                {
-                    MessageBox.Show("Cập nhật thông tin nhân viên thành công!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadEmployees();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật thông tin nhân viên thất bại!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            currentMode = ActionMode.Edit;
+            UpdateButtonState();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedEmployeeId))
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần xóa.", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn nhân viên cần xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn xóa nhân viên này?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            currentMode = ActionMode.Delete;
+            UpdateButtonState();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text) || 
+                string.IsNullOrEmpty(txtAddress.Text) || string.IsNullOrEmpty(mtxtDateOfBirth.Text))
             {
-                bool success = employeeController.DeleteEmployee(selectedEmployeeId);
-                if (success)
-                {
-                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadEmployees();
-                    ClearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa nhân viên thất bại!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            bool success = false;
+            string message = "";
+
+            // Validate date of birth
+            if (!DateTime.TryParse(mtxtDateOfBirth.Text, out DateTime dateOfBirth))
+            {
+                MessageBox.Show("Ngày sinh không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string gender = cbGender.SelectedItem.ToString();
+
+            switch (currentMode)
+            {
+                case ActionMode.Add:
+                    string newId = Guid.NewGuid().ToString();
+                    success = employeeController.AddEmployee(newId, txtName.Text.Trim(), mtxtPhone.Text.Trim(),
+                        txtAddress.Text.Trim(), dateOfBirth, gender);
+                    message = success ? "Thêm nhân viên thành công!" : "Thêm nhân viên thất bại!";
+                    break;
+
+                case ActionMode.Edit:
+                    success = employeeController.UpdateEmployee(selectedEmployeeId, txtName.Text.Trim(), mtxtPhone.Text.Trim(),
+                        txtAddress.Text.Trim(), dateOfBirth, gender);
+                    message = success ? "Cập nhật thông tin nhân viên thành công!" : "Cập nhật thông tin nhân viên thất bại!";
+                    break;
+
+                case ActionMode.Delete:
+                    success = employeeController.DeleteEmployee(selectedEmployeeId);
+                    message = success ? "Xóa nhân viên thành công!" : "Xóa nhân viên thất bại!";
+                    break;
+            }
+
+            if (success)
+            {
+                MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadEmployees();
+                ClearInputs();
+                currentMode = ActionMode.None;
+                UpdateButtonState();
+            }
+            else
+            {
+                MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
+            currentMode = ActionMode.None;
+            UpdateButtonState();
         }
 
         private void btnExcel_Click(object sender, EventArgs e)

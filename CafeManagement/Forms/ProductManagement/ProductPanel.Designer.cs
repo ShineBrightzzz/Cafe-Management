@@ -37,6 +37,8 @@
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
+            btnSave = new Button();
+            btnCancel = new Button();
             dgridProduct = new DataGridView();
             txtImportPrice = new TextBox();
             txtSalePrice = new TextBox();
@@ -97,7 +99,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(759, 633);
+            btnDelete.Location = new Point(611, 634);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 20;
@@ -107,7 +109,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(598, 633);
+            btnUpdate.Location = new Point(450, 634);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 19;
@@ -117,13 +119,35 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(436, 633);
+            btnAdd.Location = new Point(288, 634);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 18;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(770, 634);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(113, 50);
+            btnSave.TabIndex = 21;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Enabled = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Location = new Point(931, 634);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(113, 50);
+            btnCancel.TabIndex = 22;
+            btnCancel.Text = "Hủy";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Enabled = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // dgridProduct
             // 
@@ -149,7 +173,7 @@
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(915, 635);
+            btnExcel.Location = new Point(1090, 635);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 48);
             btnExcel.TabIndex = 33;
@@ -161,7 +185,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnExcel);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
             Controls.Add(txtSalePrice);
             Controls.Add(txtImportPrice);
             Controls.Add(cbType);
@@ -173,6 +198,7 @@
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
+            Controls.Add(btnExcel);
             Controls.Add(dgridProduct);
             Name = "ProductPanel";
             Size = new Size(1477, 808);
@@ -192,6 +218,8 @@
         private Button btnDelete;
         private Button btnUpdate;
         private Button btnAdd;
+        private Button btnSave;
+        private Button btnCancel;
         private DataGridView dgridProduct;
         private TextBox txtImportPrice;
         private TextBox txtSalePrice;

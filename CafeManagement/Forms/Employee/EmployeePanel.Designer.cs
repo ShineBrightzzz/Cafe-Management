@@ -35,6 +35,8 @@
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
+            btnSave = new Button();
+            btnCancel = new Button();
             dgidEmployee = new DataGridView();
             txtAddress = new TextBox();
             label3 = new Label();
@@ -81,7 +83,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(757, 701);
+            btnDelete.Location = new Point(579, 701);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 11;
@@ -91,7 +93,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(596, 701);
+            btnUpdate.Location = new Point(422, 701);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 10;
@@ -101,13 +103,35 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(434, 701);
+            btnAdd.Location = new Point(263, 701);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(741, 701);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(113, 50);
+            btnSave.TabIndex = 18;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Enabled = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Location = new Point(902, 701);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(113, 50);
+            btnCancel.TabIndex = 19;
+            btnCancel.Text = "Hủy";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Enabled = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // dgidEmployee
             // 
@@ -170,7 +194,7 @@
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(916, 701);
+            btnExcel.Location = new Point(1063, 701);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(117, 50);
             btnExcel.TabIndex = 17;
@@ -182,6 +206,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
             Controls.Add(btnExcel);
             Controls.Add(cbGender);
             Controls.Add(label5);
@@ -213,6 +239,8 @@
         private Button btnDelete;
         private Button btnUpdate;
         private Button btnAdd;
+        private Button btnSave;
+        private Button btnCancel;
         private DataGridView dgidEmployee;
         private TextBox txtAddress;
         private Label label3;
