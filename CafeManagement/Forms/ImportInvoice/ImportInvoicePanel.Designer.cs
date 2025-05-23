@@ -40,6 +40,18 @@ namespace CafeManagement.Forms.ImportInvoice
         {
             dgridImportInvoiceDetails = new DataGridView();
             dgridImportInvoice = new DataGridView();
+            btnCancel = new Button();
+            btnSave = new Button();
+            btnExcel = new Button();
+            btnDelete = new Button();
+            btnUpdate = new Button();
+            btnAdd = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            mtxtDateOfImport = new MaskedTextBox();
+            cbEmployee = new ComboBox();
+            cbSupplier = new ComboBox();
             ((ISupportInitialize)dgridImportInvoiceDetails).BeginInit();
             ((ISupportInitialize)dgridImportInvoice).BeginInit();
             SuspendLayout();
@@ -49,7 +61,7 @@ namespace CafeManagement.Forms.ImportInvoice
             dgridImportInvoiceDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgridImportInvoiceDetails.Location = new Point(761, 65);
             dgridImportInvoiceDetails.Name = "dgridImportInvoiceDetails";
-            dgridImportInvoiceDetails.Size = new Size(658, 567);
+            dgridImportInvoiceDetails.Size = new Size(658, 436);
             dgridImportInvoiceDetails.TabIndex = 34;
             // 
             // dgridImportInvoice
@@ -57,13 +69,137 @@ namespace CafeManagement.Forms.ImportInvoice
             dgridImportInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgridImportInvoice.Location = new Point(73, 65);
             dgridImportInvoice.Name = "dgridImportInvoice";
-            dgridImportInvoice.Size = new Size(587, 567);
+            dgridImportInvoice.Size = new Size(587, 436);
             dgridImportInvoice.TabIndex = 35;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Enabled = false;
+            btnCancel.Location = new Point(870, 704);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(113, 50);
+            btnCancel.TabIndex = 41;
+            btnCancel.Text = "Hủy";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.Enabled = false;
+            btnSave.Location = new Point(709, 704);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(113, 50);
+            btnSave.TabIndex = 40;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnExcel
+            // 
+            btnExcel.Location = new Point(1031, 704);
+            btnExcel.Name = "btnExcel";
+            btnExcel.Size = new Size(117, 50);
+            btnExcel.TabIndex = 39;
+            btnExcel.Text = "Xuất file excel";
+            btnExcel.UseVisualStyleBackColor = true;
+            btnExcel.Click += btnExcel_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(547, 704);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(113, 50);
+            btnDelete.TabIndex = 38;
+            btnDelete.Text = "Xóa";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(390, 704);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(113, 50);
+            btnUpdate.TabIndex = 37;
+            btnUpdate.Text = "Sửa";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(231, 704);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(113, 50);
+            btnAdd.TabIndex = 36;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(139, 544);
+            label1.Name = "label1";
+            label1.Size = new Size(65, 15);
+            label1.TabIndex = 43;
+            label1.Text = "Ngày nhập";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(139, 608);
+            label2.Name = "label2";
+            label2.Size = new Size(61, 15);
+            label2.TabIndex = 43;
+            label2.Text = "Nhân viên";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(529, 547);
+            label3.Name = "label3";
+            label3.Size = new Size(81, 15);
+            label3.TabIndex = 43;
+            label3.Text = "Nhà cung cấp";
+            // 
+            // mtxtDateOfImport
+            // 
+            mtxtDateOfImport.Location = new Point(259, 544);
+            mtxtDateOfImport.Name = "mtxtDateOfImport";
+            mtxtDateOfImport.Size = new Size(121, 23);
+            mtxtDateOfImport.TabIndex = 44;
+            // 
+            // cbEmployee
+            // 
+            cbEmployee.FormattingEnabled = true;
+            cbEmployee.Location = new Point(259, 608);
+            cbEmployee.Name = "cbEmployee";
+            cbEmployee.Size = new Size(121, 23);
+            cbEmployee.TabIndex = 45;
+            // 
+            // cbSupplier
+            // 
+            cbSupplier.FormattingEnabled = true;
+            cbSupplier.Location = new Point(648, 547);
+            cbSupplier.Name = "cbSupplier";
+            cbSupplier.Size = new Size(121, 23);
+            cbSupplier.TabIndex = 45;
             // 
             // ImportInvoicePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cbSupplier);
+            Controls.Add(cbEmployee);
+            Controls.Add(mtxtDateOfImport);
+            Controls.Add(label2);
+            Controls.Add(label3);
+            Controls.Add(label1);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
+            Controls.Add(btnExcel);
+            Controls.Add(btnDelete);
+            Controls.Add(btnUpdate);
+            Controls.Add(btnAdd);
             Controls.Add(dgridImportInvoiceDetails);
             Controls.Add(dgridImportInvoice);
             Name = "ImportInvoicePanel";
@@ -71,11 +207,24 @@ namespace CafeManagement.Forms.ImportInvoice
             ((ISupportInitialize)dgridImportInvoiceDetails).EndInit();
             ((ISupportInitialize)dgridImportInvoice).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private DataGridView dgridImportInvoiceDetails;
         private DataGridView dgridImportInvoice;
+        private Button btnCancel;
+        private Button btnSave;
+        private Button btnExcel;
+        private Button btnDelete;
+        private Button btnUpdate;
+        private Button btnAdd;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private MaskedTextBox mtxtDateOfImport;
+        private ComboBox cbEmployee;
+        private ComboBox cbSupplier;
     }
 }

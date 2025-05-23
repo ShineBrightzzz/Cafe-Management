@@ -26,7 +26,6 @@ namespace CafeManagement.Services
                 {
                     throw new ArgumentException("All employee fields must be provided.");
                 }
-                MessageBox.Show(employee.getPhoneNumber());
                 if (!IsValidPhoneNumber(employee.getPhoneNumber()))
                 {
                     throw new FormatException("Phone number is not in a valid format.");
@@ -38,7 +37,6 @@ namespace CafeManagement.Services
                     Console.WriteLine("Employee ID already exists.");
                     return false;
                 }
-                MessageBox.Show("Employee ID is valid.");
                 employeeDAO.AddEmployee(employee);
                 return true;
             }
