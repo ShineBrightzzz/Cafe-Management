@@ -81,12 +81,23 @@ namespace CafeManagement.Services
 
         public ImportInvoiceDetail GetImportInvoiceDetailById(string importInvoiceId, string ingredientId)
         {
-            return importInvoiceDetailDao.GetImportInvoiceDetailById(importInvoiceId, ingredientId);
-        }
+            try
+            {
+                if (string.IsNullOrWhiteSpace(importInvoiceId) || string.IsNullOrWhiteSpace(ingredientId))
+                    throw new ArgumentException("Invoice ID and Ingredient ID must be provided.");
 
-        public List<ImportInvoiceDetail> GetAllImportInvoiceDetails()
-        {
-            return importInvoiceDetailDao.GetAllImportInvoiceDetails();
+                return importInvoiceDetailDao.GetImportInvoiceDetailById(importInvoiceId, ingredientId);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Validation Error: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
+                return null;
+            }
         }
 
         public List<ImportInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
@@ -108,6 +119,11 @@ namespace CafeManagement.Services
                 Console.WriteLine($"Unexpected Error: {ex.Message}");
                 return new List<ImportInvoiceDetail>();
             }
+        }
+
+        public List<ImportInvoiceDetail> GetAllImportInvoiceDetails()
+        {
+            return importInvoiceDetailDao.GetAllImportInvoiceDetails();
         }
 
         private void ValidateImportInvoiceDetail(ImportInvoiceDetail detail)

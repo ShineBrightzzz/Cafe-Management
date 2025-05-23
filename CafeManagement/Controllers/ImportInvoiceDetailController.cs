@@ -33,6 +33,11 @@ namespace CafeManagement.Controllers
             return importInvoiceDetailService.DeleteImportInvoiceDetail(importInvoiceId, ingredientId);
         }
 
+        public ImportInvoiceDetail GetImportInvoiceDetailById(string importInvoiceId, string ingredientId)
+        {
+            return importInvoiceDetailService.GetImportInvoiceDetailById(importInvoiceId, ingredientId);
+        }
+
         public List<ImportInvoiceDetail> GetDetailsByInvoiceId(string invoiceId)
         {
             return importInvoiceDetailService.GetDetailsByInvoiceId(invoiceId);

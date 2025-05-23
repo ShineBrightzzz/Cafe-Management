@@ -13,7 +13,7 @@ namespace CafeManagement.DAO
     {
         public void AddImportInvoiceDetail(ImportInvoiceDetail importInvoiceDetail)
         {
-            string sql = "INSERT INTO import_invoice_details (invoice_id, product_id, quantity, unit_price, discount, amount) VALUES (@id, @product, @quantity, @price, @discount, @amount)";
+            string sql = "INSERT INTO import_invoice_details (invoice_id, ingredient_id, quantity, unit_price, discount, total_price) VALUES (@id, @product, @quantity, @price, @discount, @total_price)";
             SqlConnection conn = null;
             try
             {
@@ -30,7 +30,7 @@ namespace CafeManagement.DAO
                     cmd.Parameters.AddWithValue("@quantity", importInvoiceDetail.getQuantity());
                     cmd.Parameters.AddWithValue("@price", importInvoiceDetail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", importInvoiceDetail.getDiscount());
-                    cmd.Parameters.AddWithValue("@amount", importInvoiceDetail.getTotalPrice());
+                    cmd.Parameters.AddWithValue("@total_price", importInvoiceDetail.getTotalPrice());
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -47,7 +47,7 @@ namespace CafeManagement.DAO
 
         public void UpdateImportInvoiceDetail(ImportInvoiceDetail detail)
         {
-            string sql = "UPDATE import_invoice_details SET quantity = @quantity, unit_price = @price, discount = @discount, amount = @amount WHERE invoice_id = @invoiceId AND product_id = @productId";
+            string sql = "UPDATE import_invoice_details SET quantity = @quantity, unit_price = @price, discount = @discount, total_price = @total_price WHERE invoice_id = @invoiceId AND ingredient_id = @productId";
             SqlConnection conn = null;
             try
             {
@@ -64,7 +64,7 @@ namespace CafeManagement.DAO
                     cmd.Parameters.AddWithValue("@quantity", detail.getQuantity());
                     cmd.Parameters.AddWithValue("@price", detail.getUnitPrice());
                     cmd.Parameters.AddWithValue("@discount", detail.getDiscount());
-                    cmd.Parameters.AddWithValue("@amount", detail.getTotalPrice());
+                    cmd.Parameters.AddWithValue("@total_price", detail.getTotalPrice());
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -81,7 +81,7 @@ namespace CafeManagement.DAO
 
         public void DeleteImportInvoiceDetail(string invoiceId, string productId)
         {
-            string sql = "DELETE FROM import_invoice_details WHERE invoice_id = @invoiceId AND product_id = @productId";
+            string sql = "DELETE FROM import_invoice_details WHERE invoice_id = @invoiceId AND ingredient_id = @productId";
             SqlConnection conn = null;
             try
             {
@@ -131,11 +131,11 @@ namespace CafeManagement.DAO
                         {
                             details.Add(new ImportInvoiceDetail(
                                 reader["invoice_id"].ToString(),
-                                reader["product_id"].ToString(),
+                                reader["ingredient_id"].ToString(),
                                 Convert.ToInt32(reader["quantity"]),
                                 Convert.ToDouble(reader["unit_price"]),
                                 Convert.ToDouble(reader["discount"]),
-                                Convert.ToDouble(reader["amount"])
+                                Convert.ToDouble(reader["total_price"])
                             ));
                         }
                     }
@@ -155,7 +155,7 @@ namespace CafeManagement.DAO
 
         public ImportInvoiceDetail GetImportInvoiceDetailById(string invoiceId, string productId)
         {
-            string sql = "SELECT * FROM import_invoice_details WHERE invoice_id = @invoiceId AND product_id = @productId";
+            string sql = "SELECT * FROM import_invoice_details WHERE invoice_id = @invoiceId AND ingredient_id = @productId";
             SqlConnection conn = null;
             try
             {
@@ -175,11 +175,11 @@ namespace CafeManagement.DAO
                         {
                             return new ImportInvoiceDetail(
                                 reader["invoice_id"].ToString(),
-                                reader["product_id"].ToString(),
+                                reader["ingredient_id"].ToString(),
                                 Convert.ToInt32(reader["quantity"]),
                                 Convert.ToDouble(reader["unit_price"]),
                                 Convert.ToDouble(reader["discount"]),
-                                Convert.ToDouble(reader["amount"])
+                                Convert.ToDouble(reader["total_price"])
                             );
                         }
                     }
@@ -218,11 +218,11 @@ namespace CafeManagement.DAO
                         {
                             details.Add(new ImportInvoiceDetail(
                                 reader["invoice_id"].ToString(),
-                                reader["product_id"].ToString(),
+                                reader["ingredient_id"].ToString(),
                                 Convert.ToInt32(reader["quantity"]),
                                 Convert.ToDouble(reader["unit_price"]),
                                 Convert.ToDouble(reader["discount"]),
-                                Convert.ToDouble(reader["amount"])
+                                Convert.ToDouble(reader["total_price"])
                             ));
                         }
                     }
@@ -239,6 +239,5 @@ namespace CafeManagement.DAO
             }
             return details;
         }
-
     }
 }

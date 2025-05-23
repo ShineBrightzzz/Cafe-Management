@@ -62,18 +62,18 @@ namespace CafeManagement.Forms.ImportInvoice
             ingredientColumn.Name = "IngredientId";
             ingredientColumn.HeaderText = "Nguyên liệu";
             ingredientColumn.DataPropertyName = "IngredientId";
-            
+
             // Load ingredients into ComboBox
             var ingredients = ingredientController.GetAllIngredients();
-            ingredientColumn.DataSource = ingredients.Select(ing => new ComboboxItem 
-            { 
-                Text = $"{ing.getIngredientId()} - {ing.getName()}", 
-                Value = ing.getIngredientId() 
+            ingredientColumn.DataSource = ingredients.Select(ing => new ComboboxItem
+            {
+                Text = $"{ing.getIngredientId()} - {ing.getName()}",
+                Value = ing.getIngredientId()
             }).ToList();
             ingredientColumn.DisplayMember = "Text";
             ingredientColumn.ValueMember = "Value";
             ingredientColumn.AutoComplete = true;
-            
+
             dgridImportInvoiceDetails.Columns.Add(ingredientColumn);
             dgridImportInvoiceDetails.Columns.Add("Quantity", "Số Lượng");
             dgridImportInvoiceDetails.Columns.Add("UnitPrice", "Đơn Giá");
@@ -118,11 +118,11 @@ namespace CafeManagement.Forms.ImportInvoice
         private void LoadImportInvoiceDetails(string invoiceId)
         {
             var details = importInvoiceDetailController.GetDetailsByInvoiceId(invoiceId);
-            dgridImportInvoiceDetails.Rows.Clear();            foreach (var detail in details)
+            dgridImportInvoiceDetails.Rows.Clear(); foreach (var detail in details)
             {
                 var ingredient = ingredientController.GetIngredientById(detail.getIngredientId());
                 var row = dgridImportInvoiceDetails.Rows[dgridImportInvoiceDetails.Rows.Add()];
-                
+
                 // Set values for each cell
                 ((DataGridViewComboBoxCell)row.Cells["IngredientId"]).Value = detail.getIngredientId();
                 row.Cells["Quantity"].Value = detail.getQuantity();
@@ -142,7 +142,7 @@ namespace CafeManagement.Forms.ImportInvoice
                 grid.ColumnHeadersDefaultCellStyle.BackColor = Color.RoyalBlue;
                 grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                 grid.ColumnHeadersHeight = 40;
-                
+
                 // Content format
                 grid.BackgroundColor = Color.White;
                 grid.DefaultCellStyle.BackColor = Color.White;
@@ -151,7 +151,7 @@ namespace CafeManagement.Forms.ImportInvoice
                 grid.RowTemplate.Height = 35;
                 grid.GridColor = Color.LightGray;
                 grid.BorderStyle = BorderStyle.Fixed3D;
-                
+
                 // Grid-specific settings
                 if (grid == dgridImportInvoice)
                 {
@@ -164,7 +164,8 @@ namespace CafeManagement.Forms.ImportInvoice
                     grid.ReadOnly = false; // Details grid is editable
                     grid.AllowUserToAddRows = true;
                     grid.EditMode = DataGridViewEditMode.EditOnEnter;
-                }                grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                }
+                grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
                 // Selection colors
                 grid.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
@@ -173,7 +174,8 @@ namespace CafeManagement.Forms.ImportInvoice
                 // Handle double-click editing for details grid
                 if (grid == dgridImportInvoiceDetails)
                 {
-                    grid.CellDoubleClick += (s, e) => {
+                    grid.CellDoubleClick += (s, e) =>
+                    {
                         if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                             grid.BeginEdit(true);
                     };
@@ -320,7 +322,7 @@ namespace CafeManagement.Forms.ImportInvoice
                 return;
             }
 
-            if (MessageBox.Show("Bạn có chắc chắn muốn xóa hóa đơn nhập này?", "Xác nhận xóa", 
+            if (MessageBox.Show("Bạn có chắc chắn muốn xóa hóa đơn nhập này?", "Xác nhận xóa",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 bool success = importInvoiceController.DeleteImportInvoice(selectedInvoiceId);
@@ -330,7 +332,7 @@ namespace CafeManagement.Forms.ImportInvoice
                     LoadImportInvoices();
                     ClearInputs();
                 }
-                else 
+                else
                 {
                     MessageBox.Show("Xóa hóa đơn nhập thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -340,13 +342,14 @@ namespace CafeManagement.Forms.ImportInvoice
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool success = false;
-            string message = "";            switch (currentMode)
+            string message = "";
+            switch (currentMode)
             {
                 case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
                     string employeeId = GetSelectedEmployeeId();
                     string supplierId = GetSelectedSupplierId();
-                    
+
                     if (string.IsNullOrEmpty(employeeId) || string.IsNullOrEmpty(supplierId))
                     {
                         MessageBox.Show("Vui lòng chọn nhân viên và nhà cung cấp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -425,7 +428,7 @@ namespace CafeManagement.Forms.ImportInvoice
             if (e.RowIndex < 0) return;
 
             var row = dgridImportInvoiceDetails.Rows[e.RowIndex];
-            
+
             // Skip calculation if any required fields are empty
             if (row.Cells["Quantity"].Value == null || row.Cells["UnitPrice"].Value == null)
                 return;
@@ -447,28 +450,25 @@ namespace CafeManagement.Forms.ImportInvoice
                 // Update the overall total
                 UpdateTotalAmount();
             }
-        }
-
-        private void UpdateTotalAmount()
+        }        private void UpdateTotalAmount()
         {
             double totalAmount = 0;
             foreach (DataGridViewRow row in dgridImportInvoiceDetails.Rows)
             {
-                if (row.Cells["TotalPrice"].Value != null &&
+                if (!row.IsNewRow && row.Cells["TotalPrice"].Value != null &&
                     double.TryParse(row.Cells["TotalPrice"].Value.ToString(), out double rowTotal))
                 {
                     totalAmount += rowTotal;
                 }
             }
 
-            // Update the total in the current invoice if in edit mode
-            if (currentMode != ActionMode.None && !string.IsNullOrEmpty(selectedInvoiceId))
+            if (!string.IsNullOrEmpty(selectedInvoiceId))
             {
                 var invoice = importInvoiceController.GetImportInvoiceById(selectedInvoiceId);
                 if (invoice != null)
                 {
                     invoice.setTotalAmount(totalAmount);
-                    importInvoiceController.UpdateImportInvoice(
+                    bool success = importInvoiceController.UpdateImportInvoice(
                         selectedInvoiceId,
                         invoice.getDateOfImport(),
                         invoice.getEmployeeId(),
@@ -476,8 +476,18 @@ namespace CafeManagement.Forms.ImportInvoice
                         totalAmount
                     );
 
-                    // Refresh the main grid
-                    LoadImportInvoices();
+                    if (success)
+                    {
+                        // Cập nhật lại tổng tiền trên grid hóa đơn
+                        foreach (DataGridViewRow row in dgridImportInvoice.Rows)
+                        {
+                            if (row.Cells["ImportInvoiceId"].Value.ToString() == selectedInvoiceId)
+                            {
+                                row.Cells["TotalAmount"].Value = totalAmount.ToString("N0");
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -528,7 +538,7 @@ namespace CafeManagement.Forms.ImportInvoice
                 throw new Exception("Vui lòng chọn nguyên liệu");
             }
 
-            if (row.Cells["Quantity"].Value == null || 
+            if (row.Cells["Quantity"].Value == null ||
                 row.Cells["UnitPrice"].Value == null)
             {
                 throw new Exception("Vui lòng nhập đầy đủ số lượng và đơn giá");
@@ -587,13 +597,92 @@ namespace CafeManagement.Forms.ImportInvoice
             {
                 // Update the total price display in the grid
                 row.Cells["TotalPrice"].Value = totalPrice.ToString("N0");
-                
+
                 // Update the total amount of the invoice
                 UpdateTotalAmount();
                 return true;
             }
 
             throw new Exception("Không thể lưu chi tiết hóa đơn");
+        }
+
+        private void btnSaveDetails_Click(object sender, EventArgs e)
+        {
+            // If no invoice is selected, show error and return
+            if (string.IsNullOrEmpty(selectedInvoiceId))
+            {
+                MessageBox.Show("Vui lòng chọn hoặc tạo hóa đơn nhập trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool hasError = false;
+            string errorMessage = "";
+
+            // Save each row in the grid
+            foreach (DataGridViewRow row in dgridImportInvoiceDetails.Rows)
+            {
+                // Skip the new row at the end
+                if (row.IsNewRow) continue;
+
+                try
+                {
+                    SaveImportInvoiceDetail(row);
+                }
+                catch (Exception ex)
+                {
+                    hasError = true;
+                    errorMessage += $"Lỗi tại dòng {row.Index + 1}: {ex.Message}\n";
+                }
+            }
+
+            if (hasError)
+            {
+                MessageBox.Show($"Có lỗi xảy ra khi lưu:\n{errorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Đã lưu tất cả chi tiết hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dgridImportInvoice_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dgridImportInvoice.Rows[e.RowIndex];
+                selectedInvoiceId = row.Cells["ImportInvoiceId"].Value.ToString();
+                
+                // Lấy thông tin chi tiết của hóa đơn
+                var invoice = importInvoiceController.GetImportInvoiceById(selectedInvoiceId);
+                if (invoice != null)
+                {
+                    // Update ComboBox selections
+                    foreach (ComboboxItem item in cbEmployee.Items)
+                    {
+                        if (item.Value == invoice.getEmployeeId())
+                        {
+                            cbEmployee.SelectedItem = item;
+                            break;
+                        }
+                    }
+                      // Load supplier của hóa đơn
+                    var supplier = supplierController.GetSupplierById(invoice.getSupplierId());
+                    if (supplier != null)
+                    {
+                        foreach (ComboboxItem item in cbSupplier.Items)
+                        {
+                            if (item.Value == supplier.getId())
+                            {
+                                cbSupplier.SelectedItem = item;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Load chi tiết hóa đơn
+                LoadImportInvoiceDetails(selectedInvoiceId);
+            }
         }
     }
 }

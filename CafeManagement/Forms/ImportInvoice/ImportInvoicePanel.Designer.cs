@@ -52,6 +52,7 @@ namespace CafeManagement.Forms.ImportInvoice
             mtxtDateOfImport = new MaskedTextBox();
             cbEmployee = new ComboBox();
             cbSupplier = new ComboBox();
+            btnSaveDetails = new Button();
             ((ISupportInitialize)dgridImportInvoiceDetails).BeginInit();
             ((ISupportInitialize)dgridImportInvoice).BeginInit();
             SuspendLayout();
@@ -71,6 +72,7 @@ namespace CafeManagement.Forms.ImportInvoice
             dgridImportInvoice.Name = "dgridImportInvoice";
             dgridImportInvoice.Size = new Size(587, 436);
             dgridImportInvoice.TabIndex = 35;
+            dgridImportInvoice.CellClick += dgridImportInvoice_CellClick;
             // 
             // btnCancel
             // 
@@ -184,10 +186,21 @@ namespace CafeManagement.Forms.ImportInvoice
             cbSupplier.Size = new Size(121, 23);
             cbSupplier.TabIndex = 45;
             // 
+            // btnSaveDetails
+            // 
+            btnSaveDetails.Location = new Point(1306, 532);
+            btnSaveDetails.Name = "btnSaveDetails";
+            btnSaveDetails.Size = new Size(113, 50);
+            btnSaveDetails.TabIndex = 46;
+            btnSaveDetails.Text = "Lưu chi tiết";
+            btnSaveDetails.UseVisualStyleBackColor = true;
+            btnSaveDetails.Click += btnSaveDetails_Click;
+            // 
             // ImportInvoicePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnSaveDetails);
             Controls.Add(cbSupplier);
             Controls.Add(cbEmployee);
             Controls.Add(mtxtDateOfImport);
@@ -226,5 +239,6 @@ namespace CafeManagement.Forms.ImportInvoice
         private MaskedTextBox mtxtDateOfImport;
         private ComboBox cbEmployee;
         private ComboBox cbSupplier;
+        private Button btnSaveDetails;
     }
 }
