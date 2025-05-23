@@ -111,7 +111,7 @@
             Controls.Add(invoicesPanel);
             Controls.Add(header);
             Name = "OrderForm";
-            Text = "OrderForm";
+            Text = "Quản lí quán cafe";
             Load += OrderForm_Load;
             panel1.ResumeLayout(false);
             ResumeLayout(false);

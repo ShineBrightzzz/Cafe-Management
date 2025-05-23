@@ -67,7 +67,7 @@
             // 
             btnEmployee.BackColor = SystemColors.GradientActiveCaption;
             btnEmployee.FlatStyle = FlatStyle.Flat;
-            btnEmployee.Location = new Point(3, 220);
+            btnEmployee.Location = new Point(0, 219);
             btnEmployee.Name = "btnEmployee";
             btnEmployee.Size = new Size(200, 44);
             btnEmployee.TabIndex = 0;
@@ -79,7 +79,7 @@
             // 
             btnCustomer.BackColor = SystemColors.GradientActiveCaption;
             btnCustomer.FlatStyle = FlatStyle.Flat;
-            btnCustomer.Location = new Point(3, 176);
+            btnCustomer.Location = new Point(0, 175);
             btnCustomer.Name = "btnCustomer";
             btnCustomer.Size = new Size(200, 44);
             btnCustomer.TabIndex = 0;
@@ -91,7 +91,7 @@
             // 
             btnSaleInvoice.BackColor = SystemColors.GradientActiveCaption;
             btnSaleInvoice.FlatStyle = FlatStyle.Flat;
-            btnSaleInvoice.Location = new Point(3, 132);
+            btnSaleInvoice.Location = new Point(0, 131);
             btnSaleInvoice.Name = "btnSaleInvoice";
             btnSaleInvoice.Size = new Size(200, 44);
             btnSaleInvoice.TabIndex = 0;
@@ -103,7 +103,7 @@
             // 
             btnImportInvoice.BackColor = SystemColors.GradientActiveCaption;
             btnImportInvoice.FlatStyle = FlatStyle.Flat;
-            btnImportInvoice.Location = new Point(3, 88);
+            btnImportInvoice.Location = new Point(0, 87);
             btnImportInvoice.Name = "btnImportInvoice";
             btnImportInvoice.Size = new Size(200, 44);
             btnImportInvoice.TabIndex = 0;
@@ -115,7 +115,7 @@
             // 
             btnMenu.BackColor = SystemColors.GradientActiveCaption;
             btnMenu.FlatStyle = FlatStyle.Flat;
-            btnMenu.Location = new Point(3, 44);
+            btnMenu.Location = new Point(0, 43);
             btnMenu.Name = "btnMenu";
             btnMenu.Size = new Size(200, 44);
             btnMenu.TabIndex = 0;
@@ -127,7 +127,7 @@
             // 
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(3, 0);
+            button1.Location = new Point(0, -1);
             button1.Name = "button1";
             button1.Size = new Size(200, 44);
             button1.TabIndex = 0;
