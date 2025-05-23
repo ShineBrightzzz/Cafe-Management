@@ -18,6 +18,7 @@ namespace CafeManagement.Forms.ImportInvoice
         private readonly ImportInvoiceDetailController importInvoiceDetailController;
         private readonly EmployeeController employeeController;
         private readonly SupplierController supplierController;
+        private readonly IngredientController ingredientController;
         private string selectedInvoiceId;
         private ActionMode currentMode = ActionMode.None;
 
@@ -36,10 +37,10 @@ namespace CafeManagement.Forms.ImportInvoice
             importInvoiceDetailController = new ImportInvoiceDetailController();
             employeeController = new EmployeeController();
             supplierController = new SupplierController();
+            ingredientController = new IngredientController();
 
-            // Initialize ComboBoxes
+            // Initialize ComboBoxes and DataGridViews
             InitializeComboBoxes();
-
             InitializeDataGridViews();
             FormatDataGridViews();
             LoadImportInvoices();
@@ -56,12 +57,34 @@ namespace CafeManagement.Forms.ImportInvoice
             dgridImportInvoice.Columns.Add("TotalAmount", "Tổng Tiền");
 
             // Configure import invoice details grid
-            dgridImportInvoiceDetails.AutoGenerateColumns = false;
-            dgridImportInvoiceDetails.Columns.Add("IngredientId", "Mã NL");
+            dgridImportInvoiceDetails.AutoGenerateColumns = false;            // Add ingredient ComboBox column
+            var ingredientColumn = new DataGridViewComboBoxColumn();
+            ingredientColumn.Name = "IngredientId";
+            ingredientColumn.HeaderText = "Nguyên liệu";
+            ingredientColumn.DataPropertyName = "IngredientId";
+            
+            // Load ingredients into ComboBox
+            var ingredients = ingredientController.GetAllIngredients();
+            ingredientColumn.DataSource = ingredients.Select(ing => new ComboboxItem 
+            { 
+                Text = $"{ing.getIngredientId()} - {ing.getName()}", 
+                Value = ing.getIngredientId() 
+            }).ToList();
+            ingredientColumn.DisplayMember = "Text";
+            ingredientColumn.ValueMember = "Value";
+            ingredientColumn.AutoComplete = true;
+            
+            dgridImportInvoiceDetails.Columns.Add(ingredientColumn);
             dgridImportInvoiceDetails.Columns.Add("Quantity", "Số Lượng");
             dgridImportInvoiceDetails.Columns.Add("UnitPrice", "Đơn Giá");
             dgridImportInvoiceDetails.Columns.Add("Discount", "Giảm Giá %");
             dgridImportInvoiceDetails.Columns.Add("TotalPrice", "Thành Tiền");
+
+            // Handle data change events for auto-calculation
+            dgridImportInvoiceDetails.CellEndEdit += CalculateDetailTotalPrice;
+            dgridImportInvoiceDetails.RowsAdded += (s, e) => UpdateTotalAmount();
+            dgridImportInvoiceDetails.RowsRemoved += (s, e) => UpdateTotalAmount();
+            dgridImportInvoiceDetails.KeyDown += DgridImportInvoiceDetails_KeyDown;
 
             // Handle selection change in import invoices grid
             dgridImportInvoice.SelectionChanged += DgridImportInvoice_SelectionChanged;
@@ -95,17 +118,17 @@ namespace CafeManagement.Forms.ImportInvoice
         private void LoadImportInvoiceDetails(string invoiceId)
         {
             var details = importInvoiceDetailController.GetDetailsByInvoiceId(invoiceId);
-            dgridImportInvoiceDetails.Rows.Clear();
-
-            foreach (var detail in details)
+            dgridImportInvoiceDetails.Rows.Clear();            foreach (var detail in details)
             {
-                dgridImportInvoiceDetails.Rows.Add(
-                    detail.getIngredientId(),
-                    detail.getQuantity(),
-                    detail.getUnitPrice().ToString("N0"),
-                    detail.getDiscount().ToString("N1"),
-                    detail.getTotalPrice().ToString("N0")
-                );
+                var ingredient = ingredientController.GetIngredientById(detail.getIngredientId());
+                var row = dgridImportInvoiceDetails.Rows[dgridImportInvoiceDetails.Rows.Add()];
+                
+                // Set values for each cell
+                ((DataGridViewComboBoxCell)row.Cells["IngredientId"]).Value = detail.getIngredientId();
+                row.Cells["Quantity"].Value = detail.getQuantity();
+                row.Cells["UnitPrice"].Value = detail.getUnitPrice().ToString("N0");
+                row.Cells["Discount"].Value = detail.getDiscount().ToString("N1");
+                row.Cells["TotalPrice"].Value = detail.getTotalPrice().ToString("N0");
             }
         }
 
@@ -395,6 +418,182 @@ namespace CafeManagement.Forms.ImportInvoice
             {
                 MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void CalculateDetailTotalPrice(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dgridImportInvoiceDetails.Rows[e.RowIndex];
+            
+            // Skip calculation if any required fields are empty
+            if (row.Cells["Quantity"].Value == null || row.Cells["UnitPrice"].Value == null)
+                return;
+
+            // Parse values
+            if (int.TryParse(row.Cells["Quantity"].Value.ToString(), out int quantity) &&
+                double.TryParse(row.Cells["UnitPrice"].Value.ToString(), out double unitPrice))
+            {
+                double discount = 0;
+                if (row.Cells["Discount"].Value != null)
+                {
+                    double.TryParse(row.Cells["Discount"].Value.ToString(), out discount);
+                }
+
+                // Calculate total for this row
+                double total = quantity * unitPrice * (1 - discount / 100);
+                row.Cells["TotalPrice"].Value = total.ToString("N0");
+
+                // Update the overall total
+                UpdateTotalAmount();
+            }
+        }
+
+        private void UpdateTotalAmount()
+        {
+            double totalAmount = 0;
+            foreach (DataGridViewRow row in dgridImportInvoiceDetails.Rows)
+            {
+                if (row.Cells["TotalPrice"].Value != null &&
+                    double.TryParse(row.Cells["TotalPrice"].Value.ToString(), out double rowTotal))
+                {
+                    totalAmount += rowTotal;
+                }
+            }
+
+            // Update the total in the current invoice if in edit mode
+            if (currentMode != ActionMode.None && !string.IsNullOrEmpty(selectedInvoiceId))
+            {
+                var invoice = importInvoiceController.GetImportInvoiceById(selectedInvoiceId);
+                if (invoice != null)
+                {
+                    invoice.setTotalAmount(totalAmount);
+                    importInvoiceController.UpdateImportInvoice(
+                        selectedInvoiceId,
+                        invoice.getDateOfImport(),
+                        invoice.getEmployeeId(),
+                        invoice.getSupplierId(),
+                        totalAmount
+                    );
+
+                    // Refresh the main grid
+                    LoadImportInvoices();
+                }
+            }
+        }
+
+        private Ingredient GetSelectedIngredient(DataGridViewRow row)
+        {
+            if (row?.Cells["IngredientId"].Value == null) return null;
+            string ingredientId = row.Cells["IngredientId"].Value.ToString();
+            return ingredientController.GetIngredientById(ingredientId);
+        }
+
+        private void DgridImportInvoiceDetails_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+
+            // If no invoice is selected, show error and return
+            if (string.IsNullOrEmpty(selectedInvoiceId))
+            {
+                MessageBox.Show("Vui lòng chọn hoặc tạo hóa đơn nhập trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var currentRow = dgridImportInvoiceDetails.CurrentRow;
+            if (currentRow == null || currentRow.IsNewRow) return;
+
+            try
+            {
+                SaveImportInvoiceDetail(currentRow);
+                if (currentRow.Index == dgridImportInvoiceDetails.Rows.Count - 2) // If it's the last row before the new row
+                {
+                    dgridImportInvoiceDetails.Rows.Add(); // Add a new row
+                }
+                dgridImportInvoiceDetails.CurrentCell = dgridImportInvoiceDetails[0, currentRow.Index + 1];
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu chi tiết hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool SaveImportInvoiceDetail(DataGridViewRow row)
+        {
+            // Check required fields
+            var ingredientCell = row.Cells["IngredientId"] as DataGridViewComboBoxCell;
+            if (ingredientCell?.Value == null)
+            {
+                throw new Exception("Vui lòng chọn nguyên liệu");
+            }
+
+            if (row.Cells["Quantity"].Value == null || 
+                row.Cells["UnitPrice"].Value == null)
+            {
+                throw new Exception("Vui lòng nhập đầy đủ số lượng và đơn giá");
+            }
+
+            // Parse values
+            string ingredientId = ingredientCell.Value.ToString();
+            if (!int.TryParse(row.Cells["Quantity"].Value.ToString(), out int quantity))
+            {
+                throw new Exception("Số lượng không hợp lệ");
+            }
+            if (!double.TryParse(row.Cells["UnitPrice"].Value.ToString(), out double unitPrice))
+            {
+                throw new Exception("Đơn giá không hợp lệ");
+            }
+            double discount = 0;
+            if (row.Cells["Discount"].Value != null)
+            {
+                if (!double.TryParse(row.Cells["Discount"].Value.ToString(), out discount))
+                {
+                    throw new Exception("Giảm giá không hợp lệ");
+                }
+            }
+
+            // Calculate total
+            double totalPrice = quantity * unitPrice * (1 - discount / 100);
+
+            // Check if the detail already exists
+            var existingDetail = importInvoiceDetailController.GetImportInvoiceDetailById(selectedInvoiceId, ingredientId);
+            bool success;
+
+            if (existingDetail != null)
+            {
+                // Update existing detail
+                success = importInvoiceDetailController.UpdateImportInvoiceDetail(
+                    selectedInvoiceId,
+                    ingredientId,
+                    quantity,
+                    unitPrice,
+                    discount
+                );
+            }
+            else
+            {
+                // Add new detail
+                success = importInvoiceDetailController.AddImportInvoiceDetail(
+                    selectedInvoiceId,
+                    ingredientId,
+                    quantity,
+                    unitPrice,
+                    discount
+                );
+            }
+
+            if (success)
+            {
+                // Update the total price display in the grid
+                row.Cells["TotalPrice"].Value = totalPrice.ToString("N0");
+                
+                // Update the total amount of the invoice
+                UpdateTotalAmount();
+                return true;
+            }
+
+            throw new Exception("Không thể lưu chi tiết hóa đơn");
         }
     }
 }
