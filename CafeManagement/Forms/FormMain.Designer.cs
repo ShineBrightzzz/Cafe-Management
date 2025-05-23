@@ -152,7 +152,7 @@
             Controls.Add(panel2);
             Controls.Add(header);
             Name = "FormMain";
-            Text = "FormMain";
+            Text = "Quản lý quán cafe";
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
