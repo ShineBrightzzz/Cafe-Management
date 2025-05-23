@@ -17,6 +17,7 @@ namespace CafeManagement.Controllers
         public bool AddEmployee(string id, string name, string address, string gender, DateTime dob, string phone)
         {
             var employee = new Employee(id, name, address, gender, dob, phone);
+
             return employeeService.AddEmployee(employee);
         }
 

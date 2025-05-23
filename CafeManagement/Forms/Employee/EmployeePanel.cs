@@ -308,14 +308,26 @@ namespace CafeManagement.Forms.Employee
             {
                 case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
-                    success = employeeController.AddEmployee(newId, txtName.Text.Trim(), mtxtPhone.Text.Trim(),
-                        txtAddress.Text.Trim(), dateOfBirth, gender);
+                    success = employeeController.AddEmployee(
+                        newId,
+                        txtName.Text.Trim(),
+                        txtAddress.Text.Trim(),
+                        gender,
+                        dateOfBirth,
+                        mtxtPhone.Text.Trim()
+                    );
                     message = success ? "Thêm nhân viên thành công!" : "Thêm nhân viên thất bại!";
                     break;
 
                 case ActionMode.Edit:
-                    success = employeeController.UpdateEmployee(selectedEmployeeId, txtName.Text.Trim(), mtxtPhone.Text.Trim(),
-                        txtAddress.Text.Trim(), dateOfBirth, gender);
+                    success = employeeController.UpdateEmployee(
+                        selectedEmployeeId,
+                        txtName.Text.Trim(),
+                        txtAddress.Text.Trim(),
+                        gender,
+                        dateOfBirth,
+                        mtxtPhone.Text.Trim()
+                    );
                     message = success ? "Cập nhật thông tin nhân viên thành công!" : "Cập nhật thông tin nhân viên thất bại!";
                     break;
 

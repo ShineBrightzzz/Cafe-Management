@@ -13,7 +13,6 @@ namespace CafeManagement.DAO
         {
             string sql = "INSERT INTO employees (id, name, address, gender, date_of_birth, phone) VALUES (@id, @name, @address, @gender, @dateOfBirth, @phone)";
             SqlConnection conn = null;
-            MessageBox.Show("Adding employee...");
             try
             {
                 conn = DBConnect.GetConnection();
@@ -119,12 +118,12 @@ namespace CafeManagement.DAO
                         if (reader.Read())
                         {
                             return new Employee(
-                                reader["id"].ToString(),
-                                reader["name"].ToString(),
-                                reader["address"].ToString(),
-                                reader["gender"].ToString(),
-                                Convert.ToDateTime(reader["date_of_birth"]).Date,
-                                reader["phone"].ToString()
+                                reader["id"]?.ToString() ?? "",
+                                reader["name"]?.ToString() ?? "",
+                                reader["address"]?.ToString() ?? "",
+                                reader["gender"]?.ToString() ?? "",
+                                reader["date_of_birth"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(reader["date_of_birth"]),
+                                reader["phone"]?.ToString() ?? ""
                             );
                         }
                     }
@@ -158,12 +157,12 @@ namespace CafeManagement.DAO
                         while (reader.Read())
                         {
                             employees.Add(new Employee(
-                                reader["id"].ToString(),
-                                reader["name"].ToString(),
-                                reader["address"].ToString(),
-                                reader["gender"].ToString(),
-                                Convert.ToDateTime(reader["date_of_birth"]).Date,
-                                reader["phone"].ToString()
+                                reader["id"]?.ToString() ?? "",
+                                reader["name"]?.ToString() ?? "",
+                                reader["address"]?.ToString() ?? "",
+                                reader["gender"]?.ToString() ?? "",
+                                reader["date_of_birth"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(reader["date_of_birth"]),
+                                reader["phone"]?.ToString() ?? ""
                             ));
                         }
                     }
@@ -198,12 +197,12 @@ namespace CafeManagement.DAO
                         while (reader.Read())
                         {
                             employees.Add(new Employee(
-                                reader["id"].ToString(),
-                                reader["name"].ToString(),
-                                reader["address"].ToString(),
-                                reader["gender"].ToString(),
-                                Convert.ToDateTime(reader["date_of_birth"]).Date,
-                                reader["phone"].ToString()
+                                reader["id"]?.ToString() ?? "",
+                                reader["name"]?.ToString() ?? "",
+                                reader["address"]?.ToString() ?? "",
+                                reader["gender"]?.ToString() ?? "",
+                                reader["date_of_birth"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(reader["date_of_birth"]),
+                                reader["phone"]?.ToString() ?? ""
                             ));
                         }
                     }

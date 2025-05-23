@@ -27,7 +27,8 @@ CREATE TABLE sale_invoice_details (
     product_id NVARCHAR(50),
     quantity INT NOT NULL,
     unit_price DECIMAL(18,2) NOT NULL,
-    discount DECIMAL(5,2) NOT NULL DEFAULT 0.0,    PRIMARY KEY (invoice_id, product_id),
+    discount DECIMAL(5,2) NOT NULL DEFAULT 0.0,    
+    PRIMARY KEY (invoice_id, product_id),
     FOREIGN KEY (invoice_id) REFERENCES sale_invoices(id) ON DELETE CASCADE
 );
 GO
