@@ -35,7 +35,7 @@
             btnSaleInvoice = new Button();
             btnImportInvoice = new Button();
             btnMenu = new Button();
-            button1 = new Button();
+            btnSupplier = new Button();
             mainPanel = new FlowLayoutPanel();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -56,7 +56,7 @@
             panel2.Controls.Add(btnSaleInvoice);
             panel2.Controls.Add(btnImportInvoice);
             panel2.Controls.Add(btnMenu);
-            panel2.Controls.Add(button1);
+            panel2.Controls.Add(btnSupplier);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 61);
             panel2.Name = "panel2";
@@ -123,16 +123,17 @@
             btnMenu.UseVisualStyleBackColor = false;
             btnMenu.Click += btnMenu_Click;
             // 
-            // button1
+            // btnSupplier
             // 
-            button1.BackColor = SystemColors.GradientActiveCaption;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(0, -1);
-            button1.Name = "button1";
-            button1.Size = new Size(200, 44);
-            button1.TabIndex = 0;
-            button1.Text = "Trang chủ";
-            button1.UseVisualStyleBackColor = false;
+            btnSupplier.BackColor = SystemColors.GradientActiveCaption;
+            btnSupplier.FlatStyle = FlatStyle.Flat;
+            btnSupplier.Location = new Point(0, -1);
+            btnSupplier.Name = "btnSupplier";
+            btnSupplier.Size = new Size(200, 44);
+            btnSupplier.TabIndex = 0;
+            btnSupplier.Text = "Nhà cung cấp";
+            btnSupplier.UseVisualStyleBackColor = false;
+            btnSupplier.Click += btnSupplier_Click;
             // 
             // mainPanel
             // 
@@ -161,7 +162,7 @@
 
         private Panel header;
         private Panel panel2;
-        private Button button1;
+        private Button btnSupplier;
         private Button btnCustomer;
         private Button btnSaleInvoice;
         private Button btnImportInvoice;

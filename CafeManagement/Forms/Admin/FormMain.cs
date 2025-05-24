@@ -13,9 +13,10 @@ using CafeManagement.Forms.Employee;
 using CafeManagement.Forms.SaleInvoice;
 using CafeManagement.Forms.ImportInvoice;
 using CafeManagement.Forms.ProductManagement;
+using CafeManagement.Forms.Supplier;
 
 namespace CafeManagement.Forms
-{    
+{
     public partial class FormMain : Form
     {
         public Account CurrentAccount { get; set; }
@@ -25,7 +26,8 @@ namespace CafeManagement.Forms
             InitializeComponent();
             CurrentAccount = account;
             InitializeHeader();
-        }        private void InitializeHeader()
+        }
+        private void InitializeHeader()
         {
             Header _header = new Header();
             header.Controls.Clear();
@@ -66,6 +68,13 @@ namespace CafeManagement.Forms
             mainPanel.Controls.Clear();
             ImportInvoicePanel importInvoicePanel = new ImportInvoicePanel();
             mainPanel.Controls.Add(importInvoicePanel);
+        }
+
+        private void btnSupplier_Click(object sender, EventArgs e)
+        {
+            mainPanel.Controls.Clear();
+            SupplierPanel supplierPanel = new SupplierPanel();
+            mainPanel.Controls.Add(supplierPanel);
         }
     }
 }
