@@ -46,10 +46,8 @@ namespace CafeManagement.Forms.ImportInvoice
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
-            label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            mtxtDateOfImport = new MaskedTextBox();
             cbEmployee = new ComboBox();
             cbSupplier = new ComboBox();
             btnSaveDetails = new Button();
@@ -139,19 +137,10 @@ namespace CafeManagement.Forms.ImportInvoice
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(139, 544);
-            label1.Name = "label1";
-            label1.Size = new Size(65, 15);
-            label1.TabIndex = 43;
-            label1.Text = "Ngày nhập";
-            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(139, 608);
+            label2.Location = new Point(231, 567);
             label2.Name = "label2";
             label2.Size = new Size(61, 15);
             label2.TabIndex = 43;
@@ -160,23 +149,16 @@ namespace CafeManagement.Forms.ImportInvoice
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(529, 547);
+            label3.Location = new Point(231, 624);
             label3.Name = "label3";
             label3.Size = new Size(81, 15);
             label3.TabIndex = 43;
             label3.Text = "Nhà cung cấp";
             // 
-            // mtxtDateOfImport
-            // 
-            mtxtDateOfImport.Location = new Point(259, 544);
-            mtxtDateOfImport.Name = "mtxtDateOfImport";
-            mtxtDateOfImport.Size = new Size(121, 23);
-            mtxtDateOfImport.TabIndex = 44;
-            // 
             // cbEmployee
             // 
             cbEmployee.FormattingEnabled = true;
-            cbEmployee.Location = new Point(259, 608);
+            cbEmployee.Location = new Point(351, 567);
             cbEmployee.Name = "cbEmployee";
             cbEmployee.Size = new Size(121, 23);
             cbEmployee.TabIndex = 45;
@@ -184,7 +166,7 @@ namespace CafeManagement.Forms.ImportInvoice
             // cbSupplier
             // 
             cbSupplier.FormattingEnabled = true;
-            cbSupplier.Location = new Point(648, 547);
+            cbSupplier.Location = new Point(350, 624);
             cbSupplier.Name = "cbSupplier";
             cbSupplier.Size = new Size(121, 23);
             cbSupplier.TabIndex = 45;
@@ -236,10 +218,8 @@ namespace CafeManagement.Forms.ImportInvoice
             Controls.Add(btnSaveDetails);
             Controls.Add(cbSupplier);
             Controls.Add(cbEmployee);
-            Controls.Add(mtxtDateOfImport);
             Controls.Add(label2);
             Controls.Add(label3);
-            Controls.Add(label1);
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(btnExcel);
@@ -266,10 +246,8 @@ namespace CafeManagement.Forms.ImportInvoice
         private Button btnDelete;
         private Button btnUpdate;
         private Button btnAdd;
-        private Label label1;
         private Label label2;
         private Label label3;
-        private MaskedTextBox mtxtDateOfImport;
         private ComboBox cbEmployee;
         private ComboBox cbSupplier;
         private Button btnSaveDetails;
