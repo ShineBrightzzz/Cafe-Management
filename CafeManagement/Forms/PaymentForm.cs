@@ -133,8 +133,12 @@ namespace CafeManagement.Forms
                     try
                     {
                         PrintDocument pd = new PrintDocument();
-                        pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
-                        pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, 600);
+                        pd.PrintPage += new PrintPageEventHandler(this.PrintPage);                // Tính toán chiều cao cần thiết cho hóa đơn
+                        int baseHeight = 600; // Chiều cao cơ bản cho các phần cố định
+                        int itemHeight = 20; // Chiều cao cho mỗi sản phẩm
+                        int totalHeight = baseHeight + (_invoiceItems.Count * itemHeight);
+                        
+                        pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, totalHeight);
 
                         // Tạo form xem trước tùy chỉnh
                         Form previewForm = new Form();
@@ -451,12 +455,34 @@ namespace CafeManagement.Forms
             }
             startY += lineHeight * 3;
 
-            // Vẽ QR code nếu thanh toán bằng ngân hàng
-            if (rdBank.Checked && picQR.Image != null)
+            // Tạo và vẽ QR code cho thông tin thanh toán
+            try
             {
-                int qrSize = 100;
-                e.Graphics.DrawImage(picQR.Image, startX + (pageWidth - qrSize)/2, startY, qrSize, qrSize);
-                startY += qrSize + lineHeight;
+                double finalTotal = double.Parse(txtTotalCustomer.Text.Replace(",", "").Replace(" đ", ""));
+                string qrContent = $"Thanh toán: {finalTotal:N0} VND\n" +
+                                 "Số tài khoản: 123456789\n" +
+                                 "Ngân hàng: VPBank\n" +
+                                 "Tên: CAFE MANAGEMENT\n" +
+                                 $"Ngày: {DateTime.Now:dd/MM/yyyy HH:mm}";
+
+                using (QRCoder.QRCodeGenerator qrGenerator = new QRCoder.QRCodeGenerator())
+                {
+                    QRCoder.QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCoder.QRCodeGenerator.ECCLevel.Q);
+                    using (QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData))
+                    {
+                        int qrSize = 100;
+                        using (Bitmap qrBitmap = qrCode.GetGraphic(5))
+                        {
+                            e.Graphics.DrawImage(qrBitmap, startX + (pageWidth - qrSize)/2, startY, qrSize, qrSize);
+                        }
+                    }
+                }
+                startY += 110; // qrSize + margin
+            }
+            catch (Exception ex)
+            {
+                // Nếu có lỗi khi tạo QR code, bỏ qua và tiếp tục in phần còn lại của hóa đơn
+                Console.WriteLine($"Lỗi khi tạo QR code: {ex.Message}");
             }
 
             // Vẽ đường kẻ ngang cuối cùng
