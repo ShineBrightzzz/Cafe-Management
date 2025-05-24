@@ -119,7 +119,7 @@
             Controls.Add(MainPanel);
             Margin = new Padding(2, 1, 2, 1);
             Name = "LoginForm";
-            Text = "LoginForm";
+            Text = "Đăng nhập";
             MainPanel.ResumeLayout(false);
             MainPanel.PerformLayout();
             ResumeLayout(false);

@@ -225,7 +225,13 @@ namespace CafeManagement.Forms.ImportInvoice
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
                 dgridImportInvoice.Enabled = true;
-                dgridImportInvoiceDetails.Enabled = true;
+                dgridImportInvoiceDetails.Enabled = false;
+
+                // Disable input controls when no action is in progress
+                cbEmployee.Enabled = false;
+                cbSupplier.Enabled = false;
+                txtSearch.Enabled = true; // Keep search enabled
+                btnSaveDetails.Enabled = false;
             }
             // Add/Edit/Delete action in progress
             else
@@ -236,7 +242,12 @@ namespace CafeManagement.Forms.ImportInvoice
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
                 dgridImportInvoice.Enabled = false;
-                dgridImportInvoiceDetails.Enabled = false;
+                dgridImportInvoiceDetails.Enabled = true;
+
+                // Enable input controls when adding or editing
+                cbEmployee.Enabled = true;
+                cbSupplier.Enabled = true;
+                btnSaveDetails.Enabled = true;
             }
         }
 

@@ -62,6 +62,13 @@ namespace CafeManagement.Forms.Employee
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
                 dgidEmployee.Enabled = true;
+
+                // Disable input controls when no action is in progress
+                txtName.Enabled = false;
+                txtAddress.Enabled = false;
+                cbGender.Enabled = false;
+                mtxtDateOfBirth.Enabled = false;
+                mtxtPhone.Enabled = false;
             }
             // Add/Edit/Delete action in progress
             else
@@ -72,6 +79,13 @@ namespace CafeManagement.Forms.Employee
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
                 dgidEmployee.Enabled = false;
+
+                // Enable input controls when adding or editing
+                txtName.Enabled = true;
+                txtAddress.Enabled = true;
+                cbGender.Enabled = true;
+                mtxtDateOfBirth.Enabled = true;
+                mtxtPhone.Enabled = true;
             }
         }
 

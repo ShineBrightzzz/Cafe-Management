@@ -48,6 +48,13 @@ namespace CafeManagement.Forms.ProductManagement
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
                 dgridProduct.Enabled = true;
+
+                // Disable input controls when no action is in progress
+                txtName.Enabled = false;
+                cbType.Enabled = false;
+                txtImportPrice.Enabled = false;
+                txtSalePrice.Enabled = false;
+                txtSearch.Enabled = true; // Keep search enabled
             }
             // Add/Edit/Delete action in progress
             else
@@ -58,6 +65,12 @@ namespace CafeManagement.Forms.ProductManagement
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
                 dgridProduct.Enabled = false;
+
+                // Enable input controls when adding or editing
+                txtName.Enabled = true;
+                cbType.Enabled = true;
+                txtImportPrice.Enabled = true;
+                txtSalePrice.Enabled = true;
             }
         }
 

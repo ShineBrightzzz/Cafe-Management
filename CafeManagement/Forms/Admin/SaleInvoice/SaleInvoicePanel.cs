@@ -17,6 +17,7 @@ namespace CafeManagement.Forms.SaleInvoice
         private readonly SaleInvoiceDetailController saleInvoiceDetailController;
         private readonly EmployeeController employeeController;
         private readonly CustomerController customerController;
+        private readonly ProductController productController;
 
         public SaleInvoicePanel()
         {            InitializeComponent();
@@ -24,6 +25,7 @@ namespace CafeManagement.Forms.SaleInvoice
             saleInvoiceDetailController = new SaleInvoiceDetailController();
             employeeController = new EmployeeController();
             customerController = new CustomerController();
+            productController = new ProductController();
             InitializeDataGridViews();
             FormatDataGridViews();
             LoadSaleInvoices();
@@ -40,7 +42,7 @@ namespace CafeManagement.Forms.SaleInvoice
 
             // Configure sale invoice details grid
             dgridSaleInvoiceDetails.AutoGenerateColumns = false;
-            dgridSaleInvoiceDetails.Columns.Add("ProductId", "Mã SP");
+            dgridSaleInvoiceDetails.Columns.Add("ProductId", "Sản phẩm");
             dgridSaleInvoiceDetails.Columns.Add("Quantity", "Số Lượng");
             dgridSaleInvoiceDetails.Columns.Add("UnitPrice", "Đơn Giá");
             dgridSaleInvoiceDetails.Columns.Add("DiscountPercent", "Giảm Giá %");
@@ -89,8 +91,12 @@ namespace CafeManagement.Forms.SaleInvoice
 
             foreach (var detail in details)
             {
+                // Lấy thông tin sản phẩm
+                var product = productController.GetProductById(detail.getProductId());
+                string productName = product != null ? product.getName() : detail.getProductId();
+
                 dgridSaleInvoiceDetails.Rows.Add(
-                    detail.getProductId(),
+                    productName,
                     detail.getQuantity(),
                     detail.getUnitPrice().ToString("N0"),
                     detail.getDiscountPercent().ToString("N1"),

@@ -145,14 +145,14 @@
             txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // btnCancel
-            // 
-            btnCancel.Enabled = false;
+            //            btnCancel.Enabled = false;
             btnCancel.Location = new Point(934, 715);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(113, 50);
             btnCancel.TabIndex = 20;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // label6
             // 

@@ -38,7 +38,7 @@
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsername.ForeColor = SystemColors.Control;
-            lblUsername.Location = new Point(952, 17);
+            lblUsername.Location = new Point(1450, 17);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(68, 30);
             lblUsername.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // lblLogout
             // 
-            lblLogout.Location = new Point(1080, 17);
+            lblLogout.Location = new Point(1568, 17);
             lblLogout.Name = "lblLogout";
             lblLogout.Size = new Size(78, 30);
             lblLogout.TabIndex = 1;
@@ -59,7 +59,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(433, 5);
+            label1.Location = new Point(603, 5);
             label1.Name = "label1";
             label1.Size = new Size(268, 45);
             label1.TabIndex = 2;
@@ -74,7 +74,7 @@
             Controls.Add(lblLogout);
             Controls.Add(lblUsername);
             Name = "Header";
-            Size = new Size(1188, 61);
+            Size = new Size(1677, 61);
             ResumeLayout(false);
             PerformLayout();
         }

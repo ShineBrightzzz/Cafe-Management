@@ -50,6 +50,12 @@ namespace CafeManagement.Forms.Supplier
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
                 dgidSupplier.Enabled = true;
+
+                // Disable input controls when no action is in progress
+                txtName.Enabled = false;
+                txtAddress.Enabled = false;
+                mtxtPhone.Enabled = false;
+                txtSearch.Enabled = true; // Keep search enabled
             }
             // Add/Edit/Delete action in progress
             else
@@ -60,6 +66,11 @@ namespace CafeManagement.Forms.Supplier
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
                 dgidSupplier.Enabled = false;
+
+                // Enable input controls when adding or editing
+                txtName.Enabled = true;
+                txtAddress.Enabled = true;
+                mtxtPhone.Enabled = true;
             }
         }
 
@@ -164,11 +175,11 @@ namespace CafeManagement.Forms.Supplier
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             string searchText = txtSearch.Text.Trim().ToLower();
-            
+
             if (dgidSupplier.DataSource is DataTable dataTable)
             {
                 DataView dv = dataTable.DefaultView;
-                
+
                 if (string.IsNullOrEmpty(searchText))
                 {
                     dv.RowFilter = string.Empty;
@@ -208,9 +219,9 @@ namespace CafeManagement.Forms.Supplier
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa nhà cung cấp này không?", 
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa nhà cung cấp này không?",
                 "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                
+
             if (result == DialogResult.Yes)
             {
                 bool success = supplierController.DeleteSupplier(selectedSupplierId);
@@ -318,6 +329,25 @@ namespace CafeManagement.Forms.Supplier
             else
             {
                 MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }        private void txtSearch_TextChanged_1(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            
+            if (dgidSupplier.DataSource is DataTable dataTable)
+            {
+                DataView dv = dataTable.DefaultView;
+                
+                if (string.IsNullOrEmpty(searchText))
+                {
+                    dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
+                }
+                else
+                {
+                    // Tạo filter để tìm kiếm trên tất cả các cột
+                    dv.RowFilter = string.Format("Id LIKE '%{0}%' OR Name LIKE '%{0}%' OR Phone LIKE '%{0}%' OR Address LIKE '%{0}%'",
+                        searchText.Replace("'", "''")); // Escape dấu nháy đơn để tránh lỗi SQL
+                }
             }
         }
     }

@@ -25,13 +25,15 @@ namespace CafeManagement.Forms.Customer
             Add,
             Edit,
             Delete
-        }
-
-        public CustomerPanel()
+        }        public CustomerPanel()
         {
             InitializeComponent();
             customerController = new CustomerController();
 
+            // Thiết lập định dạng cho ô nhập số điện thoại
+            mtxtPhone.Mask = "0000000000";
+            mtxtPhone.ValidatingType = typeof(string);
+            
             // Đăng ký sự kiện click cho DataGridView
             dgidCustomer.CellClick += new DataGridViewCellEventHandler(dgidCustomer_CellClick);
 
@@ -48,6 +50,10 @@ namespace CafeManagement.Forms.Customer
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false; 
                 dgidCustomer.Enabled = true;
+                
+                // Disable input controls when no action is in progress
+                txtName.Enabled = false;
+                mtxtPhone.Enabled = false;
             }
             // Add/Edit/Delete action in progress
             else
@@ -58,6 +64,10 @@ namespace CafeManagement.Forms.Customer
                 btnSave.Enabled = true;
                 btnCancel.Enabled = true;
                 dgidCustomer.Enabled = false;
+
+                // Enable input controls when adding or editing
+                txtName.Enabled = true;
+                mtxtPhone.Enabled = true;
             }
         }
 
@@ -71,9 +81,7 @@ namespace CafeManagement.Forms.Customer
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Id", typeof(string));
                 dt.Columns.Add("Name", typeof(string));
-                dt.Columns.Add("Phone", typeof(string));
-
-                // Thêm dữ liệu vào DataTable
+                dt.Columns.Add("Phone", typeof(string));                // Thêm dữ liệu vào DataTable
                 foreach (var customer in customers)
                 {
                     dt.Rows.Add(customer.getId(), customer.getName(), customer.getPhoneNumber());
@@ -219,24 +227,26 @@ namespace CafeManagement.Forms.Customer
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text))
+        {            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text.Trim()))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }            // Kiểm tra định dạng số điện thoại
+            string phoneNumber = string.Join("", mtxtPhone.Text.Where(char.IsDigit));
+            if (phoneNumber.Length != 10)
+            {
+                MessageBox.Show("Số điện thoại phải có 10 chữ số!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             bool success = false;
             string message = "";            switch (currentMode)
-            {
-                case ActionMode.Add:
+            {                case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
-                    success = customerController.AddCustomer(newId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
+                    success = customerController.AddCustomer(newId, txtName.Text.Trim(), phoneNumber);
                     message = success ? "Thêm khách hàng thành công!" : "Thêm khách hàng thất bại!";
-                    break;
-
-                case ActionMode.Edit:
-                    success = customerController.UpdateCustomer(selectedCustomerId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
+                    break;                case ActionMode.Edit:
+                    success = customerController.UpdateCustomer(selectedCustomerId, txtName.Text.Trim(), phoneNumber);
                     message = success ? "Cập nhật thông tin khách hàng thành công!" : "Cập nhật thông tin khách hàng thất bại!";
                     break;
             }
@@ -260,12 +270,13 @@ namespace CafeManagement.Forms.Customer
             ClearInputs();
             currentMode = ActionMode.None;
             UpdateButtonState();
-        }
-
+        }        
+        
         private void ClearInputs()
         {
             txtName.Text = string.Empty;
-            mtxtPhone.Text = string.Empty;
+            mtxtPhone.Clear();
+            mtxtPhone.Mask = "0000000000";
             selectedCustomerId = null;
         }
 
