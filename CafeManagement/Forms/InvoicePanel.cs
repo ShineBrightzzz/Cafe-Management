@@ -81,6 +81,7 @@ namespace CafeManagement.Forms
                     if (product != null)
                     {
                         InvoiceItem invoiceItem = new InvoiceItem(product);
+                        invoiceItem.ItemDeleted += InvoiceItem_Deleted; // Add the delete event handler
                         // Set the quantity from order detail
                         for (int i = 1; i < detail.getQuantity(); i++)
                         {
@@ -121,7 +122,6 @@ namespace CafeManagement.Forms
                 }
 
                 InvoiceItem invoiceItem = new InvoiceItem(product);
-                invoiceItem.ItemDeleted += InvoiceItem_Deleted;
 
                 // Add to database first
                 if (_orderService.AddOrderDetail(_currentOrder.getId(), product, 1))
@@ -140,6 +140,7 @@ namespace CafeManagement.Forms
             _invoiceItems.Add(item);
             item.Width = flowLayoutPanel1.Width - 20; // Account for padding
             item.QuantityChanged += InvoiceItem_QuantityChanged;  // Subscribe to quantity changes
+            item.ItemDeleted += InvoiceItem_Deleted;  // Subscribe to delete events
             flowLayoutPanel1.Controls.Add(item);
             flowLayoutPanel1.ScrollControlIntoView(item);
             UpdateTotalPrice();
@@ -153,6 +154,14 @@ namespace CafeManagement.Forms
                 if (_currentOrder != null)
                 {
                     _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
+                    
+                    // If this was the last item, delete the order and clear table
+                    if (_invoiceItems.Count == 0)
+                    {
+                        _orderService.CompleteOrder(_currentOrder.getId());
+                        _currentOrder = null;
+                        flowLayoutPanel1.Controls.Clear();
+                    }
                 }
                 UpdateTotalPrice();
             }
@@ -162,15 +171,35 @@ namespace CafeManagement.Forms
         {
             if (sender is InvoiceItem item && _currentOrder != null)
             {
-                // Update the order detail with new quantity
-                _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
-                _orderService.AddOrderDetail(
-                    _currentOrder.getId(),
-                    item.GetProduct(),
-                    int.Parse(item.GetQuantity())
-                );
+                int quantity = int.Parse(item.GetQuantity());
+                
+                if (quantity == 0)
+                {
+                    // Remove the item if quantity is zero
+                    _invoiceItems.Remove(item);
+                    flowLayoutPanel1.Controls.Remove(item);
+                    _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
+                    
+                    // If this was the last item, delete the order and clear table
+                    if (_invoiceItems.Count == 0)
+                    {
+                        _orderService.CompleteOrder(_currentOrder.getId());
+                        _currentOrder = null;
+                        flowLayoutPanel1.Controls.Clear();
+                    }
+                }
+                else
+                {
+                    // Update the order detail with new quantity
+                    _orderService.RemoveOrderDetail(_currentOrder.getId(), item.GetProduct().getId());
+                    _orderService.AddOrderDetail(
+                        _currentOrder.getId(),
+                        item.GetProduct(),
+                        quantity
+                    );
+                }
+                UpdateTotalPrice();
             }
-            UpdateTotalPrice();
         }
 
         public Order GetCurrentOrder()

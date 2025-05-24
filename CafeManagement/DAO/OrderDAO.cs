@@ -152,5 +152,44 @@ namespace CafeManagement.DAO
             }
             return null;
         }
+
+        public bool DeleteOrder(string orderId)
+        {
+            string sql = "DELETE FROM orders WHERE id = @orderId";
+            SqlConnection conn = null;
+            try
+            {
+                if (conn == null)
+                    conn = DBConnect.GetConnection();
+                
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                // First delete all related order details
+                using (SqlCommand cmdDetails = new SqlCommand("DELETE FROM order_details WHERE order_id = @orderId", conn))
+                {
+                    cmdDetails.Parameters.AddWithValue("@orderId", orderId);
+                    cmdDetails.ExecuteNonQuery();
+                }
+
+                // Then delete the order
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    int result = cmd.ExecuteNonQuery();
+                    return result > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DeleteOrder Error: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+        }
     }
 }

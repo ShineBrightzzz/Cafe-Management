@@ -20,6 +20,10 @@ namespace CafeManagement.Forms
         {
             InitializeComponent();
             controller = new AccountController();
+            
+            // Đăng ký sự kiện KeyDown cho các textbox
+            txtUsername.KeyDown += txtLogin_KeyDown;
+            txtPassword.KeyDown += txtLogin_KeyDown;
         }
 
 
@@ -71,7 +75,8 @@ namespace CafeManagement.Forms
                 var account = controller.GetAccount(user); // ✅ Lấy thông tin tài khoản
                 if (account.getRole() == "Admin")
                 {
-                    MessageBox.Show("Đăng nhập với quyền Admin");                    FormMain mainForm = new FormMain(account);
+                    MessageBox.Show("Đăng nhập với quyền Admin");                    
+                    FormMain mainForm = new FormMain(account);
                     mainForm.Show();
                     this.Hide();
                 }
@@ -89,6 +94,15 @@ namespace CafeManagement.Forms
             else
             {
                 MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu.");
+            }
+        }
+
+        private void txtLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Ngăn chặn tiếng "beep"
+                btnLogin_Click(sender, e);
             }
         }
     }
