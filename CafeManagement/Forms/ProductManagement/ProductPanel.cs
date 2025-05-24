@@ -362,11 +362,12 @@ namespace CafeManagement.Forms.ProductManagement
                 if (string.IsNullOrEmpty(searchText))
                 {
                     dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
-                }
-                else
+                }                else
                 {
-                    // Tạo filter để tìm kiếm trên tất cả các cột
-                    dv.RowFilter = string.Format("Id LIKE '%{0}%' OR Name LIKE '%{0}%' OR ProductType LIKE '%{0}%' OR Price LIKE '%{0}%'",
+                    // Tạo filter để tìm kiếm trên các cột text và số
+                    dv.RowFilter = string.Format("id LIKE '%{0}%' OR name LIKE '%{0}%' OR type LIKE '%{0}%' OR " +
+                                               "CONVERT(import_price, 'System.String') LIKE '%{0}%' OR " +
+                                               "CONVERT(sale_price, 'System.String') LIKE '%{0}%'",
                         searchText.Replace("'", "''"));  // Escape dấu nháy đơn để tránh lỗi SQL
                 }
             }

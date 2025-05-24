@@ -43,7 +43,6 @@
             label1 = new Label();
             lblTotal = new Label();
             btnPayment = new Button();
-            btnPrintInvoice = new Button();
             paymentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picQR).BeginInit();
             SuspendLayout();
@@ -68,7 +67,6 @@
             // 
             // paymentPanel
             // 
-            paymentPanel.Controls.Add(btnPrintInvoice);
             paymentPanel.Controls.Add(picQR);
             paymentPanel.Controls.Add(txtDiscount);
             paymentPanel.Controls.Add(txtCustomerPayment);
@@ -201,16 +199,6 @@
             btnPayment.UseVisualStyleBackColor = true;
             btnPayment.Click += btnPayment_Click;
             // 
-            // btnPrintInvoice
-            // 
-            btnPrintInvoice.Location = new Point(56, 647);
-            btnPrintInvoice.Name = "btnPrintInvoice";
-            btnPrintInvoice.Size = new Size(166, 38);
-            btnPrintInvoice.TabIndex = 6;
-            btnPrintInvoice.Text = "In hóa đơn";
-            btnPrintInvoice.UseVisualStyleBackColor = true;
-            btnPrintInvoice.Click += btnPrintInvoice_Click;
-            // 
             // PaymentForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -244,6 +232,5 @@
         private Label label3;
         private Label label1;
         private PictureBox picQR;
-        private Button btnPrintInvoice;
     }
 }

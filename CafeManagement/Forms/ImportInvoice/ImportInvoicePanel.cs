@@ -48,12 +48,11 @@ namespace CafeManagement.Forms.ImportInvoice
         }
 
         private void InitializeDataGridViews()
-        {
-            // Configure import invoices grid
+        {            // Configure import invoices grid
             dgridImportInvoice.AutoGenerateColumns = false;
             dgridImportInvoice.Columns.Add("ImportInvoiceId", "Mã HĐN");
             dgridImportInvoice.Columns.Add("ImportDate", "Ngày Nhập");
-            dgridImportInvoice.Columns.Add("EmployeeId", "Mã NV");
+            dgridImportInvoice.Columns.Add("EmployeeId", "Nhân viên");
             dgridImportInvoice.Columns.Add("TotalAmount", "Tổng Tiền");
 
             // Configure import invoice details grid
@@ -67,7 +66,7 @@ namespace CafeManagement.Forms.ImportInvoice
             var ingredients = ingredientController.GetAllIngredients();
             ingredientColumn.DataSource = ingredients.Select(ing => new ComboboxItem
             {
-                Text = $"{ing.getIngredientId()} - {ing.getName()}",
+                Text = $"{ing.getName()}",
                 Value = ing.getIngredientId()
             }).ToList();
             ingredientColumn.DisplayMember = "Text";
@@ -88,21 +87,23 @@ namespace CafeManagement.Forms.ImportInvoice
 
             // Handle selection change in import invoices grid
             dgridImportInvoice.SelectionChanged += DgridImportInvoice_SelectionChanged;
-        }
-
-        private void LoadImportInvoices()
+        }        private void LoadImportInvoices()
         {
             var invoices = importInvoiceController.GetAllImportInvoices();
             dgridImportInvoice.Rows.Clear();
 
             foreach (var invoice in invoices)
             {
+                // Lấy tên nhân viên từ ID
+                var employee = employeeController.GetEmployeeById(invoice.getEmployeeId());
+                string employeeName = employee != null ? employee.getName() : invoice.getEmployeeId();
+
                 dgridImportInvoice.Rows.Add(
-                invoice.getImportInvoiceId(),
-                invoice.getDateOfImport().ToString("dd/MM/yyyy"),
-                invoice.getEmployeeId(),
-                invoice.getTotalAmount().ToString("N0")
-            );
+                    invoice.getImportInvoiceId(),
+                    invoice.getDateOfImport().ToString("dd/MM/yyyy"),
+                    employeeName,
+                    invoice.getTotalAmount().ToString("N0")
+                );
             }
         }
 
@@ -683,11 +684,78 @@ namespace CafeManagement.Forms.ImportInvoice
                 // Load chi tiết hóa đơn
                 LoadImportInvoiceDetails(selectedInvoiceId);
             }
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        }        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
+            string searchText = txtSearch.Text.Trim().ToLower();
             
+            if (dgridImportInvoice.Rows.Count > 0)
+            {
+                foreach (DataGridViewRow row in dgridImportInvoice.Rows)
+                {
+                    bool visible = false;
+                    
+                    // Tìm kiếm trên tất cả các cột
+                    for (int i = 0; i < row.Cells.Count; i++)
+                    {
+                        if (row.Cells[i].Value != null && 
+                            row.Cells[i].Value.ToString().ToLower().Contains(searchText))
+                        {
+                            visible = true;
+                            break;
+                        }
+                    }
+                    
+                    row.Visible = string.IsNullOrEmpty(searchText) || visible;
+                }
+
+                // Nếu đang tìm kiếm (có nhập text), load chi tiết của hóa đơn đầu tiên được hiển thị
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    DataGridViewRow firstVisibleRow = dgridImportInvoice.Rows.Cast<DataGridViewRow>()
+                        .FirstOrDefault(r => r.Visible);
+                    
+                    if (firstVisibleRow != null)
+                    {
+                        selectedInvoiceId = firstVisibleRow.Cells["ImportInvoiceId"].Value.ToString();
+                        LoadImportInvoiceDetails(selectedInvoiceId);
+                        
+                        // Cập nhật selection của ComboBox
+                        var invoice = importInvoiceController.GetImportInvoiceById(selectedInvoiceId);
+                        if (invoice != null)
+                        {
+                            // Update employee selection
+                            foreach (ComboboxItem item in cbEmployee.Items)
+                            {
+                                if (item.Value == invoice.getEmployeeId())
+                                {
+                                    cbEmployee.SelectedItem = item;
+                                    break;
+                                }
+                            }
+
+                            // Update supplier selection
+                            var supplier = supplierController.GetSupplierById(invoice.getSupplierId());
+                            if (supplier != null)
+                            {
+                                foreach (ComboboxItem item in cbSupplier.Items)
+                                {
+                                    if (item.Value == supplier.getId())
+                                    {
+                                        cbSupplier.SelectedItem = item;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Nếu không có kết quả tìm kiếm, xóa chi tiết
+                        dgridImportInvoiceDetails.Rows.Clear();
+                        selectedInvoiceId = null;
+                    }
+                }
+            }
         }
     }
 }

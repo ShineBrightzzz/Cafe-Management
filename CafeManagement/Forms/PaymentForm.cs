@@ -105,7 +105,9 @@ namespace CafeManagement.Forms
             // Update total amount labels
             lblTotal.Text = $"{_total:N0} đ";
             UpdateTotalAmount();
-        }        private void btnPayment_Click(object sender, EventArgs e)
+        }        
+        
+        private void btnPayment_Click(object sender, EventArgs e)
         {
             try
             {
@@ -212,7 +214,9 @@ namespace CafeManagement.Forms
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
-        }        private void UpdateTableAndClose()
+        }        
+        
+        private void UpdateTableAndClose()
         {
             try
             {
@@ -332,76 +336,8 @@ namespace CafeManagement.Forms
             {
                 MessageBox.Show($"Lỗi tạo mã QR: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }        private void btnPrintInvoice_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                PrintDocument pd = new PrintDocument();
-                pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
-                pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 280, 600);
-
-                // Tạo form xem trước tùy chỉnh
-                Form previewForm = new Form();
-                previewForm.Text = "Xem trước hóa đơn";
-                previewForm.WindowState = FormWindowState.Maximized;
-                previewForm.BackColor = Color.Gray;
-
-                // Tạo PrintPreviewControl
-                PrintPreviewControl previewControl = new PrintPreviewControl();
-                previewControl.Document = pd;
-                previewControl.Zoom = 1.0;
-                previewControl.BackColor = Color.White;
-                previewControl.Dock = DockStyle.Fill;
-                previewForm.Controls.Add(previewControl);
-
-                // Tạo ToolStrip với các nút điều khiển
-                ToolStrip toolStrip = new ToolStrip();
-                toolStrip.BackColor = Color.White;
-                  // Nút In
-                ToolStripButton printButton = new ToolStripButton();
-                printButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                printButton.Text = "In";
-                printButton.Image = CreatePrintIcon();
-                printButton.Click += (s, args) =>
-                {
-                    try
-                    {
-                        pd.Print();
-                        previewForm.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi khi in hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                };
-
-                // Nút Zoom in
-                ToolStripButton zoomInButton = new ToolStripButton();
-                zoomInButton.Text = "Phóng to";
-                zoomInButton.Click += (s, args) => { previewControl.Zoom *= 1.25; };
-
-                // Nút Zoom out
-                ToolStripButton zoomOutButton = new ToolStripButton();
-                zoomOutButton.Text = "Thu nhỏ";
-                zoomOutButton.Click += (s, args) => { previewControl.Zoom /= 1.25; };
-
-                // Thêm các nút vào ToolStrip
-                toolStrip.Items.Add(printButton);
-                toolStrip.Items.Add(new ToolStripSeparator());
-                toolStrip.Items.Add(zoomInButton);
-                toolStrip.Items.Add(zoomOutButton);
-
-                // Thêm ToolStrip vào form
-                previewForm.Controls.Add(toolStrip);
-
-                // Hiển thị form xem trước
-                previewForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi hiển thị hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        }        
+        
 
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
