@@ -37,9 +37,7 @@ namespace CafeManagement.Forms.Customer
 
             LoadCustomers();
             UpdateButtonState();
-        }
-
-        private void UpdateButtonState()
+        }        private void UpdateButtonState()
         {
             // Default state (no action in progress)
             if (currentMode == ActionMode.None)
@@ -48,7 +46,7 @@ namespace CafeManagement.Forms.Customer
                 btnUpdate.Enabled = true;
                 btnDelete.Enabled = true;
                 btnSave.Enabled = false;
-                btnCancel.Enabled = false;
+                btnCancel.Enabled = false; 
                 dgidCustomer.Enabled = true;
             }
             // Add/Edit/Delete action in progress
@@ -287,8 +285,8 @@ namespace CafeManagement.Forms.Customer
                 MessageBox.Show("Có lỗi khi chọn dữ liệu: " + ex.Message,
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }        
-        
+        }
+
         private void btnExcel_Click(object sender, EventArgs e)
         {
             var exporter = new exportExcel();
@@ -300,6 +298,25 @@ namespace CafeManagement.Forms.Customer
             else
             {
                 MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            
+            if (dgidCustomer.DataSource is DataTable dataTable)
+            {
+                DataView dv = dataTable.DefaultView;
+                
+                if (string.IsNullOrEmpty(searchText))
+                {
+                    dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
+                }
+                else
+                {
+                    // Tạo filter để tìm kiếm trên tất cả các cột
+                    dv.RowFilter = string.Format("Id LIKE '%{0}%' OR Name LIKE '%{0}%' OR Phone LIKE '%{0}%'",
+                        searchText.Replace("'", "''"));  // Escape dấu nháy đơn để tránh lỗi SQL
+                }
             }
         }
     }

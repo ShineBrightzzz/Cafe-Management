@@ -285,7 +285,7 @@ namespace CafeManagement.Forms.Employee
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text) || 
+            if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(mtxtPhone.Text) ||
                 string.IsNullOrEmpty(txtAddress.Text) || string.IsNullOrEmpty(mtxtDateOfBirth.Text))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -369,6 +369,27 @@ namespace CafeManagement.Forms.Employee
             else
             {
                 MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            
+            if (dgidEmployee.DataSource is DataTable dataTable)
+            {
+                DataView dv = dataTable.DefaultView;
+                
+                if (string.IsNullOrEmpty(searchText))
+                {
+                    dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
+                }
+                else
+                {
+                    // Tạo filter để tìm kiếm trên tất cả các cột
+                    dv.RowFilter = string.Format("Id LIKE '%{0}%' OR Name LIKE '%{0}%' OR Phone LIKE '%{0}%' OR Address LIKE '%{0}%'",
+                        searchText.Replace("'", "''"));  // Escape dấu nháy đơn để tránh lỗi SQL
+                }
             }
         }
     }

@@ -45,13 +45,16 @@
             label5 = new Label();
             cbGender = new ComboBox();
             btnExcel = new Button();
+            txtSearch = new TextBox();
+            label6 = new Label();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgidEmployee).BeginInit();
             SuspendLayout();
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(778, 596);
+            label2.Location = new Point(783, 623);
             label2.Name = "label2";
             label2.Size = new Size(76, 15);
             label2.TabIndex = 14;
@@ -60,7 +63,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(422, 544);
+            label1.Location = new Point(427, 571);
             label1.Name = "label1";
             label1.Size = new Size(80, 15);
             label1.TabIndex = 15;
@@ -68,7 +71,7 @@
             // 
             // mtxtPhone
             // 
-            mtxtPhone.Location = new Point(902, 596);
+            mtxtPhone.Location = new Point(907, 623);
             mtxtPhone.Mask = "(999) 000-0000";
             mtxtPhone.Name = "mtxtPhone";
             mtxtPhone.Size = new Size(131, 23);
@@ -76,14 +79,14 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(561, 541);
+            txtName.Location = new Point(566, 568);
             txtName.Name = "txtName";
             txtName.Size = new Size(131, 23);
             txtName.TabIndex = 12;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(579, 701);
+            btnDelete.Location = new Point(584, 728);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 11;
@@ -93,7 +96,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(422, 701);
+            btnUpdate.Location = new Point(427, 728);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 10;
@@ -103,7 +106,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(263, 701);
+            btnAdd.Location = new Point(268, 728);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 9;
@@ -113,37 +116,37 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(741, 701);
+            btnSave.Enabled = false;
+            btnSave.Location = new Point(746, 728);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(113, 50);
             btnSave.TabIndex = 18;
             btnSave.Text = "Lưu";
             btnSave.UseVisualStyleBackColor = true;
-            btnSave.Enabled = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(902, 701);
+            btnCancel.Enabled = false;
+            btnCancel.Location = new Point(907, 728);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(113, 50);
             btnCancel.TabIndex = 19;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Enabled = false;
             btnCancel.Click += btnCancel_Click;
             // 
             // dgidEmployee
             // 
             dgidEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgidEmployee.Location = new Point(405, 109);
+            dgidEmployee.Location = new Point(410, 136);
             dgidEmployee.Name = "dgidEmployee";
             dgidEmployee.Size = new Size(739, 408);
             dgidEmployee.TabIndex = 8;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(561, 630);
+            txtAddress.Location = new Point(566, 657);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(131, 23);
             txtAddress.TabIndex = 12;
@@ -151,7 +154,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(422, 630);
+            label3.Location = new Point(427, 657);
             label3.Name = "label3";
             label3.Size = new Size(43, 15);
             label3.TabIndex = 15;
@@ -160,7 +163,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(422, 591);
+            label4.Location = new Point(427, 618);
             label4.Name = "label4";
             label4.Size = new Size(52, 15);
             label4.TabIndex = 15;
@@ -168,7 +171,7 @@
             // 
             // mtxtDateOfBirth
             // 
-            mtxtDateOfBirth.Location = new Point(902, 541);
+            mtxtDateOfBirth.Location = new Point(907, 568);
             mtxtDateOfBirth.Mask = "00/00/0000";
             mtxtDateOfBirth.Name = "mtxtDateOfBirth";
             mtxtDateOfBirth.Size = new Size(131, 23);
@@ -178,7 +181,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(778, 544);
+            label5.Location = new Point(783, 571);
             label5.Name = "label5";
             label5.Size = new Size(60, 15);
             label5.TabIndex = 14;
@@ -187,14 +190,14 @@
             // cbGender
             // 
             cbGender.FormattingEnabled = true;
-            cbGender.Location = new Point(561, 588);
+            cbGender.Location = new Point(566, 615);
             cbGender.Name = "cbGender";
             cbGender.Size = new Size(131, 23);
             cbGender.TabIndex = 16;
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(1063, 701);
+            btnExcel.Location = new Point(1068, 728);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(117, 50);
             btnExcel.TabIndex = 17;
@@ -202,10 +205,40 @@
             btnExcel.UseVisualStyleBackColor = true;
             btnExcel.Click += btnExcel_Click;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(496, 106);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(226, 23);
+            txtSearch.TabIndex = 20;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(414, 109);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 15);
+            label6.TabIndex = 21;
+            label6.Text = "Tìm kiếm";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(584, 32);
+            label7.Name = "label7";
+            label7.Size = new Size(274, 45);
+            label7.TabIndex = 24;
+            label7.Text = "Quản lý nhân viên";
+            // 
             // EmployeePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(txtSearch);
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(btnExcel);
@@ -249,5 +282,8 @@
         private Label label5;
         private ComboBox cbGender;
         private Button btnExcel;
+        private TextBox txtSearch;
+        private Label label6;
+        private Label label7;
     }
 }

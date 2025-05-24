@@ -33,26 +33,29 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             btnSave = new Button();
-            btnCancel = new Button();
             txtName = new TextBox();
             mtxtPhone = new MaskedTextBox();
             label1 = new Label();
             label2 = new Label();
             btnExcel = new Button();
+            txtSearch = new TextBox();
+            btnCancel = new Button();
+            label6 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgidCustomer).BeginInit();
             SuspendLayout();
             // 
             // dgidCustomer
             // 
             dgidCustomer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgidCustomer.Location = new Point(371, 100);
+            dgidCustomer.Location = new Point(370, 173);
             dgidCustomer.Name = "dgidCustomer";
             dgidCustomer.Size = new Size(743, 408);
             dgidCustomer.TabIndex = 0;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(306, 642);
+            btnAdd.Location = new Point(305, 715);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 1;
@@ -62,7 +65,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(468, 642);
+            btnUpdate.Location = new Point(467, 715);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 2;
@@ -72,7 +75,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(629, 642);
+            btnDelete.Location = new Point(628, 715);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 3;
@@ -83,7 +86,7 @@
             // btnSave
             // 
             btnSave.Enabled = false;
-            btnSave.Location = new Point(785, 642);
+            btnSave.Location = new Point(784, 715);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(113, 50);
             btnSave.TabIndex = 9;
@@ -91,27 +94,16 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
-            // btnCancel
-            // 
-            btnCancel.Location = new Point(936, 642);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(113, 50);
-            btnCancel.TabIndex = 10;
-            btnCancel.Text = "Hủy";
-            btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Visible = false;
-            btnCancel.Click += btnCancel_Click;
-            // 
             // txtName
             // 
-            txtName.Location = new Point(670, 532);
+            txtName.Location = new Point(669, 605);
             txtName.Name = "txtName";
             txtName.Size = new Size(274, 23);
             txtName.TabIndex = 4;
             // 
             // mtxtPhone
             // 
-            mtxtPhone.Location = new Point(670, 583);
+            mtxtPhone.Location = new Point(669, 656);
             mtxtPhone.Name = "mtxtPhone";
             mtxtPhone.Size = new Size(274, 23);
             mtxtPhone.TabIndex = 6;
@@ -119,7 +111,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(531, 535);
+            label1.Location = new Point(530, 608);
             label1.Name = "label1";
             label1.Size = new Size(90, 15);
             label1.TabIndex = 7;
@@ -128,7 +120,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(545, 583);
+            label2.Location = new Point(544, 656);
             label2.Name = "label2";
             label2.Size = new Size(76, 15);
             label2.TabIndex = 7;
@@ -136,7 +128,7 @@
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(1094, 642);
+            btnExcel.Location = new Point(1093, 715);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 50);
             btnExcel.TabIndex = 8;
@@ -144,11 +136,51 @@
             btnExcel.UseVisualStyleBackColor = true;
             btnExcel.Click += btnExcel_Click;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(467, 131);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(226, 23);
+            txtSearch.TabIndex = 11;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Enabled = false;
+            btnCancel.Location = new Point(934, 715);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(113, 50);
+            btnCancel.TabIndex = 20;
+            btnCancel.Text = "Hủy";
+            btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(381, 139);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 15);
+            label6.TabIndex = 22;
+            label6.Text = "Tìm kiếm";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(540, 54);
+            label3.Name = "label3";
+            label3.Size = new Size(300, 45);
+            label3.TabIndex = 23;
+            label3.Text = "Quản lý khách hàng";
+            // 
             // CustomerPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label3);
+            Controls.Add(label6);
             Controls.Add(btnCancel);
+            Controls.Add(txtSearch);
             Controls.Add(btnSave);
             Controls.Add(btnExcel);
             Controls.Add(label2);
@@ -178,6 +210,9 @@
         private Label label2;
         private Button btnExcel;
         private Button btnSave;
+        private TextBox txtSearch;
         private Button btnCancel;
+        private Label label6;
+        private Label label3;
     }
 }

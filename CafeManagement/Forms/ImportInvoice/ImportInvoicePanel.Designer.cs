@@ -53,6 +53,9 @@ namespace CafeManagement.Forms.ImportInvoice
             cbEmployee = new ComboBox();
             cbSupplier = new ComboBox();
             btnSaveDetails = new Button();
+            label6 = new Label();
+            txtSearch = new TextBox();
+            label4 = new Label();
             ((ISupportInitialize)dgridImportInvoiceDetails).BeginInit();
             ((ISupportInitialize)dgridImportInvoice).BeginInit();
             SuspendLayout();
@@ -60,17 +63,17 @@ namespace CafeManagement.Forms.ImportInvoice
             // dgridImportInvoiceDetails
             // 
             dgridImportInvoiceDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridImportInvoiceDetails.Location = new Point(761, 65);
+            dgridImportInvoiceDetails.Location = new Point(761, 133);
             dgridImportInvoiceDetails.Name = "dgridImportInvoiceDetails";
-            dgridImportInvoiceDetails.Size = new Size(658, 436);
+            dgridImportInvoiceDetails.Size = new Size(658, 368);
             dgridImportInvoiceDetails.TabIndex = 34;
             // 
             // dgridImportInvoice
             // 
             dgridImportInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridImportInvoice.Location = new Point(73, 65);
+            dgridImportInvoice.Location = new Point(73, 133);
             dgridImportInvoice.Name = "dgridImportInvoice";
-            dgridImportInvoice.Size = new Size(587, 436);
+            dgridImportInvoice.Size = new Size(587, 368);
             dgridImportInvoice.TabIndex = 35;
             dgridImportInvoice.CellClick += dgridImportInvoice_CellClick;
             // 
@@ -196,10 +199,40 @@ namespace CafeManagement.Forms.ImportInvoice
             btnSaveDetails.UseVisualStyleBackColor = true;
             btnSaveDetails.Click += btnSaveDetails_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(72, 87);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 15);
+            label6.TabIndex = 48;
+            label6.Text = "Tìm kiếm";
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(154, 84);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(226, 23);
+            txtSearch.TabIndex = 47;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(561, 12);
+            label4.Name = "label4";
+            label4.Size = new Size(335, 45);
+            label4.TabIndex = 49;
+            label4.Text = "Quản lý hóa đơn nhập";
+            // 
             // ImportInvoicePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label4);
+            Controls.Add(label6);
+            Controls.Add(txtSearch);
             Controls.Add(btnSaveDetails);
             Controls.Add(cbSupplier);
             Controls.Add(cbEmployee);
@@ -240,5 +273,8 @@ namespace CafeManagement.Forms.ImportInvoice
         private ComboBox cbEmployee;
         private ComboBox cbSupplier;
         private Button btnSaveDetails;
+        private Label label6;
+        private TextBox txtSearch;
+        private Label label4;
     }
 }

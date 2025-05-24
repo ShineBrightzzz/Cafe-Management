@@ -350,5 +350,26 @@ namespace CafeManagement.Forms.ProductManagement
                 MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+            
+            if (dgridProduct.DataSource is DataTable dataTable)
+            {
+                DataView dv = dataTable.DefaultView;
+                
+                if (string.IsNullOrEmpty(searchText))
+                {
+                    dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
+                }
+                else
+                {
+                    // Tạo filter để tìm kiếm trên tất cả các cột
+                    dv.RowFilter = string.Format("Id LIKE '%{0}%' OR Name LIKE '%{0}%' OR ProductType LIKE '%{0}%' OR Price LIKE '%{0}%'",
+                        searchText.Replace("'", "''"));  // Escape dấu nháy đơn để tránh lỗi SQL
+                }
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace CafeManagement.Forms
 
             Label tableLabel = new Label
             {
-                Text = $"Bàn: {selectedTable.getName()}",
+                Text = $"{selectedTable.getName()}",
                 Font = new Font("Arial", 14, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleLeft,
                 Dock = DockStyle.Left,

@@ -47,16 +47,21 @@ namespace CafeManagement.Forms.SaleInvoice
 
             // Handle selection change in sale invoices grid
             dgridSaleInvoice.SelectionChanged += DgridSaleInvoice_SelectionChanged;
-        }
-
-        private void LoadSaleInvoices()
+        }        private void LoadSaleInvoices()
         {
             var invoices = saleInvoiceController.GetAllSaleInvoices();
-            dgridSaleInvoice.Rows.Clear();
             
+            // Tạo DataTable mới
+            DataTable dt = new DataTable();
+            dt.Columns.Add("InvoiceId", typeof(string));
+            dt.Columns.Add("SaleDate", typeof(string));
+            dt.Columns.Add("EmployeeId", typeof(string));
+            dt.Columns.Add("CustomerId", typeof(string));
+            dt.Columns.Add("TotalAmount", typeof(string));
+
             foreach (var invoice in invoices)
             {
-                dgridSaleInvoice.Rows.Add(
+                dt.Rows.Add(
                     invoice.getInvoiceId(),
                     invoice.getSaleDate().ToString("dd/MM/yyyy"),
                     invoice.getEmployeeId(),
@@ -64,31 +69,46 @@ namespace CafeManagement.Forms.SaleInvoice
                     invoice.getTotalAmount().ToString("N0")
                 );
             }
-        }
 
-        private void DgridSaleInvoice_SelectionChanged(object sender, EventArgs e)
+            dgridSaleInvoice.DataSource = dt;
+        }        private void DgridSaleInvoice_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgridSaleInvoice.CurrentRow != null)
+            if (dgridSaleInvoice.CurrentRow != null && 
+                dgridSaleInvoice.CurrentRow.Cells["InvoiceId"].Value != null)
             {
                 string selectedInvoiceId = dgridSaleInvoice.CurrentRow.Cells["InvoiceId"].Value.ToString();
-                LoadSaleInvoiceDetails(selectedInvoiceId);
+                if (!string.IsNullOrEmpty(selectedInvoiceId))
+                {
+                    LoadSaleInvoiceDetails(selectedInvoiceId);
+                }
             }
-        }
-
-        private void LoadSaleInvoiceDetails(string invoiceId)
+        }        private void LoadSaleInvoiceDetails(string invoiceId)
         {
-            var details = saleInvoiceDetailController.GetDetailsByInvoiceId(invoiceId);
-            dgridSaleInvoiceDetails.Rows.Clear();
-
-            foreach (var detail in details)
+            try
             {
-                dgridSaleInvoiceDetails.Rows.Add(
-                    detail.getProductId(),
-                    detail.getQuantity(),
-                    detail.getUnitPrice().ToString("N0"),
-                    detail.getDiscountPercent().ToString("N1"),
-                    detail.getTotal().ToString("N0")
-                );
+                var details = saleInvoiceDetailController.GetDetailsByInvoiceId(invoiceId);
+                if (details == null) return;
+
+                dgridSaleInvoiceDetails.Rows.Clear();
+
+                foreach (var detail in details)
+                {
+                    if (detail != null)
+                    {
+                        dgridSaleInvoiceDetails.Rows.Add(
+                            detail.getProductId() ?? "",
+                            detail.getQuantity(),
+                            detail.getUnitPrice().ToString("N0"),
+                            detail.getDiscountPercent().ToString("N1"),
+                            detail.getTotal().ToString("N0")
+                        );
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Có lỗi khi tải chi tiết hóa đơn: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -158,6 +178,30 @@ namespace CafeManagement.Forms.SaleInvoice
         {
             base.OnSizeChanged(e);
             ResizeColumns();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+
+            if (dgridSaleInvoice.DataSource is DataTable dataTable)
+            {
+                DataView dv = dataTable.DefaultView;            if (string.IsNullOrEmpty(searchText))
+                {
+                    dv.RowFilter = string.Empty; // Xóa bộ lọc để hiển thị tất cả
+                }
+                else
+                {
+                    // Tạo filter để tìm kiếm trên tất cả các cột
+                    dv.RowFilter = string.Format("InvoiceId LIKE '%{0}%' OR SaleDate LIKE '%{0}%' OR EmployeeId LIKE '%{0}%' OR CustomerId LIKE '%{0}%' OR TotalAmount LIKE '%{0}%'",
+                        searchText.Replace("'", "''"));  // Escape dấu nháy đơn để tránh lỗi SQL
+                }
+            }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+                
         }
     }
 }

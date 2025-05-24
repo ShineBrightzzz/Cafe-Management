@@ -43,13 +43,16 @@
             txtImportPrice = new TextBox();
             txtSalePrice = new TextBox();
             btnExcel = new Button();
+            label6 = new Label();
+            txtSearch = new TextBox();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgridProduct).BeginInit();
             SuspendLayout();
             // 
             // cbType
             // 
             cbType.FormattingEnabled = true;
-            cbType.Location = new Point(542, 565);
+            cbType.Location = new Point(552, 644);
             cbType.Name = "cbType";
             cbType.Size = new Size(131, 23);
             cbType.TabIndex = 30;
@@ -57,7 +60,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(759, 521);
+            label5.Location = new Point(769, 600);
             label5.Name = "label5";
             label5.Size = new Size(51, 15);
             label5.TabIndex = 25;
@@ -66,7 +69,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(759, 573);
+            label2.Location = new Point(769, 652);
             label2.Name = "label2";
             label2.Size = new Size(47, 15);
             label2.TabIndex = 26;
@@ -75,7 +78,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(403, 568);
+            label4.Location = new Point(413, 647);
             label4.Name = "label4";
             label4.Size = new Size(84, 15);
             label4.TabIndex = 27;
@@ -84,7 +87,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(403, 521);
+            label1.Location = new Point(413, 600);
             label1.Name = "label1";
             label1.Size = new Size(80, 15);
             label1.TabIndex = 29;
@@ -92,14 +95,14 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(542, 518);
+            txtName.Location = new Point(552, 597);
             txtName.Name = "txtName";
             txtName.Size = new Size(131, 23);
             txtName.TabIndex = 22;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(611, 634);
+            btnDelete.Location = new Point(621, 713);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(113, 50);
             btnDelete.TabIndex = 20;
@@ -109,7 +112,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(450, 634);
+            btnUpdate.Location = new Point(460, 713);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(113, 50);
             btnUpdate.TabIndex = 19;
@@ -119,7 +122,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(288, 634);
+            btnAdd.Location = new Point(298, 713);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(113, 50);
             btnAdd.TabIndex = 18;
@@ -129,51 +132,51 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(770, 634);
+            btnSave.Enabled = false;
+            btnSave.Location = new Point(780, 713);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(113, 50);
             btnSave.TabIndex = 21;
             btnSave.Text = "Lưu";
             btnSave.UseVisualStyleBackColor = true;
-            btnSave.Enabled = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(931, 634);
+            btnCancel.Enabled = false;
+            btnCancel.Location = new Point(941, 713);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(113, 50);
             btnCancel.TabIndex = 22;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Enabled = false;
             btnCancel.Click += btnCancel_Click;
             // 
             // dgridProduct
             // 
             dgridProduct.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgridProduct.Location = new Point(383, 74);
+            dgridProduct.Location = new Point(393, 153);
             dgridProduct.Name = "dgridProduct";
             dgridProduct.Size = new Size(739, 408);
             dgridProduct.TabIndex = 17;
             // 
             // txtImportPrice
             // 
-            txtImportPrice.Location = new Point(883, 518);
+            txtImportPrice.Location = new Point(893, 597);
             txtImportPrice.Name = "txtImportPrice";
             txtImportPrice.Size = new Size(131, 23);
             txtImportPrice.TabIndex = 31;
             // 
             // txtSalePrice
             // 
-            txtSalePrice.Location = new Point(883, 568);
+            txtSalePrice.Location = new Point(893, 647);
             txtSalePrice.Name = "txtSalePrice";
             txtSalePrice.Size = new Size(131, 23);
             txtSalePrice.TabIndex = 32;
             // 
             // btnExcel
             // 
-            btnExcel.Location = new Point(1090, 635);
+            btnExcel.Location = new Point(1100, 714);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(113, 48);
             btnExcel.TabIndex = 33;
@@ -181,10 +184,40 @@
             btnExcel.UseVisualStyleBackColor = true;
             btnExcel.Click += btnExcel_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(396, 127);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 15);
+            label6.TabIndex = 35;
+            label6.Text = "Tìm kiếm";
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(478, 124);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(226, 23);
+            txtSearch.TabIndex = 34;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(593, 26);
+            label3.Name = "label3";
+            label3.Size = new Size(275, 45);
+            label3.TabIndex = 36;
+            label3.Text = "Quản lý sản phẩm";
+            // 
             // ProductPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label3);
+            Controls.Add(label6);
+            Controls.Add(txtSearch);
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(txtSalePrice);
@@ -224,5 +257,8 @@
         private TextBox txtImportPrice;
         private TextBox txtSalePrice;
         private Button btnExcel;
+        private Label label6;
+        private TextBox txtSearch;
+        private Label label3;
     }
 }
