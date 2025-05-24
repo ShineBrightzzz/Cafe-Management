@@ -191,9 +191,7 @@ namespace CafeManagement.Forms.Customer
 
             currentMode = ActionMode.Edit;
             UpdateButtonState();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
+        }        private void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedCustomerId))
             {
@@ -201,8 +199,23 @@ namespace CafeManagement.Forms.Customer
                 return;
             }
 
-            currentMode = ActionMode.Delete;
-            UpdateButtonState();
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa khách hàng này không?", 
+                "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                
+            if (result == DialogResult.Yes)
+            {
+                bool success = customerController.DeleteCustomer(selectedCustomerId);
+                if (success)
+                {
+                    MessageBox.Show("Xóa khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadCustomers();
+                    ClearInputs();
+                }
+                else
+                {
+                    MessageBox.Show("Xóa khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -214,9 +227,7 @@ namespace CafeManagement.Forms.Customer
             }
 
             bool success = false;
-            string message = "";
-
-            switch (currentMode)
+            string message = "";            switch (currentMode)
             {
                 case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
@@ -227,11 +238,6 @@ namespace CafeManagement.Forms.Customer
                 case ActionMode.Edit:
                     success = customerController.UpdateCustomer(selectedCustomerId, txtName.Text.Trim(), mtxtPhone.Text.Trim());
                     message = success ? "Cập nhật thông tin khách hàng thành công!" : "Cập nhật thông tin khách hàng thất bại!";
-                    break;
-
-                case ActionMode.Delete:
-                    success = customerController.DeleteCustomer(selectedCustomerId);
-                    message = success ? "Xóa khách hàng thành công!" : "Xóa khách hàng thất bại!";
                     break;
             }
 

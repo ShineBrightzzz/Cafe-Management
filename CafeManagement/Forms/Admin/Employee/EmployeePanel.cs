@@ -269,9 +269,7 @@ namespace CafeManagement.Forms.Employee
 
             currentMode = ActionMode.Edit;
             UpdateButtonState();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
+        }        private void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedEmployeeId))
             {
@@ -279,8 +277,21 @@ namespace CafeManagement.Forms.Employee
                 return;
             }
 
-            currentMode = ActionMode.Delete;
-            UpdateButtonState();
+            if (MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này không?", 
+                "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                bool success = employeeController.DeleteEmployee(selectedEmployeeId);
+                if (success)
+                {
+                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadEmployees();
+                    ClearInputs();
+                }
+                else
+                {
+                    MessageBox.Show("Xóa nhân viên thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -302,9 +313,7 @@ namespace CafeManagement.Forms.Employee
                 return;
             }
 
-            string gender = cbGender.SelectedItem.ToString();
-
-            switch (currentMode)
+            string gender = cbGender.SelectedItem.ToString();            switch (currentMode)
             {
                 case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
@@ -329,11 +338,6 @@ namespace CafeManagement.Forms.Employee
                         mtxtPhone.Text.Trim()
                     );
                     message = success ? "Cập nhật thông tin nhân viên thành công!" : "Cập nhật thông tin nhân viên thất bại!";
-                    break;
-
-                case ActionMode.Delete:
-                    success = employeeController.DeleteEmployee(selectedEmployeeId);
-                    message = success ? "Xóa nhân viên thành công!" : "Xóa nhân viên thất bại!";
                     break;
             }
 

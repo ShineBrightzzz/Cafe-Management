@@ -313,9 +313,7 @@ namespace CafeManagement.Forms.ImportInvoice
 
             currentMode = ActionMode.Edit;
             UpdateButtonState();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
+        }        private void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedInvoiceId))
             {
@@ -326,16 +324,31 @@ namespace CafeManagement.Forms.ImportInvoice
             if (MessageBox.Show("Bạn có chắc chắn muốn xóa hóa đơn nhập này?", "Xác nhận xóa",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                bool success = importInvoiceController.DeleteImportInvoice(selectedInvoiceId);
-                if (success)
+                try
                 {
-                    MessageBox.Show("Xóa hóa đơn nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadImportInvoices();
-                    ClearInputs();
+                    // Xóa tất cả chi tiết hóa đơn trước
+                    var details = importInvoiceDetailController.GetDetailsByInvoiceId(selectedInvoiceId);
+                    foreach (var detail in details)
+                    {
+                        importInvoiceDetailController.DeleteImportInvoiceDetail(selectedInvoiceId, detail.getIngredientId());
+                    }
+
+                    // Sau đó xóa hóa đơn
+                    bool success = importInvoiceController.DeleteImportInvoice(selectedInvoiceId);
+                    if (success)
+                    {
+                        MessageBox.Show("Xóa hóa đơn nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadImportInvoices();
+                        ClearInputs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa hóa đơn nhập thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Xóa hóa đơn nhập thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Lỗi khi xóa hóa đơn nhập: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

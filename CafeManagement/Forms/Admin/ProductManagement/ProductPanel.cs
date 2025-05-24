@@ -260,9 +260,7 @@ namespace CafeManagement.Forms.ProductManagement
 
             currentMode = ActionMode.Edit;
             UpdateButtonState();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
+        }        private void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(selectedProductId))
             {
@@ -270,8 +268,23 @@ namespace CafeManagement.Forms.ProductManagement
                 return;
             }
 
-            currentMode = ActionMode.Delete;
-            UpdateButtonState();
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa sản phẩm này không?", 
+                "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                
+            if (result == DialogResult.Yes)
+            {
+                bool success = productController.DeleteProduct(selectedProductId);
+                if (success)
+                {
+                    MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadProducts();
+                    ClearInputs();
+                }
+                else
+                {
+                    MessageBox.Show("Xóa sản phẩm thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -293,9 +306,7 @@ namespace CafeManagement.Forms.ProductManagement
                 return;
             }
 
-            string typeId = cbType.SelectedValue.ToString();
-
-            switch (currentMode)
+            string typeId = cbType.SelectedValue.ToString();            switch (currentMode)
             {
                 case ActionMode.Add:
                     string newId = Guid.NewGuid().ToString();
@@ -308,11 +319,6 @@ namespace CafeManagement.Forms.ProductManagement
                     success = productController.UpdateProduct(selectedProductId, txtName.Text.Trim(), typeId,
                         importPrice, salePrice, null); // passing null for image parameter
                     message = success ? "Cập nhật thông tin sản phẩm thành công!" : "Cập nhật thông tin sản phẩm thất bại!";
-                    break;
-
-                case ActionMode.Delete:
-                    success = productController.DeleteProduct(selectedProductId);
-                    message = success ? "Xóa sản phẩm thành công!" : "Xóa sản phẩm thất bại!";
                     break;
             }
 
